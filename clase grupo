@@ -1,0 +1,12 @@
+class Grupo{
+	private $nombre;
+	private $edad-del-menor;
+
+//getters y setters
+
+	public function permitida(){
+		if ($this->edad-del-menor>=11){
+			return true;
+		}
+	}
+}
