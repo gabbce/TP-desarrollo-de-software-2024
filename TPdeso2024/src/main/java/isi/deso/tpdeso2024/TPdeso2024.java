@@ -21,12 +21,12 @@ Vendedor v1 = new Vendedor(1,"Agustin","Lavaise 800", new Coordenada(1,1)),
         v3 = new Vendedor(3,"Carlos","Lavaise 802", new Coordenada(2,1))
         ;
 
-List<Vendedor> vendedores = new ArrayList<>(v1,v2,v3);
+List<Vendedor> vendedores = new ArrayList<>(Arrays.asList(v1,v2,v3));
 
 // Iterar sobre el arreglo para buscar vendedores por nombre o por id.
 
 for(Vendedor v:vendedores){
-    Vendedor vAux = Vendedor.PorNombre(vendedores,v.getNombre());
+    Vendedor vAux = this.VendedoresPorNombre();
     vAux.mostrar();
     vAux = Vendedor.PorId(vendedores,v.getId());
     vAux.mostrar();
@@ -43,7 +43,7 @@ Cliente c1 = new Cliente(1,01,"Lavaise 800", new Coordenada(1,1)),
         c3 = new Cliente(3,03,"Lavaise 802", new Coordenada(2,1))
         ;
 
-List<Cliente> clientes = new ArrayList<>(c1,c2,c3);
+List<Cliente> clientes = new ArrayList<>(Arrays.asList(c1,c2,c3));
 
 // Iterar sobre el arreglo para buscar Clientes por nombre o por id.
 
@@ -58,3 +58,4 @@ for(Cliente c:clientes){
 clientes.remove(1);
     }
 }
+
