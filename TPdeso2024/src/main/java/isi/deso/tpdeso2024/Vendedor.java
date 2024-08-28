@@ -14,6 +14,9 @@ public class Vendedor {
     private String direccion;
     private Coordenada coordenada;
 
+    public Vendedor() {
+    }
+
     public Vendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
@@ -25,7 +28,6 @@ public class Vendedor {
         this.id = id;
     }
 
-    
     public void setId(int id) {
         this.id = id;
     }
@@ -42,7 +44,6 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
     
-
     public int getId() {
         return id;
     }
