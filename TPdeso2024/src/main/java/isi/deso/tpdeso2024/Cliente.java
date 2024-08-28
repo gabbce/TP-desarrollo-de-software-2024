@@ -4,6 +4,8 @@
  */
 package isi.deso.tpdeso2024;
 
+import java.util.List;
+
 /**
  *
  * @author gabic
@@ -62,6 +64,15 @@ public class Cliente {
 
     public void setCoordenadas(Coordenada coordenadas) {
         this.coordenadas = coordenadas;
+    }
+    
+    public static Cliente PorNombre(List<Cliente> lista, String nombre){
+        for(Cliente c: lista){
+            if(nombre.equals(c.nombre)){
+                return c;
+            }
+        }
+        return null;
     }
     
 }

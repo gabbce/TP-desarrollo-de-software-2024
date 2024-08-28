@@ -4,6 +4,7 @@
  */
 package isi.deso.tpdeso2024;
 
+
 /**
  *
  * @author augus
@@ -13,6 +14,9 @@ public class Vendedor {
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
+
+    public Vendedor() {
+    }
 
     public Vendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         this.id = id;
@@ -25,7 +29,6 @@ public class Vendedor {
         this.id = id;
     }
 
-    
     public void setId(int id) {
         this.id = id;
     }
@@ -42,7 +45,6 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
     
-
     public int getId() {
         return id;
     }
@@ -57,6 +59,34 @@ public class Vendedor {
 
     public Coordenada getCoordenadas() {
         return coordenada;
+    }
+    
+    public double distancia(Cliente c){
+        
+        
+        
+        double radioTierra = 6371.0;
+        
+        double lat1 = Math.toRadians(this.coordenada.getLatitud());
+        double long1 = Math.toRadians(this.coordenada.getLongitud());
+       
+        double lat2 = Math.toRadians(c.getCoordenadas().getLatitud());
+        double long2 = Math.toRadians(c.getCoordenadas().getLongitud());
+        
+        //Consigo las deltas para la formula final
+        
+        double deltaLat = lat2-lat1;
+        double deltaLong = long2-long1;
+        
+        //Aplico formula 
+        
+        double a = Math.sin(deltaLat / 2) *  Math.sin(deltaLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLong / 2) * Math.sin(deltaLong / 2);
+                
+        double arc = 2 * Math.atan(Math.sqrt(a));
+        
+        return radioTierra*arc;
+        
     }
     
 }
