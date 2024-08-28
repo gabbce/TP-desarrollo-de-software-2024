@@ -63,8 +63,6 @@ public class Vendedor {
     
     public double distancia(Cliente c){
         
-        
-        
         double radioTierra = 6371.0;
         
         double lat1 = Math.toRadians(this.coordenada.getLatitud());
