@@ -38,12 +38,12 @@ vendedores.remove(0);
 
 // Crear un método main que cree 3 instancias de Clientes y agregarlos a un arreglo.
 
-Cliente c1 = new Cliente(1,01,"Lavaise 800", new Coordenada(1,1)),
-        c2 = new Cliente(2,02,"Lavaise 801", new Coordenada(1,2)),
-        c3 = new Cliente(3,03,"Lavaise 802", new Coordenada(2,1))
+Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1)),
+        c2 = new Cliente(2,02,"carlos@gmail.com","Lavaise 801", new Coordenada(1,2)),
+        c3 = new Cliente(3,03,"pancracio@gmail.com","Lavaise 802", new Coordenada(2,1))
         ;
 
-List<Cliente> clientes = new ArrayList<>(c1,c2,c3);
+List<Cliente> clientes = new ArrayList<>(Arrays.asList(c1,c2,c3));
 
 // Iterar sobre el arreglo para buscar Clientes por nombre o por id.
 
