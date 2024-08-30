@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package isi.deso.tpdeso2024;
-
+import java.util.List;
 
 /**
  *
@@ -60,6 +60,38 @@ public class Vendedor {
     public Coordenada getCoordenadas() {
         return coordenada;
     }
+    
+    public static Vendedor BuscadorVendedor(List<Vendedor> lista, String vendedor){
+        
+        for(Vendedor v: lista){
+            if(vendedor.equals(v.getNombre())){
+                return v;
+            }
+        }
+        return null;
+        
+    }
+    
+    public static Vendedor BuscadorVendedor(List<Vendedor> lista, Integer vendedor){
+        
+        for(Vendedor v: lista){
+            if(vendedor.equals(v.getId())){
+                return v;
+            }
+        }
+        return null;
+        
+    }
+    
+    public void mostrar(){
+        System.out.println("ID: "+this.getId());
+        System.out.println("Nombre: "+this.getNombre());
+        System.out.println("Direccion : "+this.getDireccion());
+        System.out.println("Coordenadas, longitud: "+this.getCoordenadas().getLongitud() + ", latitud:" + this.getCoordenadas().getLatitud());
+    }
+    
+    
+    
     
     public double distancia(Cliente c){
         

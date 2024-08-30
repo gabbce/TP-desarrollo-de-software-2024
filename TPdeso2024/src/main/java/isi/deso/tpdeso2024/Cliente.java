@@ -66,13 +66,33 @@ public class Cliente {
         this.coordenadas = coordenadas;
     }
     
-    public static Cliente PorNombre(List<Cliente> lista, String nombre){
+    //Es la funcion por nombre, pero como cliente no tiene nombre, lo hacemos por cuit
+    public static Cliente BuscadorClienteByCuit(List<Cliente> lista, Integer cuit){
         for(Cliente c: lista){
-            if(nombre.equals(c.nombre)){
+            if(cuit.equals(c.cuit)){
                 return c;
             }
         }
         return null;
     }
     
+    public static Cliente BuscadorClienteByID(List<Cliente> lista, Integer id){
+        for(Cliente c: lista){
+            if(id.equals(c.getId())){
+                return c;
+            }
+        }
+        return null;
+    }
+    
+    
+    public void mostrar(){
+        
+        System.out.println("ID: "+this.getId());
+        System.out.println("Cuit: "+this.getCuit());
+        System.out.println("Email: "+this.getEmail());
+        System.out.println("Direccion: "+this.getDireccion());
+        System.out.println("Coordenadas, longitud: "+this.getCoordenadas().getLongitud() + ", latitud:" + this.getCoordenadas().getLatitud());
+        
+    }
 }
