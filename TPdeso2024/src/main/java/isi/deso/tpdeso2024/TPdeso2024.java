@@ -60,7 +60,11 @@ public class TPdeso2024 {
         
         
         //Funcion distancia
-        System.out.println("Distancia entre " + vendedores.get(0).getNombre() + " y " + clientes.get(0)+":"+vendedores.get(0).distancia(clientes.get(0)));
+        System.out.println("Distancia entre " + 
+                vendedores.get(0).getNombre() + " y Cliente con ID = " + 
+                clientes.get(0).getId()+": "+
+                vendedores.get(0).distancia(clientes.get(0))+
+                " Kilometros");
         
         
     }
