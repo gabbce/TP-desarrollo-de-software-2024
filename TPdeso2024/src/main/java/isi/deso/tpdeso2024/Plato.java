@@ -13,8 +13,18 @@ package isi.deso.tpdeso2024;
 public class Plato extends ItemMenu {
     private float calorias;
     private boolean aptoCeliaco;
-    private boolean aptoVegetariano;
+    private boolean aptoVegano;
 
+   
+   public Plato(int id, String nombre, String descripcion, float precio,Categoria categoria, float calorias, boolean aptoCeliaco,boolean aptoVegano ){
+    
+        super(id,nombre,descripcion,precio,categoria);
+        this.calorias=calorias;
+        this.aptoCeliaco=aptoCeliaco;
+        this.aptoVegano=aptoVegano;
+        
+    } 
+    
     public float getCalorias() {
         return calorias;
     }
@@ -23,7 +33,7 @@ public class Plato extends ItemMenu {
         this.calorias = calorias;
     }
 
-    public boolean isAptoCeliaco() {
+    public boolean esAptoCeliaco() {
         return aptoCeliaco;
     }
 
@@ -31,11 +41,20 @@ public class Plato extends ItemMenu {
         this.aptoCeliaco = aptoCeliaco;
     }
 
-    public boolean isAptoVegetariano() {
-        return aptoVegetariano;
+    public boolean esVegano() {
+        return aptoVegano;
     }
 
-    public void setAptoVegetariano(boolean aptoVegetariano) {
-        this.aptoVegetariano = aptoVegetariano;
+    public void setAptoVegetariano(boolean aptoVegano) {
+        this.aptoVegano = aptoVegano;
     }
+    
+    public boolean esComida(){
+        return true;
+    }
+    
+    public boolean esBebida(){
+        return false;
+    }
+    
 }

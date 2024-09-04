@@ -14,8 +14,17 @@ public abstract class ItemMenu {
     private String descripcion;
     private float precio;
     private Categoria categoria;
+   
     public int getId() {
         return id;
+    }
+
+    public ItemMenu(int id, String nombre, String descripcion, float precio, Categoria categoria) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
     }
 
     public void setId(int id) {
@@ -53,5 +62,15 @@ public abstract class ItemMenu {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+    
+    public boolean esComida(){
+        return false;
+    }
+    
+    public boolean esBebida(){
+        return false;
+    }
+    
+     
     
 }
