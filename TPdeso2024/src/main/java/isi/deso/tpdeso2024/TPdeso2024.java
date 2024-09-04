@@ -11,8 +11,8 @@ import java.util.*;
  */
 public class TPdeso2024 {
 
-    public static void main(String[] args) {
-        //Crear las clases Cliente, Vendedor y Coordenada.
+    public static void main(String[] args) { 
+       //Crear las clases Cliente, Vendedor y Coordenada.
         
         //Crear un método main que cree 3 instancias de vendedores y agregarlos a un arreglo.
 
