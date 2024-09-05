@@ -70,7 +70,7 @@ public abstract class ItemMenu {
     public boolean esBebida(){
         return false;
     }
-    
+    public float peso(){return 0;}
     
      
     

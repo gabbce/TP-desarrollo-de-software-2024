@@ -11,19 +11,36 @@ package isi.deso.tpdeso2024;
 
 //supongo que Plato == Comida
 public class Plato extends ItemMenu {
+    private float peso;
     private float calorias;
     private boolean aptoCeliaco;
     private boolean aptoVegano;
 
-   
-   public Plato(int id, String nombre, String descripcion, float precio,Categoria categoria, float calorias, boolean aptoCeliaco,boolean aptoVegano ){
+    public Plato(float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, int id, String nombre, String descripcion, float precio, Categoria categoria) {
+        super(id, nombre, descripcion, precio, categoria);
+        this.peso = peso;
+        this.calorias = calorias;
+        this.aptoCeliaco = aptoCeliaco;
+        this.aptoVegano = aptoVegano;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+
+    public boolean isAptoVegano() {
+        return aptoVegano;
+    }
+
+    public void setAptoVegano(boolean aptoVegano) {
+        this.aptoVegano = aptoVegano;
+    }
     
-        super(id,nombre,descripcion,precio,categoria);
-        this.calorias=calorias;
-        this.aptoCeliaco=aptoCeliaco;
-        this.aptoVegano=aptoVegano;
-        
-    } 
+
     
     public float getCalorias() {
         return calorias;
@@ -56,5 +73,7 @@ public class Plato extends ItemMenu {
     public boolean esBebida(){
         return false;
     }
+    
+    public float peso(){return (float) (1.10 * this.peso);}
     
 }

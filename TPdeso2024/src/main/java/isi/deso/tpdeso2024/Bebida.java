@@ -13,6 +13,8 @@ public class Bebida extends ItemMenu{
     private float tam; //mililitros?
 
     
+    
+    
     public Bebida(int id, String nombre, String descripcion, float precio,Categoria categoria, float graduacionAlcoholica, float tam){
     
         super(id,nombre,descripcion,precio,categoria);
@@ -41,9 +43,15 @@ public class Bebida extends ItemMenu{
     }
     
     
+    
     public boolean esBebida(){
         return true;
     }
     
-    
+    public float peso(){
+     float multiplicador;
+     if(this.graduacionAlcoholica == 0) multiplicador = (float) 1.04; //gaseosa
+     else multiplicador = (float) 0.99;
+     return (float) (multiplicador * this.tam * 1.20);
+    }
 }
