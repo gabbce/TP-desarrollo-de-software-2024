@@ -63,14 +63,13 @@ public abstract class ItemMenu {
         this.categoria = categoria;
     }
     
-    public boolean esComida(){
-        return false;
-    }
+    abstract public boolean esComida();
     
-    public boolean esBebida(){
-        return false;
-    }
-    public float peso(){return 0;}
+    abstract public boolean esBebida();
+    
+    abstract public boolean aptoVegano();
+    
+    abstract public float peso();
     
      
     
