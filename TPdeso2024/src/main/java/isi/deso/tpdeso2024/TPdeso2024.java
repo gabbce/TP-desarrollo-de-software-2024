@@ -81,7 +81,7 @@ public class TPdeso2024 {
         
         System.out.println("Lista de ItemsMenu de v1:");
         for(ItemMenu item : listaItemsMenu){
-            System.out.println(item);
+            System.out.println(item.getNombre());
         }
         
         System.out.println("Lista de bebidas de v1:");
