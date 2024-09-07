@@ -75,10 +75,12 @@ public class TPdeso2024 {
         v1.agregarItemMenu(p1);
         v1.agregarItemMenu(b1);
         
-        System.out.println(v1.getItemsMenu());
+        List<ItemMenu> listaItemsMenu = v1.getItemsMenu();
         
-        System.out.println(v1.getBebidas());
-        System.out.println(v1.getComidas());
+        System.out.println("Lista de ItemsMenu de v1:");
+        for(ItemMenu item : listaItemsMenu){
+            System.out.println(item);
+        }
         
         
     }
