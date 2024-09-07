@@ -11,8 +11,6 @@ package isi.deso.tpdeso2024;
 public class Bebida extends ItemMenu{
     private float graduacionAlcoholica;
     private float tam; //mililitros?
-
-    
     
     
     public Bebida(int id, String nombre, String descripcion, float precio,Categoria categoria, float graduacionAlcoholica, float tam){
@@ -21,6 +19,8 @@ public class Bebida extends ItemMenu{
         this.graduacionAlcoholica=graduacionAlcoholica;
         this.tam=tam;
     }
+    
+    
     
     public float getGraduacionAlcoholica() {
         return graduacionAlcoholica;
@@ -42,16 +42,18 @@ public class Bebida extends ItemMenu{
         return false;
     }
     
-    
-    
     public boolean esBebida(){
         return true;
     }
     
+    public boolean aptoVegano(){
+        return true; //revisar. hacerlo atributo en itemMenu?
+    }
+    
     public float peso(){
      float multiplicador;
-     if(this.graduacionAlcoholica == 0) multiplicador = (float) 1.04; //gaseosa
-     else multiplicador = (float) 0.99;
+     if(this.graduacionAlcoholica == 0) multiplicador = 1.04f; //gaseosa
+     else multiplicador = 0.99f; //alcohol
      return (float) (multiplicador * this.tam * 1.20);
     }
 }

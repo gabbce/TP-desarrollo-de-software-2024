@@ -16,7 +16,7 @@ public class Plato extends ItemMenu {
     private boolean aptoCeliaco;
     private boolean aptoVegano;
 
-    public Plato(float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, int id, String nombre, String descripcion, float precio, Categoria categoria) {
+    public Plato(int id,float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, String nombre, String descripcion, float precio, Categoria categoria) {
         super(id, nombre, descripcion, precio, categoria);
         this.peso = peso;
         this.calorias = calorias;
@@ -32,15 +32,9 @@ public class Plato extends ItemMenu {
         this.peso = peso;
     }
 
-    public boolean isAptoVegano() {
-        return aptoVegano;
-    }
-
     public void setAptoVegano(boolean aptoVegano) {
         this.aptoVegano = aptoVegano;
     }
-    
-
     
     public float getCalorias() {
         return calorias;
@@ -50,20 +44,8 @@ public class Plato extends ItemMenu {
         this.calorias = calorias;
     }
 
-    public boolean esAptoCeliaco() {
-        return aptoCeliaco;
-    }
-
     public void setAptoCeliaco(boolean aptoCeliaco) {
         this.aptoCeliaco = aptoCeliaco;
-    }
-
-    public boolean esVegano() {
-        return aptoVegano;
-    }
-
-    public void setAptoVegetariano(boolean aptoVegano) {
-        this.aptoVegano = aptoVegano;
     }
     
     public boolean esComida(){
@@ -72,6 +54,14 @@ public class Plato extends ItemMenu {
     
     public boolean esBebida(){
         return false;
+    }
+    
+    public boolean aptoVegano() {
+        return aptoVegano;
+    }
+    
+    public boolean aptoCeliaco() {
+        return aptoCeliaco;
     }
     
     public float peso(){return (float) (1.10 * this.peso);}

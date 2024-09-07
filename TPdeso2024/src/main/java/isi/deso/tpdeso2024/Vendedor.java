@@ -127,7 +127,7 @@ public class Vendedor {
     public List<Plato> getComidasVeganas() {
         List<Plato> comidasVeganas = new ArrayList<>();
         for (ItemMenu item : itemsMenu) {
-            if (item instanceof Plato && ((Plato) item).esVegano()) {
+            if (item instanceof Plato && ((Plato) item).aptoVegano()) {
                 comidasVeganas.add((Plato) item);
             }
         }
