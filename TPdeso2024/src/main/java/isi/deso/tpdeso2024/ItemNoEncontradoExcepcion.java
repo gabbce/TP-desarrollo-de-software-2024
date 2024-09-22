@@ -9,8 +9,8 @@ package isi.deso.tpdeso2024;
  * @author augus
  */
 public class ItemNoEncontradoExcepcion extends Exception{
-    public ItemNoEncontradoExcepcion(){
-    super();
-    //System.out.println("Item no encontrado"); //mensaje a consola
+    public ItemNoEncontradoExcepcion(String mensaje){
+    super(mensaje);
+    
     }
 }

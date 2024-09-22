@@ -13,9 +13,9 @@ public class Bebida extends ItemMenu{
     private float tam; //mililitros?
     
     
-    public Bebida(int id, String nombre, String descripcion, float precio,Categoria categoria, float graduacionAlcoholica, float tam){
+    public Bebida(int id, String nombre, String descripcion, float precio, Categoria categoria, float graduacionAlcoholica, float tam, Vendedor vendedor){
     
-        super(id,nombre,descripcion,precio,categoria);
+        super(id,nombre,descripcion,precio,categoria,vendedor);
         this.graduacionAlcoholica=graduacionAlcoholica;
         this.tam=tam;
     }

@@ -67,8 +67,8 @@ public class TPdeso2024 {
                 vendedores.get(0).distancia(clientes.get(0))+
                 " Kilometros");
         
-        Bebida b1= new Bebida(11,"Coca Cola","Rica", 2500.00F,new Categoria(101,"Zarpada","Bebida"), 0.0F, 1500.0F);
-        Plato p1 = new Plato(1,124f,3000f,false,true,"Pizza rica","Pizza con piña",17999f,new Categoria(10, "Pizza", "Comida"));
+        Bebida b1= new Bebida(11,"Coca Cola","Rica", 2500.00F,new Categoria(101,"Zarpada","Bebida"), 0.0F, 1500.0F, v1);
+        Plato p1 = new Plato(1,124f,3000f,false,true,"Pizza rica","Pizza con piña",17999f,new Categoria(10, "Pizza", "Comida"), v1);
         System.out.println(b1.getNombre()+" - es Bebida?: "+b1.esBebida()+" - es Plato?: "+b1.esComida());
         System.out.println(p1.getNombre()+" - es Bebida?: "+p1.esBebida()+" - es Plato?: "+p1.esComida());
         

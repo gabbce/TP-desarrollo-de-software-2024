@@ -14,12 +14,9 @@ public abstract class ItemMenu {
     private String descripcion;
     private float precio;
     private Categoria categoria;
-   
-    public int getId() {
-        return id;
-    }
-
-    public ItemMenu(int id, String nombre, String descripcion, float precio, Categoria categoria) {
+    private Vendedor vendedor;
+    
+    public ItemMenu(int id, String nombre, String descripcion, float precio, Categoria categoria, Vendedor vendedor) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -27,6 +24,19 @@ public abstract class ItemMenu {
         this.categoria = categoria;
     }
 
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+   
+    public int getId() {
+        return id;
+    }
+
+   
     public void setId(int id) {
         this.id = id;
     }

@@ -4,7 +4,7 @@
  */
 package isi.deso.tpdeso2024;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public interface ItemsPedidoDao {
 
-    public ArrayList<ItemMenu> Filtrado()throws ItemNoEncontradoExcepcion;
-    public ArrayList<ItemMenu> OrdenarPorCriterios()throws ItemNoEncontradoExcepcion;
-    public ArrayList<ItemMenu> BuscarPorRangoDePrecios()throws ItemNoEncontradoExcepcion;
-    public ArrayList<ItemMenu> BuscarPorRestaurante()throws ItemNoEncontradoExcepcion;
+    public ArrayList<ItemMenu> Filtrado(String criterio, String valor)throws ItemNoEncontradoExcepcion;
+    public ArrayList<ItemMenu> OrdenarPorCriterios(Comparator<ItemMenu> criterio)throws ItemNoEncontradoExcepcion;
+    public ArrayList<ItemMenu> BuscarPorRangoDePrecios(float precioMin, float precioMax)throws ItemNoEncontradoExcepcion;
+    public ArrayList<ItemMenu> BuscarPorRestaurante(int idVendedor)throws ItemNoEncontradoExcepcion;
 }
