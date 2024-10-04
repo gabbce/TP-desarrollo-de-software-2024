@@ -8,6 +8,6 @@ package isi.deso.tpdeso2024;
  *
  * @author Usuario
  */
-public class Pago {
+public abstract class Pago {
     
 }
