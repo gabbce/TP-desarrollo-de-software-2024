@@ -4,7 +4,10 @@
  */
 package isi.deso.tpdeso2024;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -83,6 +86,60 @@ public class Cliente {
             }
         }
         return null;
+    }
+    
+    
+    public void crearPedido(ArrayList<ItemMenu> listaItems) throws IOException{ //el argumento seria el carro de compra 
+        if(listaItems.isEmpty()){
+            System.out.println("Error: lista vacia");
+            return;
+        }
+        //deben ser todos del mismo vendedor
+        Vendedor vend = listaItems.get(0).getVendedor();
+        for(ItemMenu it:listaItems)if(it.getVendedor().getId() != vend.getId()){
+            System.out.println("Error: los items deben ser del mismo vendedor");
+            return;
+        }
+        
+        float precioTotal = 0;
+        for(ItemMenu it:listaItems)precioTotal+=it.getPrecio();
+        
+        System.out.println("Elija la forma de pago");
+     
+        /*
+        creamos ambos objetos
+        para mostrar opciones, .precio() de cada uno
+        
+        */
+        
+        PagoMercadoPago pMP = new PagoMercadoPago(); 
+        PagoTransferencia pTr = new PagoTransferencia(); 
+        
+        float precioMP,precioTransferencia;
+        precioMP  = pMP.precioFinal(precioTotal);
+        precioTransferencia = pTr.precioFinal(precioTotal);
+        
+        System.out.println("1 - MercadoPago. Precio: "+precioMP);
+        System.out.println("2 - Transferencia. Precio: "+precioTransferencia);
+        Scanner scan = new Scanner(System.in);
+        int formaDePago = scan.nextInt();
+        while(formaDePago<1 || formaDePago>2){
+            System.out.println("Elija una opcion valida");
+            formaDePago = scan.nextInt();
+            }
+        
+        
+        Pago pagoSeleccionado = pMP; //A netbeans no le gusta que no inicialice 
+        switch (formaDePago){
+            case 1 -> pagoSeleccionado = pMP;
+            case 2 -> pagoSeleccionado = pTr;
+        }
+        pagoSeleccionado.tomarDatos();
+        Pedido p = new Pedido(new PedidoDetalle(listaItems),
+        pagoSeleccionado
+        );
+        p.setEstado(EstadoPedido.RECIBIDO);
+        //aca tendria que ir a DB
     }
     
     

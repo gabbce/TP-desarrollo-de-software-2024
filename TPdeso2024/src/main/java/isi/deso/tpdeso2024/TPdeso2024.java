@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.util.*;
 /**
  *
@@ -12,8 +13,8 @@ import java.util.*;
  */
 public class TPdeso2024 {
 
-    public static void main(String[] args) { 
-       //Crear las clases Cliente, Vendedor y Coordenada.
+    public static void main(String[] args) throws IOException { 
+       /*//Crear las clases Cliente, Vendedor y Coordenada.
         
         //Crear un método main que cree 3 instancias de vendedores y agregarlos a un arreglo.
 
@@ -93,7 +94,19 @@ public class TPdeso2024 {
         for(Plato comida: listaComidas){
             System.out.println(comida.getNombre());
         }
-        
+        */
+       
+       Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1));
+       Vendedor v1 = new Vendedor(1,"Agustin","Lavaise 800", new Coordenada(1,1));
+       Bebida b = new Bebida(1,"Coca","una coca", (float)1.05,
+               new Categoria(1,"las gaseosas","gaseosas"),0,(float)1.0,v1);
+     // public Bebida(int id, String nombre, String descripcion, float precio, 
+     //Categoria categoria, float graduacionAlcoholica, float tam, Vendedor vendedor){
+    
+       ArrayList<ItemMenu> listaItems = new ArrayList<>();
+       listaItems.add(b);
+       
+       c1.crearPedido(listaItems);
     }
     
     

@@ -8,6 +8,10 @@ package isi.deso.tpdeso2024;
  *
  * @author Usuario
  */
-public abstract class Pago {
-    
+public interface Pago{
+    //Pago strategy
+    public float precioFinal(float precioTotal);
+    public void tomarDatos();
+
+    public PagoType getStrategyType();
 }

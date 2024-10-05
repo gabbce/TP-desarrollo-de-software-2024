@@ -22,6 +22,7 @@ public abstract class ItemMenu {
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
+        this.vendedor = vendedor;
     }
 
     public Vendedor getVendedor() {

@@ -11,10 +11,20 @@ package isi.deso.tpdeso2024;
 public class Pedido {
     private PedidoDetalle detalle;
     private Pago pago;
+    private EstadoPedido estado;
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
 
     public Pedido(PedidoDetalle detalle, Pago pago) {
         this.detalle = detalle;
         this.pago = pago;
+        this.estado = EstadoPedido.NO_RECIBIDO;
     }
 
     public PedidoDetalle getDetalle() {
