@@ -12,6 +12,8 @@ import java.util.Set;
  *
  * @author augus
  */
+
+// NO LO USAMOS POR AHORA
 public class PagoStrategyFactory {
     private Map<PagoType,Pago> strategies = new HashMap<>();
     
@@ -20,7 +22,11 @@ public class PagoStrategyFactory {
     public void createStrategy(Set<Pago> sp){
     for(Pago p:sp){
         strategies.put(p.getStrategyType(),p);
+        }
     }
     
+    public Pago findPago(PagoType tipo){
+        return strategies.get(tipo);
     }
+ 
 }

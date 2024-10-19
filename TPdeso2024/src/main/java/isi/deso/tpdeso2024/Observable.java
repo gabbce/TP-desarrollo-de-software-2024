@@ -8,6 +8,10 @@ package isi.deso.tpdeso2024;
  *
  * @author exero
  */
-interface Observer {
-    void update();
+public interface Observable {
+    //public void addObserver(ObserverPedido observer);
+    //public boolean removeObserver(ObserverPedido observer);
+    public void setChanged();
+    public void clearChanged();
+    public void notifyObservers();
 }

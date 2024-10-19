@@ -4,14 +4,10 @@
  */
 package isi.deso.tpdeso2024;
 
-import java.util.ArrayList;
-import java.util.List;
 /**
  *
  * @author exero
  */
-interface Subject {
-    void attach(Observer observer);
-    void detach(Observer observer);
-    void notifyObservers();
+interface ObserverPedido {
+    void update(Pedido pedido);
 }

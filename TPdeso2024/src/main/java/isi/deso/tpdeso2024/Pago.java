@@ -4,12 +4,16 @@
  */
 package isi.deso.tpdeso2024;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Usuario
  */
 public interface Pago{
     //Pago strategy
+    public void setFechaPago(LocalDateTime fecha);
+    public LocalDateTime getFechaPago();
     public float precioFinal(float precioTotal);
     public void tomarDatos();
 

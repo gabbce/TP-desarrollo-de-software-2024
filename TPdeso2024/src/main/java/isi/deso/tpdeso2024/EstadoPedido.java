@@ -9,6 +9,8 @@ package isi.deso.tpdeso2024;
  * @author augus
  */
 public enum EstadoPedido {
-    RECIBIDO,
-    NO_RECIBIDO
+    PENDIENTE,// no lo recibio el vendedor
+    RECIBIDO, // el vendedor lo recibio
+    EN_ENVIO, // el vendedor envio el pedido, se crea un pago
+    RECIBIDO_CLIENTE
 }

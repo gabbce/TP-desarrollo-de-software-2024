@@ -6,6 +6,7 @@ package isi.deso.tpdeso2024;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 /**
  *
@@ -98,15 +99,26 @@ public class TPdeso2024 {
        
        Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1));
        Vendedor v1 = new Vendedor(1,"Agustin","Lavaise 800", new Coordenada(1,1));
-       Bebida b = new Bebida(1,"Coca","una coca", (float)1.05,
+       Bebida b1 = new Bebida(1,"Coca","una coca", (float)1.05,
                new Categoria(1,"las gaseosas","gaseosas"),0,(float)1.0,v1);
      // public Bebida(int id, String nombre, String descripcion, float precio, 
      //Categoria categoria, float graduacionAlcoholica, float tam, Vendedor vendedor){
     
        ArrayList<ItemMenu> listaItems = new ArrayList<>();
-       listaItems.add(b);
+       listaItems.add(b1);
        
-       c1.crearPedido(listaItems);
+       Pedido p1 = c1.crearPedido(listaItems); // god
+       
+       List<Pedido> listaPedidos = new ArrayList<>();
+       listaPedidos.add(p1);
+       
+       List<Pedido> pedidosRecibidos = v1.FiltrarPedidosPorEstado(listaPedidos, EstadoPedido.RECIBIDO);
+       
+       System.out.println("cantidad de pedidos recibidos: " + pedidosRecibidos.size());
+       
+       pedidosRecibidos.get(0).setEstado(EstadoPedido.EN_ENVIO);
+       
+       System.out.println("Fecha de pago del pedido: " + pedidosRecibidos.get(0).getPago().getFechaPago().format(DateTimeFormatter.ISO_DATE));
     }
     
     

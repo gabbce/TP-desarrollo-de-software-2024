@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 /**
  *
  * @author gabic
  */
-public class Cliente {
+public class Cliente implements ObserverPedido{
     private int id;
     private int cuit;
     private String email;
@@ -89,16 +90,16 @@ public class Cliente {
     }
     
     
-    public void crearPedido(ArrayList<ItemMenu> listaItems) throws IOException{ //el argumento seria el carro de compra 
+    public Pedido crearPedido(ArrayList<ItemMenu> listaItems) throws IOException{ //el argumento seria el carro de compra 
         if(listaItems.isEmpty()){
             System.out.println("Error: lista vacia");
-            return;
+            return null;
         }
         //deben ser todos del mismo vendedor
         Vendedor vend = listaItems.get(0).getVendedor();
         for(ItemMenu it:listaItems)if(it.getVendedor().getId() != vend.getId()){
             System.out.println("Error: los items deben ser del mismo vendedor");
-            return;
+            return null;
         }
         
         float precioTotal = 0;
@@ -134,14 +135,24 @@ public class Cliente {
             case 1 -> pagoSeleccionado = pMP;
             case 2 -> pagoSeleccionado = pTr;
         }
+        
         pagoSeleccionado.tomarDatos();
-        Pedido p = new Pedido(new PedidoDetalle(listaItems),
-        pagoSeleccionado
-        );
+        Pedido p = new Pedido(new PedidoDetalle(listaItems), pagoSeleccionado, this);
+        
         p.setEstado(EstadoPedido.RECIBIDO);
         //aca tendria que ir a DB
+        
+        return p;
     }
     
+    @Override
+    public void update(Pedido pedido){
+        if(pedido.getEstado().equals(EstadoPedido.EN_ENVIO)){
+            
+            pedido.getPago().setFechaPago(LocalDateTime.now());
+        }
+        System.out.println("El pedido ha cambiado al estado " + pedido.getEstado());
+    }
     
     public void mostrar(){
         

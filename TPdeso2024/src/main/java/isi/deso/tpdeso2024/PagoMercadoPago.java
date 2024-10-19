@@ -4,6 +4,7 @@
  */
 package isi.deso.tpdeso2024;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -12,6 +13,17 @@ import java.util.Scanner;
  */
 public class PagoMercadoPago implements Pago{
     private String alias;
+    private LocalDateTime fechaPago;
+
+    @Override
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
+    }
+
+    @Override
+    public void setFechaPago(LocalDateTime fecha) {
+        this.fechaPago = fecha;
+    }
 
     public String getAlias() {
         return alias;

@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -167,6 +168,15 @@ public class Vendedor {
         
         return radioTierra*arc;
         
+    }
+    
+    public List<Pedido> FiltrarPedidosPorEstado(List<Pedido> lista, EstadoPedido estado){
+        List<Pedido> resultados = lista.stream()
+            .filter(item -> item.getDetalle().getItems().get(0).getVendedor() == this)
+            .filter(item -> item.getEstado().equals(estado))
+            .collect(Collectors.toList());
+        
+        return resultados;
     }
     
 }
