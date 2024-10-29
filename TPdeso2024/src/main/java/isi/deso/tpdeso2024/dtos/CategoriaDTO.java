@@ -12,4 +12,11 @@ public class CategoriaDTO {
     int id;
     String descripcion;
     String tipo;
+
+    public CategoriaDTO(int id, String descripcion, String tipo) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+    }
+
 }

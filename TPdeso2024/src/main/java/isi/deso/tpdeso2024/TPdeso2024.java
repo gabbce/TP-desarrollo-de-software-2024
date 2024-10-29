@@ -4,10 +4,15 @@
 
 package isi.deso.tpdeso2024;
 
-import java.awt.BorderLayout;
+import isi.deso.tpdeso2024.controllers.*;
+import isi.deso.tpdeso2024.dtos.*;
+import isi.deso.tpdeso2024.utils.ModeloTabla;
+
+
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import javax.swing.JFrame;
 /**
  *
  * @author gabic
@@ -99,6 +104,8 @@ public class TPdeso2024 {
        
        Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1));
        Vendedor v1 = new Vendedor(1,"Agustin","Lavaise 800", new Coordenada(1,1));
+       Vendedor v2 = new Vendedor(2,"Agustin","Lavaise 800", new Coordenada(1,1));
+       Vendedor v3 = new Vendedor(3,"Agustin","Lavaise 800", new Coordenada(1,1));
        Bebida b1 = new Bebida(1,"Coca","una coca", (float)1.05,
                new Categoria(1,"las gaseosas","gaseosas"),0,(float)1.0,v1);
      // public Bebida(int id, String nombre, String descripcion, float precio, 
@@ -114,11 +121,20 @@ public class TPdeso2024 {
        
        List<Pedido> pedidosRecibidos = v1.FiltrarPedidosPorEstado(listaPedidos, EstadoPedido.RECIBIDO);
        
-       System.out.println("cantidad de pedidos recibidos: " + pedidosRecibidos.size());
+       /*System.out.println("cantidad de pedidos recibidos: " + pedidosRecibidos.size());
        
        pedidosRecibidos.get(0).setEstado(EstadoPedido.EN_ENVIO);
        
-       System.out.println("Fecha de pago del pedido: " + pedidosRecibidos.get(0).getPago().getFechaPago().format(DateTimeFormatter.ISO_DATE));
+       System.out.println("Fecha de pago del pedido: " + pedidosRecibidos.get(0).getPago().getFechaPago().format(DateTimeFormatter.ISO_DATE));*/
+       
+        VendedorInterface miVentana = new VendedorInterface();
+        miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        miVentana.setVisible(true);
+        ModeloTabla model = new ModeloTabla(new VendedorController());
+        
+        model.setNombreColumnas(Arrays.asList("Nombre", "Direccion", "Latitud", "Longitud", "Acciones"));
+        miVentana.setModel(model);
+     
     }
     
     

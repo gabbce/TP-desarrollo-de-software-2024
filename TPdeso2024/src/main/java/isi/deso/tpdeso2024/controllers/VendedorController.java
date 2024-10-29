@@ -9,6 +9,7 @@ import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Vendedor;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
 import isi.deso.tpdeso2024.daos.VendedorDAO;
+import isi.deso.tpdeso2024.dtos.CategoriaDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.VendedorDTO;
@@ -59,7 +60,7 @@ listaItems
     it.getNombre(),
     it.getDescripcion(),
     it.getPrecio(),
-    it.getCategoria(),
+    new CategoriaDTO(it.getCategoria().getId(), it.getCategoria().getDescripcion(), it.getCategoria().getTipo()),
             null
     );
     

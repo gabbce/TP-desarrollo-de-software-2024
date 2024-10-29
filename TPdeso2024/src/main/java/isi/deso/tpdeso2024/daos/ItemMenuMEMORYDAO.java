@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @author augus
  */
 
-public class ItemMenuMEMORYDAO implements ItemMenuDao {
+public class ItemMenuMEMORYDAO implements ItemMenuDAO {
 
     private List<ItemMenu> itemsPedido;
 

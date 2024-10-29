@@ -13,10 +13,12 @@ public class MEMORYFactoryDAO extends FactoryDAO{
     @Override
     public VendedorDAO getVendedorDAO() {return new VendedorMEMORYDAO();}
     @Override
-    public ClienteDAO getClienteDAO() {return new ClienteMEMORYDAO();}
+    public ClienteDAO getClienteDAO() {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*return new ClienteMEMORYDAO();*/}
     @Override
-    public ItemMenuDAO getItemMenuDAO() {return new ItemMenuMEMORYDAO();}
+    public ItemMenuDAO getItemMenuDAO() {throw new UnsupportedOperationException("Not supported yet."); /*return new ItemMenuMEMORYDAO();*/}
     @Override
-    public PedidoDAO getPedidoDAO() {return new PedidoMEMORYDAO();}
+    public PedidoDAO getPedidoDAO() {throw new UnsupportedOperationException("Not supported yet."); /*return new PedidoMEMORYDAO*/ }
     
 }

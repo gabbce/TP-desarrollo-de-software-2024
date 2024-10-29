@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Vendedor;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +16,8 @@ public class VendedorMEMORYDAO implements VendedorDAO {
 
     private List<Vendedor> vendedores;
     // Constructor para inicializar la lista
-    public VendedorMEMORYDAO(List<Vendedor> vend) {
-        this.vendedores = vend;
+    public VendedorMEMORYDAO() {
+        this.vendedores = new ArrayList();
     }
 
     @Override

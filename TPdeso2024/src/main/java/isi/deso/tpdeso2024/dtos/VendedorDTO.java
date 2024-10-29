@@ -19,6 +19,14 @@ public class VendedorDTO {
         this.coordenada = coordenada;
         this.itemsMenu = itemsMenu;
     }
+    
+    public VendedorDTO(String nombre, String direccion, CoordenadaDTO coordenada) {
+        //this.id = 0;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.coordenada = coordenada;
+        this.itemsMenu = null;
+    }
 
     public int getId() {
         return id;

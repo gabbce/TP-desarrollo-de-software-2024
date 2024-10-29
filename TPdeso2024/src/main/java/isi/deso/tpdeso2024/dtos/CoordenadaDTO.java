@@ -10,8 +10,30 @@ package isi.deso.tpdeso2024.dtos;
  */
 public class CoordenadaDTO {
 
-    public CoordenadaDTO(double longitud1, double latitud1) {
-    }
+    
     private double longitud;
     private double latitud;
+
+    public CoordenadaDTO(double longitud, double latitud) {
+        this.longitud = longitud;
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+    
+    
 }
