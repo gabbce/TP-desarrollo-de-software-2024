@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Vendedor;
+import java.util.List;
 
 /**
  *
@@ -12,7 +13,10 @@ import isi.deso.tpdeso2024.Vendedor;
  */
 public class VendedorMEMORYDAO implements VendedorDAO {
 
-    public VendedorMEMORYDAO() {
+    private List<Vendedor> vendedores;
+    // Constructor para inicializar la lista
+    public VendedorMEMORYDAO(List<Vendedor> vend) {
+        this.vendedores = vend;
     }
 
     @Override
@@ -33,6 +37,11 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     @Override
     public boolean read(Vendedor v) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Vendedor> listar() {
+        return this.vendedores;
     }
     
 }
