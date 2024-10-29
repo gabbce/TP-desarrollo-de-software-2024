@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024;
+package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.ItemNoEncontradoExcepcion;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,12 +14,12 @@ import java.util.stream.Collectors;
  * @author augus
  */
 
-public class ItemsPedidoMemory implements ItemsPedidoDao {
+public class ItemMenuMEMORYDAO implements ItemMenuDao {
 
     private List<ItemMenu> itemsPedido;
 
     // Constructor para inicializar la lista
-    public ItemsPedidoMemory(List<ItemMenu> itemsPedido) {
+    public ItemMenuMEMORYDAO(List<ItemMenu> itemsPedido) {
         this.itemsPedido = itemsPedido;
     }
 

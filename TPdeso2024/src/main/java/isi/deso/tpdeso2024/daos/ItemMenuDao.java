@@ -2,15 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024;
+package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.ItemNoEncontradoExcepcion;
 import java.util.*;
 
 /**
  *
  * @author augus
  */
-public interface ItemsPedidoDao {
+public interface ItemMenuDAO {
 
     public ArrayList<ItemMenu> Filtrado(String criterio, String valor)throws ItemNoEncontradoExcepcion;
     public ArrayList<ItemMenu> OrdenarPorCriterios(Comparator<ItemMenu> criterio)throws ItemNoEncontradoExcepcion;
