@@ -432,7 +432,7 @@ public class VendedorInterface extends javax.swing.JFrame {
             System.out.println(e.getMessage());
        }
        
-       
+       modal_crear_vendedor.dispose();
        
     }//GEN-LAST:event_boton_confirmar_crear_vendedorActionPerformed
 
