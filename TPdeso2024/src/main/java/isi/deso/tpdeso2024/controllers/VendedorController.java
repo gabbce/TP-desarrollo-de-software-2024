@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024.controllers;
 
 
+import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Vendedor;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
@@ -33,6 +34,34 @@ public class VendedorController {
         for(Vendedor v:lista) resultado.add(this.convertirADTO(v));
         
         return resultado;
+    }
+    
+    public void crear(VendedorDTO vdto){
+        //crear el objeto y mandarlo a db
+        Vendedor v = new Vendedor(
+       0, //implementar identity increment en dao
+                vdto.getNombre(),
+                vdto.getDireccion(),
+                new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud()) //deberia buscar entre las coordenadas existentes, si ya existe
+        );
+        //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
+        
+        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+        dao.create(v);
+    }
+    
+    public void eliminar(int id){
+        
+    
+    }
+    
+    public List<VendedorDTO> buscarPorNombre(String nombre){
+    
+    }
+    
+    public void actualizar(VendedorDTO vdto){
+    
+    
     }
     
     private VendedorDTO convertirADTO(Vendedor v){

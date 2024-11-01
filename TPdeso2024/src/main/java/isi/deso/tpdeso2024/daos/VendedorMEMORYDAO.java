@@ -15,14 +15,19 @@ import java.util.List;
 public class VendedorMEMORYDAO implements VendedorDAO {
 
     private List<Vendedor> vendedores;
+    private int ultimaID; //se auto incrementa
     // Constructor para inicializar la lista
     public VendedorMEMORYDAO() {
         this.vendedores = new ArrayList();
+        ultimaID = 1; 
     }
 
     @Override
     public boolean create(Vendedor v) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        v.setId(ultimaID);
+        ultimaID++;
+        vendedores.add(v);
+        return true;
     }
 
     @Override
