@@ -130,6 +130,7 @@ public class TPdeso2024 {
         VendedorInterface miVentana = new VendedorInterface();
         miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         miVentana.setVisible(true);
+       
         ModeloTabla model = new ModeloTabla(new VendedorController());
         
         model.setNombreColumnas(Arrays.asList("Nombre", "Direccion", "Latitud", "Longitud", "Acciones"));
