@@ -111,7 +111,7 @@ public class TPdeso2024 {
      // public Bebida(int id, String nombre, String descripcion, float precio, 
      //Categoria categoria, float graduacionAlcoholica, float tam, Vendedor vendedor){
     
-       ArrayList<ItemMenu> listaItems = new ArrayList<>();
+      /* ArrayList<ItemMenu> listaItems = new ArrayList<>();
        listaItems.add(b1);
        
        Pedido p1 = c1.crearPedido(listaItems); // god
@@ -119,7 +119,7 @@ public class TPdeso2024 {
        List<Pedido> listaPedidos = new ArrayList<>();
        listaPedidos.add(p1);
        
-       List<Pedido> pedidosRecibidos = v1.FiltrarPedidosPorEstado(listaPedidos, EstadoPedido.RECIBIDO);
+       List<Pedido> pedidosRecibidos = v1.FiltrarPedidosPorEstado(listaPedidos, EstadoPedido.RECIBIDO);*/
        
        /*System.out.println("cantidad de pedidos recibidos: " + pedidosRecibidos.size());
        
@@ -130,11 +130,6 @@ public class TPdeso2024 {
         VendedorInterface miVentana = new VendedorInterface();
         miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         miVentana.setVisible(true);
-       
-        ModeloTabla model = new ModeloTabla(new VendedorController());
-        
-        model.setNombreColumnas(Arrays.asList("Nombre", "Direccion", "Latitud", "Longitud", "Acciones"));
-        miVentana.setModel(model);
      
     }
     

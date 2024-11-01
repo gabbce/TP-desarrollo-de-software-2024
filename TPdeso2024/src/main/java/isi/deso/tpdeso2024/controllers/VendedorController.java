@@ -44,6 +44,11 @@ public class VendedorController {
         for(Vendedor v:lista) resultado.add(this.convertirADTO(v));
         
         return resultado;
+        
+        /*List<VendedorDTO> listaVendedores = new ArrayList<>();
+        listaVendedores.add( new VendedorDTO("Agustin","Lavaise 800", new CoordenadaDTO(1,1)));
+        
+        return listaVendedores;*/
     }
     
     public void crear(VendedorDTO vdto){

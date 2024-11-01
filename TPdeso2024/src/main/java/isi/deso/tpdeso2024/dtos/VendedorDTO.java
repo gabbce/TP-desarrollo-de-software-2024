@@ -20,6 +20,13 @@ public class VendedorDTO {
         this.itemsMenu = itemsMenu;
     }
     
+    public VendedorDTO(int id, String nombre, String direccion, CoordenadaDTO coordenada) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.coordenada = coordenada;
+    }
+    
     public VendedorDTO(String nombre, String direccion, CoordenadaDTO coordenada) {
         //this.id = 0;
         this.nombre = nombre;
