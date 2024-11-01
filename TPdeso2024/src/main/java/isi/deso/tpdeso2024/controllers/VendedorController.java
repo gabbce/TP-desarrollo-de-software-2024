@@ -23,6 +23,16 @@ import java.util.*;
 public class VendedorController {
     //metodos  listar, buscar, crear, eliminar, actualizar
     
+
+//singleton
+    private static VendedorController instance;
+    public static VendedorController getInstance(){
+        if(VendedorController.instance == null)VendedorController.instance =  new VendedorController();
+        return VendedorController.instance;
+    }
+    private VendedorController(){}
+    
+    
     
     public List<VendedorDTO> listar(){
         VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
