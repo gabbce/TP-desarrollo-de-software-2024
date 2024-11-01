@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Vendedor;
+import isi.deso.tpdeso2024.dtos.VendedorDTO;
 import java.util.List;
 
 /**
@@ -13,9 +14,8 @@ import java.util.List;
  */
 public interface VendedorDAO {
     public boolean create(Vendedor v);
-    public boolean delete(Vendedor v);
-    public boolean update(Vendedor v);
-    public boolean read (Vendedor v);
-
+    public boolean delete(int id);
+    public boolean actualizar(VendedorDTO vdto);
     public List<Vendedor> listar();
+    public List<Vendedor> buscar(String nombre);
 }

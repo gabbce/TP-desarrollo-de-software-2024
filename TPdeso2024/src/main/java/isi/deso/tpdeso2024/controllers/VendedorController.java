@@ -39,7 +39,7 @@ public class VendedorController {
     public void crear(VendedorDTO vdto){
         //crear el objeto y mandarlo a db
         Vendedor v = new Vendedor(
-       0, //implementar identity increment en dao
+       0, //implementado identity increment en dao
                 vdto.getNombre(),
                 vdto.getDireccion(),
                 new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud()) //deberia buscar entre las coordenadas existentes, si ya existe
@@ -51,17 +51,27 @@ public class VendedorController {
     }
     
     public void eliminar(int id){
-        
+        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+        dao.delete(id);
     
     }
     
-    public List<VendedorDTO> buscarPorNombre(String nombre){
+    public List<VendedorDTO> buscar(String nombre){
     
+        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+        
+        List<Vendedor> l = dao.buscar(nombre);
+        
+        List<VendedorDTO> resultado = new ArrayList<>();
+        for(Vendedor v: l)resultado.add(convertirADTO(v));
+        
+        return resultado;
     }
     
     public void actualizar(VendedorDTO vdto){
-    
-    
+        //buscar el id del dto y actualizar con los otros datos
+        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+        dao.actualizar(vdto);
     }
     
     private VendedorDTO convertirADTO(Vendedor v){
