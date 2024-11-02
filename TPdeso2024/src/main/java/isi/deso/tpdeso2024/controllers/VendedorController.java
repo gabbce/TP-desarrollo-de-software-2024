@@ -46,12 +46,11 @@ public class VendedorController {
                 vdto.getDireccion(),
                  c
         );
-        System.out.println(v.getNombre());
         //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
         
         
         
-        this.dao.create(v);
+        this.dao.crear(v);
     }
     public List<VendedorDTO> listar(){
         
@@ -73,15 +72,15 @@ public class VendedorController {
     
     public void eliminar(int id){
         
-        this.dao.delete(id);
+        this.dao.eliminar(id);
     
     }
     
-    public List<VendedorDTO> buscar(String nombre){
-    
+    public List<VendedorDTO> buscar(String nombreSubstring){
+        //nombre es substring de nombre. Ignore case
         
         
-        List<Vendedor> l = this.dao.buscar(nombre);
+        List<Vendedor> l = this.dao.buscar(nombreSubstring);
         
         List<VendedorDTO> resultado = new ArrayList<>();
         for(Vendedor v: l)resultado.add(convertirADTO(v));
