@@ -32,6 +32,9 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private final VendedorController vendedorController;
     private CardLayout cardLayout;
     
+    private ButtonGroup tipo_pago_group;
+    
+    
     /**
      * Creates new form VendedorInterface
      */
@@ -95,6 +98,16 @@ public class InterfazGeneral extends javax.swing.JFrame {
         boton_confirmar_vendedor.setName("boton_confirmar_cliente");
         
         // Pedido
+        text_field_cliente_p.setName("text_field_cliente_p");
+        rbutton_mp_p.setName("rbutton_mp_p");
+        rbutton_transferencia_p.setName("rbutton_transferencia_p");
+        label_titulo_modal_pedido.setName("label_titulo_modal_pedido");
+        boton_confirmar_pedido.setName("boton_confirmar_pedido");
+        
+        
+        tipo_pago_group = new ButtonGroup();
+        tipo_pago_group.add(rbutton_mp_p);
+        tipo_pago_group.add(rbutton_transferencia_p);
         
         // Item Menu
         text_field_nombre_i.setName("text_field_nombre_i");
@@ -180,21 +193,16 @@ public class InterfazGeneral extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         text_area_descripcion_i = new javax.swing.JTextArea();
         modal_pedido = new javax.swing.JDialog();
-        panel_modal_item_menu1 = new javax.swing.JPanel();
-        boton_confirmar_item_menu1 = new javax.swing.JButton();
-        boton_cancelar_item_menu1 = new javax.swing.JButton();
-        label_titulo_modal_item_menu1 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        text_field_vendedor_i1 = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        text_field_categoria_i1 = new javax.swing.JTextField();
+        panel_modal_pedido = new javax.swing.JPanel();
+        boton_confirmar_pedido = new javax.swing.JButton();
+        boton_cancelar_pedido = new javax.swing.JButton();
+        label_titulo_modal_pedido = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        text_field_nombre_i1 = new javax.swing.JTextField();
-        text_field_precio_i1 = new javax.swing.JTextField();
+        text_field_cliente_p = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        text_area_descripcion_i1 = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        rbutton_transferencia_p = new javax.swing.JRadioButton();
+        rbutton_mp_p = new javax.swing.JRadioButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         panel_botones = new javax.swing.JPanel();
         botonListaVendedores = new javax.swing.JButton();
@@ -698,135 +706,120 @@ public class InterfazGeneral extends javax.swing.JFrame {
 
         modal_pedido.setBackground(new java.awt.Color(0, 0, 0));
 
-        panel_modal_item_menu1.setBackground(new java.awt.Color(255, 204, 204));
+        panel_modal_pedido.setBackground(new java.awt.Color(255, 204, 204));
 
-        boton_confirmar_item_menu1.setBackground(new java.awt.Color(0, 102, 0));
-        boton_confirmar_item_menu1.setForeground(new java.awt.Color(204, 204, 204));
-        boton_confirmar_item_menu1.setText("Crear");
-        boton_confirmar_item_menu1.addActionListener(new java.awt.event.ActionListener() {
+        boton_confirmar_pedido.setBackground(new java.awt.Color(0, 102, 0));
+        boton_confirmar_pedido.setForeground(new java.awt.Color(204, 204, 204));
+        boton_confirmar_pedido.setText("Crear");
+        boton_confirmar_pedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_confirmar_item_menu1ActionPerformed(evt);
+                boton_confirmar_pedidoActionPerformed(evt);
             }
         });
 
-        boton_cancelar_item_menu1.setBackground(new java.awt.Color(102, 0, 0));
-        boton_cancelar_item_menu1.setForeground(new java.awt.Color(204, 204, 204));
-        boton_cancelar_item_menu1.setText("Cancelar");
-        boton_cancelar_item_menu1.addActionListener(new java.awt.event.ActionListener() {
+        boton_cancelar_pedido.setBackground(new java.awt.Color(102, 0, 0));
+        boton_cancelar_pedido.setForeground(new java.awt.Color(204, 204, 204));
+        boton_cancelar_pedido.setText("Cancelar");
+        boton_cancelar_pedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_cancelar_item_menu1ActionPerformed(evt);
+                boton_cancelar_pedidoActionPerformed(evt);
             }
         });
 
-        label_titulo_modal_item_menu1.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        label_titulo_modal_item_menu1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_titulo_modal_item_menu1.setText("Completar datos del nuevo item menu");
-
-        jLabel18.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setLabelFor(text_field_direccion_v);
-        jLabel18.setText("Descripcion");
-
-        jLabel19.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setLabelFor(text_field_direccion_v);
-        jLabel19.setText("Id vendedor");
-
-        text_field_vendedor_i1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-
-        jLabel20.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setLabelFor(text_field_direccion_v);
-        jLabel20.setText("Id categoria");
-
-        text_field_categoria_i1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        label_titulo_modal_pedido.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        label_titulo_modal_pedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_titulo_modal_pedido.setText("Completar datos del nuevo pedido");
 
         jLabel21.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setLabelFor(text_field_direccion_v);
-        jLabel21.setText("Nombre");
+        jLabel21.setText("Id cliente");
 
-        text_field_nombre_i1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-
-        text_field_precio_i1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        text_field_cliente_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
         jLabel22.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setLabelFor(text_field_direccion_v);
-        jLabel22.setText("Precio");
+        jLabel22.setText("Tipo de pago");
 
-        text_area_descripcion_i1.setColumns(20);
-        text_area_descripcion_i1.setRows(5);
-        jScrollPane3.setViewportView(text_area_descripcion_i1);
+        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
 
-        javax.swing.GroupLayout panel_modal_item_menu1Layout = new javax.swing.GroupLayout(panel_modal_item_menu1);
-        panel_modal_item_menu1.setLayout(panel_modal_item_menu1Layout);
-        panel_modal_item_menu1Layout.setHorizontalGroup(
-            panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_titulo_modal_item_menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
+        rbutton_transferencia_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        rbutton_transferencia_p.setText("Transferencia");
+
+        rbutton_mp_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        rbutton_mp_p.setText("Mercado pago");
+        rbutton_mp_p.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbutton_mp_pActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                        .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel21))
-                        .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(boton_cancelar_item_menu1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(boton_confirmar_item_menu1)
-                                .addGap(107, 107, 107))
-                            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(text_field_nombre_i1)
-                                    .addComponent(jScrollPane3))
-                                .addContainerGap())))
-                    .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                        .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel22))
-                        .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(text_field_categoria_i1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(text_field_vendedor_i1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(text_field_precio_i1)))
-                        .addContainerGap())))
+                .addComponent(rbutton_transferencia_p)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rbutton_mp_p)
+                .addContainerGap())
         );
-        panel_modal_item_menu1Layout.setVerticalGroup(
-            panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_modal_item_menu1Layout.createSequentialGroup()
-                .addComponent(label_titulo_modal_item_menu1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {rbutton_mp_p, rbutton_transferencia_p});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(rbutton_transferencia_p)
+                .addComponent(rbutton_mp_p))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {rbutton_mp_p, rbutton_transferencia_p});
+
+        javax.swing.GroupLayout panel_modal_pedidoLayout = new javax.swing.GroupLayout(panel_modal_pedido);
+        panel_modal_pedido.setLayout(panel_modal_pedidoLayout);
+        panel_modal_pedidoLayout.setHorizontalGroup(
+            panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_titulo_modal_pedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(21, 21, 21)
+                        .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                                .addComponent(boton_cancelar_pedido)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                                .addComponent(boton_confirmar_pedido)
+                                .addGap(107, 107, 107))
+                            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                                .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addGap(41, 41, 41)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(85, 85, 85))))
+        );
+        panel_modal_pedidoLayout.setVerticalGroup(
+            panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                .addComponent(label_titulo_modal_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(text_field_nombre_i1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22)
-                    .addComponent(text_field_precio_i1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(text_field_categoria_i1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19)
-                    .addComponent(text_field_vendedor_i1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(panel_modal_item_menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton_confirmar_item_menu1)
-                    .addComponent(boton_cancelar_item_menu1))
+                    .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boton_confirmar_pedido)
+                    .addComponent(boton_cancelar_pedido))
                 .addGap(20, 20, 20))
         );
 
@@ -836,13 +829,13 @@ public class InterfazGeneral extends javax.swing.JFrame {
             modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 486, Short.MAX_VALUE)
             .addGroup(modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_modal_item_menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel_modal_pedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modal_pedidoLayout.setVerticalGroup(
             modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 208, Short.MAX_VALUE)
             .addGroup(modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_modal_item_menu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel_modal_pedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1016,7 +1009,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
                         .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1034,7 +1027,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
                     .addComponent(label_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(text_field_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1206,13 +1199,26 @@ public class InterfazGeneral extends javax.swing.JFrame {
         modal_item_menu.dispose();
     }//GEN-LAST:event_boton_cancelar_item_menuActionPerformed
 
-    private void boton_confirmar_item_menu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmar_item_menu1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boton_confirmar_item_menu1ActionPerformed
+    private void boton_confirmar_pedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmar_pedidoActionPerformed
+         switch((String) boton_confirmar_pedido.getClientProperty("tipoAccion")){
+            case "crear":
+                interfazActual.crear();
+            break;
+            case "editar":
+               interfazActual.editar((Integer) boton_confirmar_pedido.getClientProperty("id"));
+            break;
+        }
+       
+       modal_actual.dispose();
+    }//GEN-LAST:event_boton_confirmar_pedidoActionPerformed
 
-    private void boton_cancelar_item_menu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelar_item_menu1ActionPerformed
+    private void boton_cancelar_pedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelar_pedidoActionPerformed
+       modal_pedido.dispose();
+    }//GEN-LAST:event_boton_cancelar_pedidoActionPerformed
+
+    private void rbutton_mp_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbutton_mp_pActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_boton_cancelar_item_menu1ActionPerformed
+    }//GEN-LAST:event_rbutton_mp_pActionPerformed
 
     private void mostrarModal(JDialog modal) {
         
@@ -1284,12 +1290,12 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JButton boton_cancelar_cliente;
     private javax.swing.JButton boton_cancelar_eliminar;
     private javax.swing.JButton boton_cancelar_item_menu;
-    private javax.swing.JButton boton_cancelar_item_menu1;
+    private javax.swing.JButton boton_cancelar_pedido;
     private javax.swing.JButton boton_cancelar_vendedor;
     private javax.swing.JButton boton_confirmar_cliente;
     private javax.swing.JButton boton_confirmar_eliminar;
     private javax.swing.JButton boton_confirmar_item_menu;
-    private javax.swing.JButton boton_confirmar_item_menu1;
+    private javax.swing.JButton boton_confirmar_pedido;
     private javax.swing.JButton boton_confirmar_vendedor;
     private javax.swing.JButton boton_crear;
     private javax.swing.JButton boton_editar;
@@ -1302,9 +1308,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
@@ -1313,15 +1316,15 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel label_buscar;
     private javax.swing.JLabel label_titulo_modal_cliente;
     private javax.swing.JLabel label_titulo_modal_eliminar;
     private javax.swing.JLabel label_titulo_modal_item_menu;
-    private javax.swing.JLabel label_titulo_modal_item_menu1;
+    private javax.swing.JLabel label_titulo_modal_pedido;
     private javax.swing.JLabel label_titulo_modal_vendedor;
     private javax.swing.JDialog modal_cliente;
     private javax.swing.JDialog modal_eliminar;
@@ -1335,14 +1338,15 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JPanel panel_modal_cliente;
     private javax.swing.JPanel panel_modal_eliminar;
     private javax.swing.JPanel panel_modal_item_menu;
-    private javax.swing.JPanel panel_modal_item_menu1;
+    private javax.swing.JPanel panel_modal_pedido;
     private javax.swing.JPanel panel_modal_vendedor;
+    private javax.swing.JRadioButton rbutton_mp_p;
+    private javax.swing.JRadioButton rbutton_transferencia_p;
     private javax.swing.JTable tabla;
     private javax.swing.JTextArea text_area_descripcion_i;
-    private javax.swing.JTextArea text_area_descripcion_i1;
     private javax.swing.JTextField text_field_buscar;
     private javax.swing.JTextField text_field_categoria_i;
-    private javax.swing.JTextField text_field_categoria_i1;
+    private javax.swing.JTextField text_field_cliente_p;
     private javax.swing.JTextField text_field_cuit_c;
     private javax.swing.JTextField text_field_direccion_c;
     private javax.swing.JTextField text_field_direccion_v;
@@ -1352,12 +1356,9 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JTextField text_field_longitud_c;
     private javax.swing.JTextField text_field_longitud_v;
     private javax.swing.JTextField text_field_nombre_i;
-    private javax.swing.JTextField text_field_nombre_i1;
     private javax.swing.JTextField text_field_nombre_v;
     private javax.swing.JTextField text_field_precio_i;
-    private javax.swing.JTextField text_field_precio_i1;
     private javax.swing.JTextField text_field_vendedor_i;
-    private javax.swing.JTextField text_field_vendedor_i1;
     // End of variables declaration//GEN-END:variables
 
 

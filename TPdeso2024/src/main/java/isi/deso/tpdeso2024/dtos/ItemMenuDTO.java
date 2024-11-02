@@ -29,6 +29,24 @@ public class ItemMenuDTO {
         this.categoria = categoria;
         this.vendedor = vendedor;
     }
+    
+    public ItemMenuDTO(int id, String nombre, String descripcion, float precio, int categoria, int vendedor) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = new CategoriaDTO(categoria, null,null);
+        this.vendedor = new VendedorDTO(vendedor, null, null, null);
+    }
+    
+    public ItemMenuDTO(String nombre, String descripcion, float precio, int categoria, int vendedor) {
+
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = new CategoriaDTO(categoria, null,null);
+        this.vendedor = new VendedorDTO(vendedor, null, null, null);
+    }
 
     public void setId(int id) {
         this.id = id;
