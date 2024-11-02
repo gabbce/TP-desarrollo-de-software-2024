@@ -4,9 +4,9 @@
  */
 package isi.deso.tpdeso2024.utils;
 
-import isi.deso.tpdeso2024.controllers.VendedorController;
+import isi.deso.tpdeso2024.controllers.ClienteController;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
-import isi.deso.tpdeso2024.dtos.VendedorDTO;
+import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.HeadlessException;
@@ -24,16 +24,19 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author gabic
  */
-public class InterfazVendedor implements InformacionInterfaz{
-    private final VendedorController vendedorController = VendedorController.getInstance();
+public class InterfazCliente implements InformacionInterfaz{
+    private final ClienteController clienteController = ClienteController.getInstance();
+    
+ 
     
     //JPanel panel_info;
     JDialog modal;
     JDialog modal_eliminar;
     
-    ModeloTablaVendedor modeloVendedor;
+    ModeloTablaCliente modeloCliente;
     JTable tabla;
-    JTextField completar_nombre;
+    JTextField completar_cuit;
+    JTextField completar_email;
     JTextField completar_direccion;
     JTextField completar_latitud;
     JTextField completar_longitud;
@@ -49,19 +52,20 @@ public class InterfazVendedor implements InformacionInterfaz{
     
     // armar constructor con todos los componentes usados!!!
 
-    public InterfazVendedor(JPanel panel_info, JDialog modal, JDialog modal_eliminar) {
+    public InterfazCliente(JPanel panel_info, JDialog modal, JDialog modal_eliminar) {
         
         //this.panel_info = panel_info;
         this.modal = modal; 
         this.modal_eliminar = modal_eliminar;
         
         tabla = (JTable) buscarComponente(panel_info, "tabla");
-        completar_nombre = (JTextField) buscarComponente(modal, "text_field_nombre");
+        completar_cuit = (JTextField) buscarComponente(modal, "text_field_cuit");
+        completar_email = (JTextField) buscarComponente(modal, "text_field_email");
         completar_direccion = (JTextField) buscarComponente(modal, "text_field_direccion");
         completar_latitud = (JTextField) buscarComponente(modal, "text_field_latitud");
         completar_longitud = (JTextField) buscarComponente(modal, "text_field_longitud");
-        titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_vendedor");
-        boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_vendedor");
+        titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_cliente");
+        boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_cliente");
         titulo_modal_eliminar = (JLabel)  buscarComponente(modal_eliminar, "label_titulo_modal_eliminar");
         boton_confirmar_eliminar = (JButton) buscarComponente(modal_eliminar, "boton_confirmar_eliminar");
         
@@ -70,34 +74,34 @@ public class InterfazVendedor implements InformacionInterfaz{
         //text_field_buscar  = (JTextField) buscarComponente(panel_info, "text_field_buscar");
         label_buscar = (JLabel) buscarComponente(panel_info, "label_buscar");
         
-        modeloVendedor = new ModeloTablaVendedor();
-        modeloVendedor.setNombreColumnas(List.of("Id", "Nombre", "Dirección", "Latitud", "Longitud"));
+        modeloCliente = new ModeloTablaCliente();
+        modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Latitud", "Longitud"));
 
     }
     
     
     @Override
     public void cambiarPanel() {
-        boton_crear.setText("Agregar vendedor");
-        panel_info_titulo.setText("Lista de vendedores");
-        label_buscar.setText("buscar por nombre:");
+        boton_crear.setText("Agregar cliente");
+        panel_info_titulo.setText("Lista de clientes");
+        label_buscar.setText("buscar por CUIT:");
         
-        tabla.setModel(modeloVendedor);
+        tabla.setModel(modeloCliente);
         ((AbstractTableModel)tabla.getModel()).fireTableChanged(null);
     }
 
     @Override
     public void mostrarEliminar(int filaSeleccionada) {
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
-        titulo_modal_eliminar.setText("Se eliminará el vendedor " + id);
+        titulo_modal_eliminar.setText("Se eliminará el cliente " + id);
         boton_confirmar_eliminar.putClientProperty("id", id);
     }
     
     @Override
     public void eliminar(int id){
         try {
-            vendedorController.eliminar(id);
-            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
+            clienteController.eliminar(id);
+            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
             ((AbstractTableModel)tabla.getModel()).fireTableChanged(null);
             
              JOptionPane.showMessageDialog(modal_eliminar, "Eliminado exitosamente.");
@@ -113,12 +117,14 @@ public class InterfazVendedor implements InformacionInterfaz{
     public void mostrarEditar(int filaSeleccionada) {
         
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
-        String nombre = (String) tabla.getValueAt(filaSeleccionada, 1);
-        String direccion = (String) tabla.getValueAt(filaSeleccionada, 2);
-        String latitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 3));
-        String longitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
+        String cuit = (String) tabla.getValueAt(filaSeleccionada, 1);
+        String email = (String) tabla.getValueAt(filaSeleccionada, 2);
+        String direccion = (String) tabla.getValueAt(filaSeleccionada, 3);
+        String latitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
+        String longitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 5));
 
-        completar_nombre.setText(nombre);
+        completar_cuit.setText(cuit);
+        completar_email.setText(email);
         completar_direccion.setText(direccion);
         completar_latitud.setText(latitud);
         completar_longitud.setText(longitud);
@@ -126,35 +132,35 @@ public class InterfazVendedor implements InformacionInterfaz{
         boton_confirmar.putClientProperty("tipoAccion", "editar");
         boton_confirmar.putClientProperty("id", id);
         boton_confirmar.setText("Confirmar");
-        titulo_modal.setText("Editar datos del vendedor " + id);
+        titulo_modal.setText("Editar datos del cliente " + id);
     }
     
     @Override
     public void editar(int id) {
-        VendedorDTO vendedorDTO = new VendedorDTO(id, completar_nombre.getText(),
+        ClienteDTO clienteDTO = new ClienteDTO(id, Integer.parseInt(completar_cuit.getText()), completar_email.getText(),
                 completar_direccion.getText(),
-                new CoordenadaDTO(Double.valueOf(completar_latitud.getText()), Double.valueOf(completar_longitud.getText()))
+                new CoordenadaDTO(Double.parseDouble(completar_latitud.getText()), Double.parseDouble(completar_longitud.getText()))
         );
 
         try {
-            vendedorController.actualizar(vendedorDTO);
-            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
+            clienteController.actualizar(clienteDTO);
+            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
-            JOptionPane.showMessageDialog(modal, "Vendedor actualizado exitosamente.");
+            JOptionPane.showMessageDialog(modal, "Cliente actualizado exitosamente.");
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(modal, "Error al actualizar el vendedor.");
+            JOptionPane.showMessageDialog(modal, "Error al actualizar el cliente.");
         }
     }
 
     @Override
     public void buscar(String nombre) {
         if("".equals(nombre)){
-            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
+            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
         }
         else{
-            ((ModeloTablaVendedor) tabla.getModel()).actualizarListaVendedores(vendedorController.buscar(nombre));
-            System.out.println(vendedorController.buscar(nombre));
+            ((ModeloTablaCliente) tabla.getModel()).actualizarListaCliente(clienteController.buscar(nombre));
+            System.out.println(clienteController.buscar(nombre));
         }
         
         ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
@@ -163,7 +169,8 @@ public class InterfazVendedor implements InformacionInterfaz{
     @Override
     public void mostrarCrear() {
        
-        completar_nombre.setText("");
+        completar_cuit.setText("");
+        completar_email.setText("");
         completar_direccion.setText("");
         completar_latitud.setText("");
         completar_longitud.setText("");
@@ -171,25 +178,25 @@ public class InterfazVendedor implements InformacionInterfaz{
        boton_confirmar.putClientProperty("tipoAccion", "crear");
        
        boton_confirmar.setText("Crear");
-       titulo_modal.setText("Completar datos del nuevo vendedor");
+       titulo_modal.setText("Completar datos del nuevo cliente");
        
     }
     
     @Override
     public void crear() {
-        VendedorDTO vendedorDTO = new VendedorDTO(completar_nombre.getText(),
+        ClienteDTO clienteDTO = new ClienteDTO(Integer.parseInt(completar_cuit.getText()), completar_email.getText(),
                 completar_direccion.getText(),
-                new CoordenadaDTO(Double.valueOf(completar_latitud.getText()), Double.valueOf(completar_longitud.getText()))
+                new CoordenadaDTO(Double.parseDouble(completar_latitud.getText()), Double.parseDouble(completar_longitud.getText()))
         );
 
         try {
-            vendedorController.crear(vendedorDTO);
-            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
+            clienteController.crear(clienteDTO);
+            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
-            JOptionPane.showMessageDialog(modal, "Vendedor creado exitosamente.");
+            JOptionPane.showMessageDialog(modal, "Cliente creado exitosamente.");
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(modal, "Error al crear el vendedor.");
+            JOptionPane.showMessageDialog(modal, "Error al crear el cliente.");
         }
     }
 
@@ -212,9 +219,4 @@ public class InterfazVendedor implements InformacionInterfaz{
         }
         return null;
     }
-    
-    
-    
 }
-
-    

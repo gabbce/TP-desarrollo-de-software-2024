@@ -127,7 +127,7 @@ public class TPdeso2024 {
        
        System.out.println("Fecha de pago del pedido: " + pedidosRecibidos.get(0).getPago().getFechaPago().format(DateTimeFormatter.ISO_DATE));*/
        
-        VendedorInterface miVentana = new VendedorInterface();
+        InterfazGeneral miVentana = new InterfazGeneral();
         miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         miVentana.setVisible(true);
      

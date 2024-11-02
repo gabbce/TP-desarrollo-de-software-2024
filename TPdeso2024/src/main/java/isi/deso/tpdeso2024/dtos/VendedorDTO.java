@@ -4,6 +4,7 @@
  */
 package isi.deso.tpdeso2024.dtos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,11 @@ import java.util.List;
  * @author augus
  */
 public class VendedorDTO {
+    private int id;
+    private String nombre;
+    private String direccion;
+    private CoordenadaDTO coordenada;
+    private List<ItemMenuDTO> itemsMenu; //null desde lado de itemMenu
 
     public VendedorDTO(int id, String nombre, String direccion, CoordenadaDTO coordenada, List<ItemMenuDTO> itemsMenu) {
         this.id = id;
@@ -25,6 +31,7 @@ public class VendedorDTO {
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
+        this.itemsMenu = new ArrayList<>();
     }
     
     public VendedorDTO(String nombre, String direccion, CoordenadaDTO coordenada) {
@@ -32,7 +39,7 @@ public class VendedorDTO {
         this.nombre = nombre;
         this.direccion = direccion;
         this.coordenada = coordenada;
-        this.itemsMenu = null;
+        this.itemsMenu = new ArrayList<>();
     }
 
     public int getId() {
@@ -74,12 +81,6 @@ public class VendedorDTO {
     public void setItemsMenu(List<ItemMenuDTO> itemsMenu) {
         this.itemsMenu = itemsMenu;
     }
-    private int id;
-    private String nombre;
-    private String direccion;
-    private CoordenadaDTO coordenada;
-    private List<ItemMenuDTO> itemsMenu; //null desde lado de itemMenu
-    
 
 
 }

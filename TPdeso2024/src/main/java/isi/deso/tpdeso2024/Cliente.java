@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  *
  * @author gabic
  */
-public class Cliente implements ObserverPedido{
+public class Cliente{
     private int id;
     private int cuit;
     private String email;
@@ -145,7 +145,6 @@ public class Cliente implements ObserverPedido{
         return p;
     }
     
-    @Override
     public void update(Pedido pedido){
         if(pedido.getEstado().equals(EstadoPedido.EN_ENVIO)){
             

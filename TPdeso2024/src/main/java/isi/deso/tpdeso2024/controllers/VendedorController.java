@@ -39,7 +39,7 @@ public class VendedorController {
     
     public void crear(VendedorDTO vdto){
         //crear el objeto y mandarlo a db
-        Coordenada c = new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud());
+        CoordenadaDTO c = new CoordenadaDTO(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud());
         Vendedor v = new Vendedor(
        0, //implementado identity increment en this.dao
                 vdto.getNombre(),
@@ -99,7 +99,7 @@ public class VendedorController {
     
     private VendedorDTO convertirADTO(Vendedor v){
         ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
-        for(ItemMenu it:v.getItemsMenu()){
+        for(ItemMenuDTO it:v.getItemsMenu()){
             listaItems.add(this.convertirItemADTO(it));
         }
         
@@ -116,7 +116,7 @@ public class VendedorController {
 
     }
     
-    private ItemMenuDTO convertirItemADTO(ItemMenu it){
+    private ItemMenuDTO convertirItemADTO(ItemMenuDTO it){
     return new ItemMenuDTO(
     it.getId(),
     it.getNombre(),

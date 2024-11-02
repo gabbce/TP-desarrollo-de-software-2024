@@ -11,8 +11,15 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class Pedido implements Observable{
+public class Pedido implements Observable {
+
     private int id;
+
+    private PedidoDetalle detalle;
+    private Pago pago;
+    private EstadoPedido estado;
+    private Cliente cliente;
+    boolean changed = false;
 
     public int getId() {
         return id;
@@ -29,11 +36,6 @@ public class Pedido implements Observable{
     public void setChanged(boolean changed) {
         this.changed = changed;
     }
-    private PedidoDetalle detalle;
-    private Pago pago;
-    private EstadoPedido estado;
-    private ObserverPedido cliente;
-    boolean changed = false;
 
     public EstadoPedido getEstado() {
         return estado;
@@ -45,7 +47,7 @@ public class Pedido implements Observable{
         this.notifyObservers();
     }
 
-    public Pedido(PedidoDetalle detalle, Pago pago, ObserverPedido cliente) {
+    public Pedido(PedidoDetalle detalle, Pago pago, Cliente cliente) {
         this.detalle = detalle;
         this.pago = pago;
         this.cliente = cliente;
@@ -68,11 +70,11 @@ public class Pedido implements Observable{
         this.pago = pago;
     }
 
-    public ObserverPedido getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(ObserverPedido cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
@@ -80,7 +82,7 @@ public class Pedido implements Observable{
     public void setChanged() {
         this.changed = true;
     }
-    
+
     @Override
     public void clearChanged() {
         this.changed = false;
@@ -88,14 +90,10 @@ public class Pedido implements Observable{
 
     @Override
     public void notifyObservers() {
-        if(this.changed){
+        if (this.changed) {
             this.cliente.update(this);
         }
         this.clearChanged();
     }
-    
-    
-    
-    
-    
+
 }

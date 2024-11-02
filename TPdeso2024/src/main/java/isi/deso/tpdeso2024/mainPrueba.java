@@ -31,7 +31,7 @@ public class mainPrueba {
  
        System.out.println(vendedorController.listar());
 
-       VendedorInterface miVentana = new VendedorInterface();
+       InterfazGeneral miVentana = new InterfazGeneral();
        miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        miVentana.setVisible(true);
        

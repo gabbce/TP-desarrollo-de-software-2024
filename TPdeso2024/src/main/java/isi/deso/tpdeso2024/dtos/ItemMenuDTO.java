@@ -12,6 +12,10 @@ public class ItemMenuDTO {
     private int id; 
     private String nombre;
     private String descripcion;
+    
+    private float precio;
+    private CategoriaDTO categoria;
+    private VendedorDTO vendedor; //null desde lado de vendedor
 
     public int getId() {
         return id;
@@ -69,7 +73,4 @@ public class ItemMenuDTO {
     public void setVendedor(VendedorDTO vendedor) {
         this.vendedor = vendedor;
     }
-    private float precio;
-    private CategoriaDTO categoria;
-    private VendedorDTO vendedor; //null desde lado de vendedor
 }
