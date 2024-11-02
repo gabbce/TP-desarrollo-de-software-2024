@@ -7,7 +7,7 @@ package isi.deso.tpdeso2024;
 import isi.deso.tpdeso2024.controllers.*;
 import isi.deso.tpdeso2024.daos.*;
 import isi.deso.tpdeso2024.dtos.*;
-import isi.deso.tpdeso2024.utils.ModeloTabla;
+import isi.deso.tpdeso2024.utils.ModeloTablaVendedor;
 
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class mainPrueba {
 
     public static void main(String[] args) throws IOException { 
       
-       VendedorDAO vendedorMemory = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+       
        VendedorController vendedorController = VendedorController.getInstance();
        
        vendedorController.crear( new VendedorDTO("Agustin","Lavaise 800", new CoordenadaDTO(1,1)));
@@ -31,9 +31,9 @@ public class mainPrueba {
  
        System.out.println(vendedorController.listar());
 
-        VendedorInterface miVentana = new VendedorInterface();
-        miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        miVentana.setVisible(true);
+       VendedorInterface miVentana = new VendedorInterface();
+       miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       miVentana.setVisible(true);
        
         
      
