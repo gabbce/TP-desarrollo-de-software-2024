@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class VendedorMEMORYDAO implements VendedorDAO {
 
-    private List<Vendedor> vendedores;
+    private List<Vendedor> vendedores; //mantiene orden por id
     private int ultimaID; //se auto incrementa
     // Constructor para inicializar la lista
     public VendedorMEMORYDAO() {
@@ -26,7 +26,7 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     }
 
     @Override
-    public boolean create(Vendedor v) {
+    public boolean crear(Vendedor v) {
         v.setId(ultimaID);
         ultimaID++;
         vendedores.add(v);
@@ -34,10 +34,10 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean eliminar(int id) {
         //ahora mismo estan ordenados por id
-        int indice = this.buscarPorID(id);
-        vendedores.remove(indice);
+        //int indice = this.buscarPorID(id);
+        vendedores.remove(id-1);
         return true;  
     }
 
@@ -45,7 +45,10 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     @Override
     public List<Vendedor> buscar(String nombre) {
         ArrayList<Vendedor> res = new ArrayList<>();
-        for(Vendedor v:vendedores) if(v.getNombre().equals(nombre)) res.add(v);
+        for(Vendedor v:vendedores) {
+            String s = v.getNombre().substring(0,nombre.length());
+            if(s.equalsIgnoreCase(nombre)) res.add(v);
+        }
         return res;
     }
 
@@ -57,8 +60,8 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     @Override
     public boolean actualizar(VendedorDTO vdto) {
         //ahora mismo estan ordenados por id
-        int indice = this.buscarPorID(vdto.getId());
-        Vendedor v = vendedores.get(indice);
+        //int indice = this.buscarPorID(vdto.getId());
+        Vendedor v = vendedores.get(vdto.getId()-1);
         
         v.setNombre(vdto.getNombre());
         v.setDireccion(vdto.getDireccion());
@@ -73,7 +76,7 @@ public class VendedorMEMORYDAO implements VendedorDAO {
         
         return true;
     }
-    private int buscarPorID(int id){
+    private int buscarPorID(int id){ //no se usa xq mantiene orden por id
         for (int i = 0; i < vendedores.size(); i++) if(vendedores.get(i).getId()==id)return i;
         return -1;
     }

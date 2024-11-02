@@ -12,7 +12,23 @@ import java.util.List;
  * @author Usuario
  */
 public class Pedido implements Observable{
-    //private int id;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
     private PedidoDetalle detalle;
     private Pago pago;
     private EstadoPedido estado;

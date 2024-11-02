@@ -13,8 +13,8 @@ import java.util.List;
  * @author augus
  */
 public interface VendedorDAO {
-    public boolean create(Vendedor v);
-    public boolean delete(int id);
+    public boolean crear(Vendedor v);
+    public boolean eliminar(int id);
     public boolean actualizar(VendedorDTO vdto);
     public List<Vendedor> listar();
     public List<Vendedor> buscar(String nombre);
