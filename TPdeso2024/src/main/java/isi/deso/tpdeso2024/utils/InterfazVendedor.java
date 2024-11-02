@@ -97,7 +97,9 @@ public class InterfazVendedor implements InformacionInterfaz{
     public void eliminar(int id){
         try {
             vendedorController.eliminar(id);
+            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
             ((AbstractTableModel)tabla.getModel()).fireTableChanged(null);
+            
              JOptionPane.showMessageDialog(modal_eliminar, "Eliminado exitosamente.");
              
         } catch(HeadlessException e){
@@ -136,6 +138,7 @@ public class InterfazVendedor implements InformacionInterfaz{
 
         try {
             vendedorController.actualizar(vendedorDTO);
+            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Vendedor actualizado exitosamente.");
         } catch (HeadlessException e) {
@@ -181,6 +184,7 @@ public class InterfazVendedor implements InformacionInterfaz{
 
         try {
             vendedorController.crear(vendedorDTO);
+            ((ModeloTablaVendedor) tabla.getModel()).resetListaVendedores();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Vendedor creado exitosamente.");
         } catch (HeadlessException e) {
