@@ -4,10 +4,18 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.Pedido;
+import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import java.util.List;
+
 /**
  *
  * @author augus
  */
-class ClienteDAO {
-    
+public interface ClienteDAO {
+    public boolean crear(Pedido v);
+    public boolean eliminar(int id);
+    public boolean actualizar(PedidoDTO vdto);
+    public List<Pedido> listar();
+    public List<Pedido> buscar(String nombre);
 }
