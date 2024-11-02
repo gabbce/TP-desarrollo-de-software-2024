@@ -46,12 +46,15 @@ public class VendedorController {
                 vdto.getDireccion(),
                  c
         );
+
         //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
         
         
         
         this.dao.crear(v);
     }
+    
+    
     public List<VendedorDTO> listar(){
         
         List<Vendedor> lista = this.dao.listar();
@@ -101,16 +104,16 @@ public class VendedorController {
         }
         
         return new VendedorDTO(
-v.getId(),
-v.getNombre(),
-v.getDireccion(),
-new CoordenadaDTO(
-v.getCoordenadas().getLongitud(),
-v.getCoordenadas().getLatitud()
-),
-listaItems
-);
-    
+                v.getId(),
+                v.getNombre(),
+                v.getDireccion(),
+                new CoordenadaDTO(
+                        v.getCoordenadas().getLongitud(),
+                        v.getCoordenadas().getLatitud()
+                ),
+                listaItems
+        );
+
     }
     
     private ItemMenuDTO convertirItemADTO(ItemMenu it){

@@ -6,7 +6,7 @@ package isi.deso.tpdeso2024;
 
 import isi.deso.tpdeso2024.controllers.*;
 import isi.deso.tpdeso2024.dtos.*;
-import isi.deso.tpdeso2024.utils.ModeloTabla;
+import isi.deso.tpdeso2024.utils.ModeloTablaVendedor;
 
 
 import java.io.IOException;
