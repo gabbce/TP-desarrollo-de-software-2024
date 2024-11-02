@@ -30,14 +30,32 @@ public class VendedorController {
         if(VendedorController.instance == null)VendedorController.instance =  new VendedorController();
         return VendedorController.instance;
     }
-    private VendedorController(){}
     
     
+    private VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+    private VendedorController(){
+    }
     
-    public List<VendedorDTO> listar(){
-        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+    
+    public void crear(VendedorDTO vdto){
+        //crear el objeto y mandarlo a db
+        Coordenada c = new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud());
+        Vendedor v = new Vendedor(
+       0, //implementado identity increment en this.dao
+                vdto.getNombre(),
+                vdto.getDireccion(),
+                 c
+        );
+        System.out.println(v.getNombre());
+        //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
         
-        List<Vendedor> lista = dao.listar();
+        
+        
+        this.dao.create(v);
+    }
+    public List<VendedorDTO> listar(){
+        
+        List<Vendedor> lista = this.dao.listar();
         
         List<VendedorDTO> resultado = new ArrayList<>();
         
@@ -51,31 +69,19 @@ public class VendedorController {
         return listaVendedores;*/
     }
     
-    public void crear(VendedorDTO vdto){
-        //crear el objeto y mandarlo a db
-        Vendedor v = new Vendedor(
-       0, //implementado identity increment en dao
-                vdto.getNombre(),
-                vdto.getDireccion(),
-                new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud()) //deberia buscar entre las coordenadas existentes, si ya existe
-        );
-        //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
-        
-        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
-        dao.create(v);
-    }
+    
     
     public void eliminar(int id){
-        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
-        dao.delete(id);
+        
+        this.dao.delete(id);
     
     }
     
     public List<VendedorDTO> buscar(String nombre){
     
-        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
         
-        List<Vendedor> l = dao.buscar(nombre);
+        
+        List<Vendedor> l = this.dao.buscar(nombre);
         
         List<VendedorDTO> resultado = new ArrayList<>();
         for(Vendedor v: l)resultado.add(convertirADTO(v));
@@ -85,8 +91,8 @@ public class VendedorController {
     
     public void actualizar(VendedorDTO vdto){
         //buscar el id del dto y actualizar con los otros datos
-        VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
-        dao.actualizar(vdto);
+        
+        this.dao.actualizar(vdto);
     }
     
     private VendedorDTO convertirADTO(Vendedor v){
