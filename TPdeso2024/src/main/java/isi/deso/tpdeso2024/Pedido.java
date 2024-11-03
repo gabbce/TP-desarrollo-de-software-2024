@@ -21,6 +21,21 @@ public class Pedido implements Observable {
     private Cliente cliente;
     boolean changed = false;
 
+    public Pedido(int id, PedidoDetalle detalle, Pago pago, EstadoPedido estado, Cliente cliente) {
+        this.id = id;
+        this.detalle = detalle;
+        this.pago = pago;
+        this.estado = estado;
+        this.cliente = cliente;
+    }
+    
+    public Pedido(PedidoDetalle detalle, Pago pago, Cliente cliente) {
+        this.detalle = detalle;
+        this.pago = pago;
+        this.cliente = cliente;
+        this.estado = EstadoPedido.PENDIENTE;
+    }
+
     public int getId() {
         return id;
     }
@@ -47,12 +62,7 @@ public class Pedido implements Observable {
         this.notifyObservers();
     }
 
-    public Pedido(PedidoDetalle detalle, Pago pago, Cliente cliente) {
-        this.detalle = detalle;
-        this.pago = pago;
-        this.cliente = cliente;
-        this.estado = EstadoPedido.PENDIENTE;
-    }
+    
 
     public PedidoDetalle getDetalle() {
         return detalle;

@@ -32,40 +32,43 @@ public class ClienteController {
     }
     
     
-    private ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+    //private ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
     private ClienteController(){
     }
     
     
     public void crear(ClienteDTO dto){
         //crear el objeto y mandarlo a db
-        Coordenada c = new Coordenada(dto.getCoordenada().getLatitud(),dto.getCoordenada().getLongitud());
+        Coordenada c = new Coordenada(dto.getCoordenadas().getLatitud(),dto.getCoordenadas().getLongitud());
         Cliente v = new Cliente(
        0, //implementado identity increment en this.dao
-                dto.getNombre(),
+                dto.getCuit(),
+                dto.getEmail(),
                 dto.getDireccion(),
                  c
         );        
-        this.dao.crear(v);
+        //this.dao.crear(v);
     }
     
     
     public List<ClienteDTO> listar(){
         
-        List<Cliente> lista = this.dao.listar();
+        /*List<Cliente> lista = this.dao.listar();
         
         List<ClienteDTO> resultado = new ArrayList<>();
         
         for(Cliente c:lista) resultado.add(this.convertirADTO(c));
         
-        return resultado;
+        return resultado;*/
+        
+        return new ArrayList<>();
     }
     
     
     
     public void eliminar(int id){
         
-        this.dao.eliminar(id);
+       // this.dao.eliminar(id);
     
     }
     
@@ -73,25 +76,26 @@ public class ClienteController {
         //nombre es substring de nombre. Ignore case
         
         
-        List<Cliente> l = this.dao.buscar(nombreSubstring);
+       /* List<Cliente> l = this.dao.buscar(nombreSubstring);
         
         List<ClienteDTO> resultado = new ArrayList<>();
         for(Cliente v: l)resultado.add(convertirADTO(v));
         
-        return resultado;
+        return resultado;*/ return new ArrayList<>();
     }
     
     public void actualizar(ClienteDTO dto){
         //buscar el id del dto y actualizar con los otros datos
         
-        this.dao.actualizar(dto);
+        //this.dao.actualizar(dto);
     }
     
     private ClienteDTO convertirADTO(Cliente v){
         
         return new ClienteDTO(
                 v.getId(),
-                v.getNombre(),
+                v.getCuit(),
+                v.getEmail(),
                 v.getDireccion(),
                 new CoordenadaDTO(
                         v.getCoordenadas().getLongitud(),

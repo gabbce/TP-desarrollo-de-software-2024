@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024.controllers;
 
 
+import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Pedido;
@@ -32,43 +33,39 @@ public class PedidoController {
     }
     
     
-    private PedidoDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getPedidoDAO();
+    //private PedidoDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getPedidoDAO();
     private PedidoController(){
     }
     
     
-    public void crear(PedidoDTO vdto){
+    public void crear(PedidoDTO vdto) {
         //crear el objeto y mandarlo a db
-		/*
-		 this.detalle = detalle;
-        this.pago = pago;
-        this.estado = estado;
-        this.cliente = cliente;
-        this.changed = false;*/
+        /*
         Pedido v = new Pedido(
-       0, //implementado identity increment en this.dao
+                0, //implementado identity increment en this.dao
                 vdto.getDetalle(),
                 vdto.getPago(),
-				vdto.getEstado(),
-				vdto.getCliente(),
-				false
-		);
+                vdto.getEstado(),
+                /* un cliente ya existente *//* ClienteController.getInstance().buscarPorId(vdto.getCliente().getId()))
+        ); 
 
         
         
-        this.dao.crear(v);
+        this.dao.crear(v);*/
     }
     
     
     public List<PedidoDTO> listar(){
         
-        List<Pedido> lista = this.dao.listar();
+        /*List<Pedido> lista = this.dao.listar();
         
         List<PedidoDTO> resultado = new ArrayList<>();
         
         for(Pedido v:lista) resultado.add(this.convertirADTO(v));
         
-        return resultado;
+        return resultado;*/
+        
+        return new ArrayList<>();
         
         /*List<PedidoDTO> listaPedidoes = new ArrayList<>();
         listaPedidoes.add( new PedidoDTO("Agustin","Lavaise 800", new CoordenadaDTO(1,1)));
@@ -80,30 +77,32 @@ public class PedidoController {
     
     public void eliminar(int id){
         
-        this.dao.eliminar(id);
+        //this.dao.eliminar(id);
     
     }
     
     public List<PedidoDTO> buscar(String nombreSubstring){
         //nombre es substring de nombre. Ignore case
         
-        
+        /*
         List<Pedido> l = this.dao.buscar(nombreSubstring);
         
         List<PedidoDTO> resultado = new ArrayList<>();
         for(Pedido v: l)resultado.add(convertirADTO(v));
         
-        return resultado;
+        return resultado;*/
+        
+        return new ArrayList<>();
     }
     
     public void actualizar(PedidoDTO vdto){
         //buscar el id del dto y actualizar con los otros datos
         
-        this.dao.actualizar(vdto);
+       // this.dao.actualizar(vdto);
     }
     
     private PedidoDTO convertirADTO(Pedido v){
-        ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
+       /* ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
         for(ItemMenu it:v.getItemsMenu()){
             listaItems.add(this.convertirItemADTO(it));
         }
@@ -117,18 +116,21 @@ public class PedidoController {
                         v.getCoordenadas().getLatitud()
                 ),
                 listaItems
+        );*/
+       
+       return null;
+    }
+    
+    private ItemMenuDTO convertirItemADTO(ItemMenu it) {
+        return new ItemMenuDTO(
+                it.getId(),
+                it.getNombre(),
+                it.getDescripcion(),
+                it.getPrecio(),
+                new CategoriaDTO(it.getCategoria().getId(), it.getCategoria().getDescripcion(), it.getCategoria().getTipo()),
+                null
         );
 
     }
-    
-    private ItemMenuDTO convertirItemADTO(ItemMenu it){
-    return new ItemMenuDTO(
-    it.getId(),
-    it.getNombre(),
-    it.getDescripcion(),
-    it.getPrecio(),
-    new CategoriaDTO(it.getCategoria().getId(), it.getCategoria().getDescripcion(), it.getCategoria().getTipo()),
-            null
-    );
     
 }

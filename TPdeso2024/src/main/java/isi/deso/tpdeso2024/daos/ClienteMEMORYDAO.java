@@ -46,8 +46,8 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     public List<Cliente> buscar(String nombre) {
         ArrayList<Cliente> res = new ArrayList<>();
         for(Cliente v:clientes) {
-            String s = v.getNombre().substring(0,nombre.length());
-            if(s.equalsIgnoreCase(nombre)) res.add(v);
+            /*String s = v.getNombre().substring(0,nombre.length());
+            if(s.equalsIgnoreCase(nombre)) res.add(v);*/
         }
         return res;
     }
@@ -63,14 +63,14 @@ public class ClienteMEMORYDAO implements ClienteDAO {
         //int indice = this.buscarPorID(vdto.getId());
         Cliente v = clientes.get(vdto.getId()-1);
         
-        v.setNombre(vdto.getNombre());
+        /*v.setNombre(vdto.getNombre());
         v.setDireccion(vdto.getDireccion());
         Coordenada c = new Coordenada(
                 vdto.getCoordenada().getLatitud(),
                 vdto.getCoordenada().getLongitud()
         );
         
-        v.setCoordenadas(c);
+        v.setCoordenadas(c);*/
         
         
         

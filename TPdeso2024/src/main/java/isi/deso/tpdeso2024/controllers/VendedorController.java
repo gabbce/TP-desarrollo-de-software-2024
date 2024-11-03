@@ -39,12 +39,12 @@ public class VendedorController {
     
     public void crear(VendedorDTO vdto){
         //crear el objeto y mandarlo a db
-        CoordenadaDTO c = new CoordenadaDTO(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud());
+       CoordenadaDTO c = new CoordenadaDTO(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud());
         Vendedor v = new Vendedor(
        0, //implementado identity increment en this.dao
                 vdto.getNombre(),
                 vdto.getDireccion(),
-                 c
+                 new Coordenada(vdto.getCoordenada().getLatitud(),vdto.getCoordenada().getLongitud())
         );
 
         //arranca vacia v.itemsMenu, se le agregan items al crearlos en la interfaz de items
@@ -99,9 +99,9 @@ public class VendedorController {
     
     private VendedorDTO convertirADTO(Vendedor v){
         ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
-        for(ItemMenuDTO it:v.getItemsMenu()){
+        /*for(ItemMenuDTO it:v.getItemsMenu()){
             listaItems.add(this.convertirItemADTO(it));
-        }
+        }*/
         
         return new VendedorDTO(
                 v.getId(),

@@ -94,8 +94,8 @@ public class InterfazGeneral extends javax.swing.JFrame {
         text_field_direccion_c.setName("text_field_direccion_c");
         text_field_latitud_c.setName("text_field_latitud_c");
         text_field_longitud_c.setName("text_field_longitud_c");
-        label_titulo_modal_vendedor.setName("label_titulo_modal_cliente");
-        boton_confirmar_vendedor.setName("boton_confirmar_cliente");
+        label_titulo_modal_cliente.setName("label_titulo_modal_cliente");
+        boton_confirmar_cliente.setName("boton_confirmar_cliente");
         
         // Pedido
         text_field_cliente_p.setName("text_field_cliente_p");
@@ -1124,7 +1124,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
             mostrarModal(modal_actual);
             
         } else {
-            JOptionPane.showMessageDialog(modal_actual, "Por favor, selecciona una fila para editar.");
+            JOptionPane.showMessageDialog(panel_info, "Por favor, selecciona una fila para editar.");
         }
     }//GEN-LAST:event_boton_editarActionPerformed
 

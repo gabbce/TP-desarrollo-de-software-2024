@@ -56,10 +56,10 @@ public class InterfazVendedor implements InformacionInterfaz{
         this.modal_eliminar = modal_eliminar;
         
         tabla = (JTable) buscarComponente(panel_info, "tabla");
-        completar_nombre = (JTextField) buscarComponente(modal, "text_field_nombre");
-        completar_direccion = (JTextField) buscarComponente(modal, "text_field_direccion");
-        completar_latitud = (JTextField) buscarComponente(modal, "text_field_latitud");
-        completar_longitud = (JTextField) buscarComponente(modal, "text_field_longitud");
+        completar_nombre = (JTextField) buscarComponente(modal, "text_field_nombre_v");
+        completar_direccion = (JTextField) buscarComponente(modal, "text_field_direccion_v");
+        completar_latitud = (JTextField) buscarComponente(modal, "text_field_latitud_v");
+        completar_longitud = (JTextField) buscarComponente(modal, "text_field_longitud_v");
         titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_vendedor");
         boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_vendedor");
         titulo_modal_eliminar = (JLabel)  buscarComponente(modal_eliminar, "label_titulo_modal_eliminar");

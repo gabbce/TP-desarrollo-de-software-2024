@@ -4,8 +4,8 @@
  */
 package isi.deso.tpdeso2024.daos;
 
-import isi.deso.tpdeso2024.Pedido;
-import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import isi.deso.tpdeso2024.Cliente;
+import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import java.util.List;
 
 /**
@@ -13,9 +13,9 @@ import java.util.List;
  * @author augus
  */
 public interface ClienteDAO {
-    public boolean crear(Pedido v);
+    public boolean crear(Cliente v);
     public boolean eliminar(int id);
-    public boolean actualizar(PedidoDTO vdto);
-    public List<Pedido> listar();
-    public List<Pedido> buscar(String nombre);
+    public boolean actualizar(ClienteDTO vdto);
+    public List<Cliente> listar();
+    public List<Cliente> buscar(String nombre);
 }

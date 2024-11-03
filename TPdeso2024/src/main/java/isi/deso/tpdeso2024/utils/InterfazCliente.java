@@ -101,7 +101,7 @@ public class InterfazCliente implements InformacionInterfaz{
     public void eliminar(int id){
         try {
             clienteController.eliminar(id);
-            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
+            ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
             ((AbstractTableModel)tabla.getModel()).fireTableChanged(null);
             
              JOptionPane.showMessageDialog(modal_eliminar, "Eliminado exitosamente.");
@@ -144,7 +144,7 @@ public class InterfazCliente implements InformacionInterfaz{
 
         try {
             clienteController.actualizar(clienteDTO);
-            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
+            ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Cliente actualizado exitosamente.");
         } catch (HeadlessException e) {
@@ -156,10 +156,10 @@ public class InterfazCliente implements InformacionInterfaz{
     @Override
     public void buscar(String nombre) {
         if("".equals(nombre)){
-            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
+            ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
         }
         else{
-            ((ModeloTablaCliente) tabla.getModel()).actualizarListaCliente(clienteController.buscar(nombre));
+            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscar(nombre));
             System.out.println(clienteController.buscar(nombre));
         }
         
@@ -191,7 +191,7 @@ public class InterfazCliente implements InformacionInterfaz{
 
         try {
             clienteController.crear(clienteDTO);
-            ((ModeloTablaCliente) tabla.getModel()).resetListaCliente();
+            ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Cliente creado exitosamente.");
         } catch (HeadlessException e) {

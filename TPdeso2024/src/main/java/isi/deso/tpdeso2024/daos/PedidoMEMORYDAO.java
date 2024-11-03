@@ -46,8 +46,8 @@ public class PedidoMEMORYDAO implements PedidoDAO {
     public List<Pedido> buscar(String nombre) {
         ArrayList<Pedido> res = new ArrayList<>();
         for(Pedido v:pedidos) {
-            String s = v.getNombre().substring(0,nombre.length());
-            if(s.equalsIgnoreCase(nombre)) res.add(v);
+           /* String s = v.getNombre().substring(0,nombre.length());
+            if(s.equalsIgnoreCase(nombre)) res.add(v);*/
         }
         return res;
     }
@@ -62,7 +62,7 @@ public class PedidoMEMORYDAO implements PedidoDAO {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
         Pedido v = pedidos.get(vdto.getId()-1);
-        
+        /*
         v.setNombre(vdto.getNombre());
         v.setDireccion(vdto.getDireccion());
         Coordenada c = new Coordenada(
@@ -70,7 +70,7 @@ public class PedidoMEMORYDAO implements PedidoDAO {
                 vdto.getCoordenada().getLongitud()
         );
         
-        v.setCoordenadas(c);
+        v.setCoordenadas(c);*/
         
         
         

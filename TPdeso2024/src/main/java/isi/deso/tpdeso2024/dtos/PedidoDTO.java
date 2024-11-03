@@ -30,6 +30,14 @@ public class PedidoDTO {
         this.changed = false;
     }
     
+    public PedidoDTO(int id, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+        this.id = id;
+        this.pago = pago;
+        this.estado = estado;
+        this.cliente = cliente;
+        this.changed = false;
+    }
+    
     public PedidoDTO(PedidoDetalle detalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
         this.detalle = detalle;
         this.pago = pago;
