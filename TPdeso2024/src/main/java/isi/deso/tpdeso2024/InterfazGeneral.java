@@ -42,83 +42,33 @@ public class InterfazGeneral extends javax.swing.JFrame {
         initComponents();
         vendedorController = VendedorController.getInstance();
         
-        inicializarNombreComponentes();
         
-        interfazVendedor = new InterfazVendedor(panel_info, modal_vendedor, modal_eliminar);
-        interfazCliente = new InterfazCliente(panel_info, modal_cliente, modal_eliminar);
-        interfazItemMenu = new InterfazItemMenu(panel_info, modal_item_menu, modal_eliminar);
-        interfazPedido = new InterfazPedido(panel_info, modal_pedido, modal_eliminar);
+        //interfazVendedor = new InterfazVendedor(panel_info, modal_vendedor, modal_eliminar);
+        interfazVendedor = new InterfazVendedor(modal_vendedor, modal_eliminar,
+                                                tabla, text_field_nombre_v, text_field_direccion_v, text_field_latitud_v, text_field_longitud_v,
+                                                    label_titulo_modal_vendedor, boton_confirmar_vendedor, label_titulo_modal_eliminar, boton_confirmar_eliminar,
+                                                        boton_crear, panel_info_titulo, label_buscar);
+        
+        interfazCliente = new InterfazCliente(modal_cliente, modal_eliminar,
+                                                tabla, text_field_cuit_c, text_field_email_c, text_field_direccion_c, text_field_latitud_c, text_field_longitud_c,
+                                                    label_titulo_modal_cliente, boton_confirmar_cliente, label_titulo_modal_eliminar, boton_confirmar_eliminar,
+                                                        boton_crear, panel_info_titulo, label_buscar);
+        
+        interfazItemMenu = new InterfazItemMenu(modal_item_menu, modal_eliminar,
+                                                tabla, text_field_nombre_i, text_area_descripcion_i, text_field_vendedor_i, text_field_precio_i,  text_field_categoria_i,
+                                                    label_titulo_modal_item_menu, boton_confirmar_item_menu, label_titulo_modal_eliminar, boton_confirmar_eliminar,
+                                                        boton_crear, panel_info_titulo, label_buscar);
+        
+        interfazPedido = new InterfazPedido(modal_pedido, modal_eliminar,
+                                                tabla, text_field_cliente_p,  rbutton_mp_p, rbutton_transferencia_p,
+                                                    label_titulo_modal_pedido, boton_confirmar_pedido, label_titulo_modal_eliminar, boton_confirmar_eliminar,
+                                                        boton_crear, panel_info_titulo, label_buscar);
         
         inicializarTabla(tabla);
         
-        //interfazVendedor.setModelTabla();
-        /*setModelTablaCliente();
-        setModelTablaItemsMenu();
-        setModelTablaPedido();*/
-        
-        
-        /*this.cardLayout = new CardLayout(); // Crea el CardLayout
-        panel_Informacion.setLayout(this.cardLayout); // Configura el layout
-
-        // Añade los paneles con nombres para el CardLayout
-        panel_Informacion.add(panel_info, "Vendedores");
-        panel_Informacion.add(panel_clientes, "Clientes");
-        panel_Informacion.add(panel_items_menu, "ItemMenus");
-        panel_Informacion.add(panel_pedidos, "Pedidos");*/
-        
         cambiarPanel(interfazVendedor, modal_vendedor);
-        
     }
     
-    public void inicializarNombreComponentes(){
-        // Generales
-        tabla.setName("tabla");
-        label_titulo_modal_eliminar.setName("label_titulo_modal_eliminar");
-        boton_confirmar_eliminar.setName("boton_confirmar_eliminar");
-        boton_crear.setName("boton_crear");
-        panel_info_titulo.setName("panel_info_titulo");
-        text_field_buscar.setName("text_field_buscar");
-        label_buscar.setName("label_buscar");
-        
-        // Vendedor
-        text_field_nombre_v.setName("text_field_nombre_v");
-        text_field_direccion_v.setName("text_field_direccion_v");
-        text_field_latitud_v.setName("text_field_latitud_v");
-        text_field_longitud_v.setName("text_field_longitud_v");
-        label_titulo_modal_vendedor.setName("label_titulo_modal_vendedor");
-        boton_confirmar_vendedor.setName("boton_confirmar_vendedor");
-        
-        //Cliente
-        text_field_cuit_c.setName("text_field_cuit_c");
-        text_field_email_c.setName("text_field_email_c");
-        text_field_direccion_c.setName("text_field_direccion_c");
-        text_field_latitud_c.setName("text_field_latitud_c");
-        text_field_longitud_c.setName("text_field_longitud_c");
-        label_titulo_modal_cliente.setName("label_titulo_modal_cliente");
-        boton_confirmar_cliente.setName("boton_confirmar_cliente");
-        
-        // Pedido
-        text_field_cliente_p.setName("text_field_cliente_p");
-        rbutton_mp_p.setName("rbutton_mp_p");
-        rbutton_transferencia_p.setName("rbutton_transferencia_p");
-        label_titulo_modal_pedido.setName("label_titulo_modal_pedido");
-        boton_confirmar_pedido.setName("boton_confirmar_pedido");
-        
-        
-        tipo_pago_group = new ButtonGroup();
-        tipo_pago_group.add(rbutton_mp_p);
-        tipo_pago_group.add(rbutton_transferencia_p);
-        
-        // Item Menu
-        text_field_nombre_i.setName("text_field_nombre_i");
-        text_field_precio_i.setName("text_field_precio_i");
-        text_area_descripcion_i.setName("text_area_descripcion_i");
-        text_field_categoria_i.setName("text_field_categoria_i");
-        text_field_vendedor_i.setName("text_field_vendedor_i");
-        label_titulo_modal_item_menu.setName("label_titulo_modal_item_menu");
-        boton_confirmar_item_menu.setName("boton_confirmar_item_menu");
-        
-    }
     
     public void inicializarTabla(JTable tabla){
         tabla.setRowSelectionAllowed(true);
@@ -209,6 +159,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         botonListaClientes = new javax.swing.JButton();
         botonListaItemsMenu = new javax.swing.JButton();
         botonListaPedidos = new javax.swing.JButton();
+        label_buscar1 = new javax.swing.JLabel();
         panel_Informacion = new javax.swing.JPanel();
         panel_info = new javax.swing.JPanel();
         panel_info_titulo = new javax.swing.JLabel();
@@ -746,6 +697,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
 
         rbutton_transferencia_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         rbutton_transferencia_p.setText("Transferencia");
+        rbutton_transferencia_p.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         rbutton_mp_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         rbutton_mp_p.setText("Mercado pago");
@@ -841,11 +793,15 @@ public class InterfazGeneral extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jSplitPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jSplitPane1.setDividerLocation(150);
+        jSplitPane1.setDividerSize(3);
+        jSplitPane1.setLastDividerLocation(150);
 
         panel_botones.setBackground(new java.awt.Color(255, 255, 153));
+        panel_botones.setPreferredSize(new java.awt.Dimension(150, 610));
 
         botonListaVendedores.setBackground(new java.awt.Color(255, 102, 153));
-        botonListaVendedores.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        botonListaVendedores.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         botonListaVendedores.setText("Vendedores");
         botonListaVendedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -854,6 +810,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         botonListaClientes.setBackground(new java.awt.Color(255, 102, 153));
+        botonListaClientes.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         botonListaClientes.setText("Clientes");
         botonListaClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -862,6 +819,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         botonListaItemsMenu.setBackground(new java.awt.Color(255, 102, 153));
+        botonListaItemsMenu.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         botonListaItemsMenu.setText("ItemsMenu");
         botonListaItemsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -870,6 +828,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         botonListaPedidos.setBackground(new java.awt.Color(255, 102, 153));
+        botonListaPedidos.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         botonListaPedidos.setText("Pedidos");
         botonListaPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -877,32 +836,43 @@ public class InterfazGeneral extends javax.swing.JFrame {
             }
         });
 
+        label_buscar1.setBackground(new java.awt.Color(102, 0, 102));
+        label_buscar1.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        label_buscar1.setForeground(new java.awt.Color(255, 255, 255));
+        label_buscar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_buscar1.setText("GRUPO 10");
+        label_buscar1.setOpaque(true);
+
         javax.swing.GroupLayout panel_botonesLayout = new javax.swing.GroupLayout(panel_botones);
         panel_botones.setLayout(panel_botonesLayout);
         panel_botonesLayout.setHorizontalGroup(
             panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_botonesLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botonListaVendedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonListaVendedores, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                     .addComponent(botonListaItemsMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botonListaPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(label_buscar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panel_botonesLayout.setVerticalGroup(
             panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_botonesLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(botonListaVendedores)
+                .addComponent(label_buscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonListaClientes)
+                .addComponent(botonListaVendedores, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonListaItemsMenu)
+                .addComponent(botonListaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonListaPedidos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(botonListaItemsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonListaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(329, Short.MAX_VALUE))
         );
+
+        panel_botonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonListaClientes, botonListaItemsMenu, botonListaPedidos, botonListaVendedores});
 
         jSplitPane1.setLeftComponent(panel_botones);
 
@@ -1009,7 +979,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
                         .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1022,11 +992,11 @@ public class InterfazGeneral extends javax.swing.JFrame {
             .addGroup(panel_infoLayout.createSequentialGroup()
                 .addComponent(panel_info_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                     .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(text_field_buscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1054,22 +1024,20 @@ public class InterfazGeneral extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Configuración en el constructor o inicialización de tu clase `Split`
-
-    
     
     private void botonListaPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListaPedidosActionPerformed
         if(interfazActual != interfazPedido) cambiarPanel(interfazPedido, modal_pedido);
@@ -1221,21 +1189,30 @@ public class InterfazGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_rbutton_mp_pActionPerformed
 
     private void mostrarModal(JDialog modal) {
-        
         modal.setSize(500, 300);
-
         modal.setLocationRelativeTo(this);
-
         modal.setVisible(true);
     }
     
     private void mostrarModalEliminar(JDialog modal) {
-        
         modal.setSize(300, 150);
-
         modal.setLocationRelativeTo(this);
-
         modal.setVisible(true);
+    }
+    
+     public void cambiarPanel(InformacionInterfaz nuevaInterfaz, JDialog nuevoModal){
+        nuevaInterfaz.cambiarPanel();
+        cerrarModales();
+        interfazActual = nuevaInterfaz;
+        modal_actual = nuevoModal;
+    }
+     
+    private void cerrarModales(){
+        modal_eliminar.dispose();
+        modal_vendedor.dispose();
+        modal_cliente.dispose();
+        modal_item_menu.dispose();
+        modal_pedido.dispose();
     }
     
     /**
@@ -1272,13 +1249,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
                 new InterfazGeneral().setVisible(true);
             }
         });
-    }
-    
-    
-    public void cambiarPanel(InformacionInterfaz nuevaInterfaz, JDialog nuevoModal){
-        nuevaInterfaz.cambiarPanel();
-        interfazActual = nuevaInterfaz;
-        modal_actual = nuevoModal;
     }
     
 
@@ -1321,6 +1291,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel label_buscar;
+    private javax.swing.JLabel label_buscar1;
     private javax.swing.JLabel label_titulo_modal_cliente;
     private javax.swing.JLabel label_titulo_modal_eliminar;
     private javax.swing.JLabel label_titulo_modal_item_menu;

@@ -7,15 +7,12 @@ package isi.deso.tpdeso2024.utils;
 import isi.deso.tpdeso2024.controllers.ItemMenuController;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -47,32 +44,23 @@ public class InterfazItemMenu implements InformacionInterfaz{
     JLabel panel_info_titulo;
     //JTextField text_field_buscar;
     JLabel label_buscar;
-    
-    
-    // armar constructor con todos los componentes usados!!!
 
-    public InterfazItemMenu(JPanel panel_info, JDialog modal, JDialog modal_eliminar) {
-        
-        //this.panel_info = panel_info;
-        this.modal = modal; 
+    public InterfazItemMenu(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_nombre, JTextArea completar_descripcion, JTextField completar_vendedor, JTextField completar_precio, JTextField completar_categoria, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+        this.modal = modal;
         this.modal_eliminar = modal_eliminar;
-        
-        tabla = (JTable) buscarComponente(panel_info, "tabla");
-        completar_nombre = (JTextField) buscarComponente(modal, "text_field_nombre_i");
-        completar_descripcion = (JTextArea) buscarComponente(modal, "text_area_descripcion_i");
-        completar_precio = (JTextField) buscarComponente(modal, "text_field_precio_i");
-        completar_categoria = (JTextField) buscarComponente(modal, "text_field_categoria_i");
-        completar_vendedor = (JTextField) buscarComponente(modal, "text_field_vendedor_i");
-
-        titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_itemMenu");
-        boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_itemMenu");
-        titulo_modal_eliminar = (JLabel)  buscarComponente(modal_eliminar, "label_titulo_modal_eliminar");
-        boton_confirmar_eliminar = (JButton) buscarComponente(modal_eliminar, "boton_confirmar_eliminar");
-        
-        boton_crear = (JButton) buscarComponente(panel_info, "boton_crear");
-        panel_info_titulo  = (JLabel) buscarComponente(panel_info, "panel_info_titulo");
-        //text_field_buscar  = (JTextField) buscarComponente(panel_info, "text_field_buscar");
-        label_buscar = (JLabel) buscarComponente(panel_info, "label_buscar");
+        this.tabla = tabla;
+        this.completar_nombre = completar_nombre;
+        this.completar_descripcion = completar_descripcion;
+        this.completar_vendedor = completar_vendedor;
+        this.completar_precio = completar_precio;
+        this.completar_categoria = completar_categoria;
+        this.titulo_modal = titulo_modal;
+        this.boton_confirmar = boton_confirmar;
+        this.titulo_modal_eliminar = titulo_modal_eliminar;
+        this.boton_confirmar_eliminar = boton_confirmar_eliminar;
+        this.boton_crear = boton_crear;
+        this.panel_info_titulo = panel_info_titulo;
+        this.label_buscar = label_buscar;
         
         modeloItemMenu = new ModeloTablaItemMenu();
         modeloItemMenu.setNombreColumnas(List.of("Id", "Nombre", "Descripcion", "Precio", "Id Categoria", "Id Vendedor"));
@@ -202,7 +190,7 @@ public class InterfazItemMenu implements InformacionInterfaz{
         }
     }
 
-    @Override
+    /*@Override
     public Component buscarComponente(Container container, String nombre) {
         if (nombre.equals(container.getName())) {
             return container;
@@ -220,7 +208,7 @@ public class InterfazItemMenu implements InformacionInterfaz{
             }
         }
         return null;
-    }
+    }*/
     
     
     

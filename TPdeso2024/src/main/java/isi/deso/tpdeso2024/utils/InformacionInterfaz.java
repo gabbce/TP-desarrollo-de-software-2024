@@ -25,7 +25,7 @@ public interface InformacionInterfaz {
     public void mostrarCrear();
     public void crear();
     public void buscar(String nombre);
-    public Component buscarComponente(Container container, String nombre);
+    //public Component buscarComponente(Container container, String nombre);
     
     
 }

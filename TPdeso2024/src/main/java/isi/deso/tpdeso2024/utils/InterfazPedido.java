@@ -10,15 +10,12 @@ import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.controllers.PedidoController;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -51,34 +48,27 @@ public class InterfazPedido implements InformacionInterfaz{
     JLabel panel_info_titulo;
     //JTextField text_field_buscar;
     JLabel label_buscar;
-    
-    
-    // armar constructor con todos los componentes usados!!!
 
-    public InterfazPedido(JPanel panel_info, JDialog modal, JDialog modal_eliminar) {
-        
-        //this.panel_info = panel_info;
-        this.modal = modal; 
+    public InterfazPedido(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_cliente, JRadioButton rbutton_mp, JRadioButton rbutton_transferencia, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+        this.modal = modal;
         this.modal_eliminar = modal_eliminar;
-        
-        tabla = (JTable) buscarComponente(panel_info, "tabla");
-        completar_cliente = (JTextField) buscarComponente(modal, "text_field_cliente_p");
-        rbutton_mp = (JRadioButton) buscarComponente(modal, "rbutton_mp");
-        rbutton_transferencia = (JRadioButton) buscarComponente(modal, "rbutton_transferencia");
-        titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_pedido");
-        boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_pedido");
-        titulo_modal_eliminar = (JLabel)  buscarComponente(modal_eliminar, "label_titulo_modal_eliminar");
-        boton_confirmar_eliminar = (JButton) buscarComponente(modal_eliminar, "boton_confirmar_eliminar");
-        
-        boton_crear = (JButton) buscarComponente(panel_info, "boton_crear");
-        panel_info_titulo  = (JLabel) buscarComponente(panel_info, "panel_info_titulo");
-        //text_field_buscar  = (JTextField) buscarComponente(panel_info, "text_field_buscar");
-        label_buscar = (JLabel) buscarComponente(panel_info, "label_buscar");
+        this.tabla = tabla;
+        this.completar_cliente = completar_cliente;
+        this.rbutton_mp = rbutton_mp;
+        this.rbutton_transferencia = rbutton_transferencia;
+        this.titulo_modal = titulo_modal;
+        this.boton_confirmar = boton_confirmar;
+        this.titulo_modal_eliminar = titulo_modal_eliminar;
+        this.boton_confirmar_eliminar = boton_confirmar_eliminar;
+        this.boton_crear = boton_crear;
+        this.panel_info_titulo = panel_info_titulo;
+        this.label_buscar = label_buscar;
         
         modeloPedido = new ModeloTablaPedido();
         modeloPedido.setNombreColumnas(List.of("Id", "Tipo Pago", "Estado", "Id cliente"));
-
     }
+    
+
     
     
     @Override
@@ -207,7 +197,7 @@ public class InterfazPedido implements InformacionInterfaz{
         JOptionPane.showMessageDialog(modal, "Error al crear el pedido.");
     }
 
-    @Override
+    /*@Override
     public Component buscarComponente(Container container, String nombre) {
         if (nombre.equals(container.getName())) {
             return container;
@@ -225,6 +215,6 @@ public class InterfazPedido implements InformacionInterfaz{
             }
         }
         return null;
-    }
+    }*/
     
 }

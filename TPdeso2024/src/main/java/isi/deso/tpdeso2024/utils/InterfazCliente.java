@@ -7,15 +7,12 @@ package isi.deso.tpdeso2024.utils;
 import isi.deso.tpdeso2024.controllers.ClienteController;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -48,31 +45,23 @@ public class InterfazCliente implements InformacionInterfaz{
     JLabel panel_info_titulo;
     //JTextField text_field_buscar;
     JLabel label_buscar;
-    
-    
-    // armar constructor con todos los componentes usados!!!
 
-    public InterfazCliente(JPanel panel_info, JDialog modal, JDialog modal_eliminar) {
-        
-        //this.panel_info = panel_info;
-        this.modal = modal; 
+    public InterfazCliente(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_cuit, JTextField completar_email, JTextField completar_direccion, JTextField completar_latitud, JTextField completar_longitud, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+        this.modal = modal;
         this.modal_eliminar = modal_eliminar;
-        
-        tabla = (JTable) buscarComponente(panel_info, "tabla");
-        completar_cuit = (JTextField) buscarComponente(modal, "text_field_cuit");
-        completar_email = (JTextField) buscarComponente(modal, "text_field_email");
-        completar_direccion = (JTextField) buscarComponente(modal, "text_field_direccion");
-        completar_latitud = (JTextField) buscarComponente(modal, "text_field_latitud");
-        completar_longitud = (JTextField) buscarComponente(modal, "text_field_longitud");
-        titulo_modal = (JLabel) buscarComponente(modal, "label_titulo_modal_cliente");
-        boton_confirmar = (JButton) buscarComponente(modal, "boton_confirmar_cliente");
-        titulo_modal_eliminar = (JLabel)  buscarComponente(modal_eliminar, "label_titulo_modal_eliminar");
-        boton_confirmar_eliminar = (JButton) buscarComponente(modal_eliminar, "boton_confirmar_eliminar");
-        
-        boton_crear = (JButton) buscarComponente(panel_info, "boton_crear");
-        panel_info_titulo  = (JLabel) buscarComponente(panel_info, "panel_info_titulo");
-        //text_field_buscar  = (JTextField) buscarComponente(panel_info, "text_field_buscar");
-        label_buscar = (JLabel) buscarComponente(panel_info, "label_buscar");
+        this.tabla = tabla;
+        this.completar_cuit = completar_cuit;
+        this.completar_email = completar_email;
+        this.completar_direccion = completar_direccion;
+        this.completar_latitud = completar_latitud;
+        this.completar_longitud = completar_longitud;
+        this.titulo_modal = titulo_modal;
+        this.boton_confirmar = boton_confirmar;
+        this.titulo_modal_eliminar = titulo_modal_eliminar;
+        this.boton_confirmar_eliminar = boton_confirmar_eliminar;
+        this.boton_crear = boton_crear;
+        this.panel_info_titulo = panel_info_titulo;
+        this.label_buscar = label_buscar;
         
         modeloCliente = new ModeloTablaCliente();
         modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Latitud", "Longitud"));
@@ -200,7 +189,7 @@ public class InterfazCliente implements InformacionInterfaz{
         }
     }
 
-    @Override
+    /*@Override
     public Component buscarComponente(Container container, String nombre) {
         if (nombre.equals(container.getName())) {
             return container;
@@ -218,5 +207,5 @@ public class InterfazCliente implements InformacionInterfaz{
             }
         }
         return null;
-    }
+    }*/
 }
