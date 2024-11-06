@@ -17,11 +17,11 @@ import java.util.List;
  */
 public class ClienteMEMORYDAO implements ClienteDAO {
 
-    private List<Cliente> clientes; //mantiene orden por id
+    private static List<Cliente> clientes; //mantiene orden por id
     private int ultimaID; //se auto incrementa
     // Constructor para inicializar la lista
     public ClienteMEMORYDAO() {
-        this.clientes = new LinkedList<>();
+        ClienteMEMORYDAO.clientes = new LinkedList<>();
         ultimaID = 1; 
     }
 
@@ -54,7 +54,7 @@ public class ClienteMEMORYDAO implements ClienteDAO {
 
     @Override
     public List<Cliente> listar() {
-        return this.clientes;
+        return ClienteMEMORYDAO.clientes;
     }
 
     @Override

@@ -6,6 +6,7 @@ package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Vendedor;
 import isi.deso.tpdeso2024.dtos.VendedorDTO;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.util.List;
 
 /**
@@ -17,5 +18,7 @@ public interface VendedorDAO {
     public boolean eliminar(int id);
     public boolean actualizar(VendedorDTO vdto);
     public List<Vendedor> listar();
-    public List<Vendedor> buscar(String nombre);
+    public List<Vendedor> buscar(String nombre) ;
+
+    public Vendedor buscarPorID(int id) throws VendedorNoEncontradoException;
 }

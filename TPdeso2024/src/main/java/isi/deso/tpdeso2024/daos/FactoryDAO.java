@@ -14,6 +14,7 @@ public abstract class FactoryDAO {
     public abstract ClienteDAO getClienteDAO();
     public abstract ItemMenuDAO getItemMenuDAO();
     public abstract PedidoDAO getPedidoDAO();
+    public abstract CategoriaDAO getCategoriaDAO();
     public static FactoryDAO getFactory(int claveFactory){
         switch (claveFactory) {
             case MEMORY -> {

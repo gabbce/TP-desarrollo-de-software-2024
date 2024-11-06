@@ -7,6 +7,7 @@ package isi.deso.tpdeso2024.daos;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Vendedor;
 import isi.deso.tpdeso2024.dtos.VendedorDTO;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
  */
 public class VendedorMEMORYDAO implements VendedorDAO {
 
-    private List<Vendedor> vendedores; //mantiene orden por id
+    private static List<Vendedor> vendedores; //mantiene orden por id
     private int ultimaID; //se auto incrementa
     // Constructor para inicializar la lista
     public VendedorMEMORYDAO() {
-        this.vendedores = new LinkedList<>();
+        VendedorMEMORYDAO.vendedores = new LinkedList<>();
         ultimaID = 1; 
     }
 
@@ -54,7 +55,7 @@ public class VendedorMEMORYDAO implements VendedorDAO {
 
     @Override
     public List<Vendedor> listar() {
-        return this.vendedores;
+        return VendedorMEMORYDAO.vendedores;
     }
 
     @Override
@@ -76,8 +77,10 @@ public class VendedorMEMORYDAO implements VendedorDAO {
         
         return true;
     }
-    private int buscarPorID(int id){ //no se usa xq mantiene orden por id
-        for (int i = 0; i < vendedores.size(); i++) if(vendedores.get(i).getId()==id)return i;
-        return -1;
+    
+    @Override
+    public Vendedor buscarPorID(int id) throws VendedorNoEncontradoException{
+        for (int i = 0; i < vendedores.size(); i++) if(vendedores.get(i).getId()==id)return vendedores.get(i);
+        throw new VendedorNoEncontradoException("");
     }
 }

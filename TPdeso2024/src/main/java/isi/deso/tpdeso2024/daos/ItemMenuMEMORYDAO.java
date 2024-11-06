@@ -5,7 +5,7 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.ItemMenu;
-import isi.deso.tpdeso2024.ItemNoEncontradoExcepcion;
+import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +21,10 @@ public class ItemMenuMEMORYDAO implements ItemMenuDAO {
     // Constructor para inicializar la lista
     public ItemMenuMEMORYDAO(List<ItemMenu> itemsPedido) {
         this.itemsPedido = itemsPedido;
+    }
+
+    public ItemMenuMEMORYDAO() {
+        this.itemsPedido = new LinkedList<>();
     }
 
     @Override

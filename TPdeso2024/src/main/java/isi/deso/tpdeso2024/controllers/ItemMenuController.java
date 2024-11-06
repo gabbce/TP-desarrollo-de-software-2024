@@ -4,9 +4,17 @@
  */
 package isi.deso.tpdeso2024.controllers;
 
+import isi.deso.tpdeso2024.Bebida;
+import isi.deso.tpdeso2024.Categoria;
 import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.Plato;
+import isi.deso.tpdeso2024.Vendedor;
+import isi.deso.tpdeso2024.daos.CategoriaDAO;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
+import isi.deso.tpdeso2024.daos.ItemMenuDAO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
+import isi.deso.tpdeso2024.excepciones.CategoriaNoEncontradoException;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +32,18 @@ public class ItemMenuController {
         return ItemMenuController.instance;
     }
     
+    private CategoriaDAO catdao;
+    private ItemMenuDAO itemdao;
+    private ItemMenuController(){
+        this.catdao = FactoryDAO.getFactory(1).getCategoriaDAO();
+        this.itemdao = FactoryDAO.getFactory(1).getItemMenuDAO();
+    }
+    
     public void eliminar(int id){
         
     }
     
-    public void actualizar(ItemMenuDTO dto){
+    public void actualizar(ItemMenuDTO dto) throws VendedorNoEncontradoException, CategoriaNoEncontradoException{
         
     }
     
@@ -54,7 +69,28 @@ public class ItemMenuController {
     
     //metodos  buscar, crear, eliminar, actualizar
     
-    public void crear (ItemMenuDTO dto){
+    public void crear (ItemMenuDTO dto) throws VendedorNoEncontradoException, CategoriaNoEncontradoException{
+        int idVendedor = dto.getVendedor().getId();
+        Vendedor v = FactoryDAO.getFactory(1).getVendedorDAO().buscarPorID(idVendedor);
+        Categoria c = this.catdao.buscarPorID(dto.getCategoria().getId());
+        
+        if(dto.isEsComida()){
+        Plato it = new Plato(
+                0,//arbitrario
+                dto.getNombre(),
+                dto.getDescripcion(),
+                dto.getPrecio(),
+                c,
+                v
+        )
+        }
+        else{
+            Bebida it = new Bebida(idVendedor, nombre, descripcion, idVendedor, c, idVendedor, idVendedor, v)
+        
+        }
+        
+        
+        this.itemdao.crear(it);
         
     }
 }

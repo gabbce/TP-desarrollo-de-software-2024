@@ -13,6 +13,16 @@ public class ItemMenuDTO {
     private String nombre;
     private String descripcion;
     
+    private boolean esComida;
+
+    public boolean isEsComida() {
+        return esComida;
+    }
+
+    public void setEsComida(boolean esComida) {
+        this.esComida = esComida;
+    }
+    
     private float precio;
     private CategoriaDTO categoria;
     private VendedorDTO vendedor; //null desde lado de vendedor
@@ -21,13 +31,14 @@ public class ItemMenuDTO {
         return id;
     }
 
-    public ItemMenuDTO(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor) {
+    public ItemMenuDTO(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor, boolean esComida) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
         this.vendedor = vendedor;
+        this.esComida = esComida;
     }
     
     public ItemMenuDTO(int id, String nombre, String descripcion, float precio, int categoria, int vendedor) {

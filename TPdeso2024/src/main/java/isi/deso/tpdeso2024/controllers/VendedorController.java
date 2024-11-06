@@ -14,6 +14,7 @@ import isi.deso.tpdeso2024.dtos.CategoriaDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.VendedorDTO;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.util.*;
 
 /**
@@ -89,6 +90,11 @@ public class VendedorController {
         for(Vendedor v: l)resultado.add(convertirADTO(v));
         
         return resultado;
+    }
+    
+    public VendedorDTO buscarPorID(int id) throws VendedorNoEncontradoException{
+        Vendedor v = this.dao.buscarPorID(id);
+        return this.convertirADTO(v);
     }
     
     public void actualizar(VendedorDTO vdto){

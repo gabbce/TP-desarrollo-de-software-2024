@@ -5,7 +5,7 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.ItemMenu;
-import isi.deso.tpdeso2024.ItemNoEncontradoExcepcion;
+import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
 import java.util.*;
 
 /**
@@ -18,4 +18,11 @@ public interface ItemMenuDAO {
     public ArrayList<ItemMenu> OrdenarPorCriterios(Comparator<ItemMenu> criterio)throws ItemNoEncontradoExcepcion;
     public ArrayList<ItemMenu> BuscarPorRangoDePrecios(float precioMin, float precioMax)throws ItemNoEncontradoExcepcion;
     public ArrayList<ItemMenu> BuscarPorRestaurante(int idVendedor)throws ItemNoEncontradoExcepcion;
+
+    public boolean crear(ItemMenu it);
+    public boolean eliminar(int id);
+    public boolean actualizar(ItemMenu it);
+    public List<ItemMenu> listar();
+    public List<ItemMenu> buscar(String nombre) ;
+
 }
