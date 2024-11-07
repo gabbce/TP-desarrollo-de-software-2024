@@ -32,6 +32,9 @@ public class ItemMenuController {
         return ItemMenuController.instance;
     }
     
+	
+	
+	//Los objetos ItemMenu estan referenciados por Vendedor y por PedidoDetalle. Para operar sobre estos navegar a ellos para conectarlos o desconectarlos y que los agarre el GC
     private CategoriaDAO catdao;
     private ItemMenuDAO itemdao;
     private ItemMenuController(){
@@ -39,8 +42,10 @@ public class ItemMenuController {
         this.itemdao = FactoryDAO.getFactory(1).getItemMenuDAO();
     }
     
+	
     public void eliminar(int id){
-        
+		//hay que eliminarlo del vendedor para que lo levante el 
+        this.itemdao.eliminar(id);
     }
     
     public void actualizar(ItemMenuDTO dto) throws VendedorNoEncontradoException, CategoriaNoEncontradoException{
@@ -74,7 +79,7 @@ public class ItemMenuController {
         Vendedor v = FactoryDAO.getFactory(1).getVendedorDAO().buscarPorID(idVendedor);
         Categoria c = this.catdao.buscarPorID(dto.getCategoria().getId());
         
-        if(dto.isEsComida()){
+        if(dto.esComida()){
         Plato it = new Plato(
                 0,//arbitrario
                 dto.getNombre(),
@@ -82,15 +87,21 @@ public class ItemMenuController {
                 dto.getPrecio(),
                 c,
                 v
-        )
+			);
+			this.itemdao.crear(it); //sobrecargar en el dao
         }
         else{
-            Bebida it = new Bebida(idVendedor, nombre, descripcion, idVendedor, c, idVendedor, idVendedor, v)
-        
+            Bebida it = new Bebida(
+                0,//arbitrario
+                dto.getNombre(),
+                dto.getDescripcion(),
+                dto.getPrecio(),
+				c,
+				dto.getGraduacionAlcoholica(),
+				dto.getTam,
+				v
+				);
+			this.itemdao.crear(it);
         }
-        
-        
-        this.itemdao.crear(it);
-        
     }
 }
