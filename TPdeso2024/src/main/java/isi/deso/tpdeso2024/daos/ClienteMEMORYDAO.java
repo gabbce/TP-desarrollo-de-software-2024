@@ -17,12 +17,10 @@ import java.util.List;
  */
 public class ClienteMEMORYDAO implements ClienteDAO {
 
-    private static List<Cliente> clientes; //mantiene orden por id
-    private int ultimaID; //se auto incrementa
+    private static List<Cliente> clientes = new LinkedList<>();; //mantiene orden por id
+    private static int ultimaID; //se auto incrementa
     // Constructor para inicializar la lista
     public ClienteMEMORYDAO() {
-        ClienteMEMORYDAO.clientes = new LinkedList<>();
-        ultimaID = 1; 
     }
 
     @Override
@@ -37,17 +35,16 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     public boolean eliminar(int id) {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(id);
-        clientes.remove(id-1);
+        for(Cliente v:clientes) if(v.getId()==id)clientes.remove(v);
         return true;  
     }
 
 
     @Override
-    public List<Cliente> buscar(String nombre) {
+    public List<Cliente> buscar(int cuit) {
         ArrayList<Cliente> res = new ArrayList<>();
         for(Cliente v:clientes) {
-            /*String s = v.getNombre().substring(0,nombre.length());
-            if(s.equalsIgnoreCase(nombre)) res.add(v);*/
+            if(v.getCuit()==cuit) res.add(v);
         }
         return res;
     }
@@ -61,17 +58,22 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     public boolean actualizar(ClienteDTO vdto) {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
-        Cliente v = clientes.get(vdto.getId()-1);
+	Cliente v = null;
+        for(Cliente v1:clientes) {
+            if(v1.getId()==vdto.getId()){
+				v=v1;
+			}
+        }
         
-        /*v.setNombre(vdto.getNombre());
+        v.setCuit(vdto.getCuit());
         v.setDireccion(vdto.getDireccion());
         Coordenada c = new Coordenada(
-                vdto.getCoordenada().getLatitud(),
-                vdto.getCoordenada().getLongitud()
+                vdto.getCoordenadas().getLatitud(),
+                vdto.getCoordenadas().getLongitud()
         );
         
-        v.setCoordenadas(c);*/
-        
+        v.setCoordenadas(c);
+        v.setEmail(vdto.getEmail());
         
         
         return true;

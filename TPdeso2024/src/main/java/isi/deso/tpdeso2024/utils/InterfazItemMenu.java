@@ -7,8 +7,12 @@ package isi.deso.tpdeso2024.utils;
 import isi.deso.tpdeso2024.controllers.ItemMenuController;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
+import isi.deso.tpdeso2024.excepciones.CategoriaNoEncontradoException;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.awt.HeadlessException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -140,6 +144,11 @@ public class InterfazItemMenu implements InformacionInterfaz{
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal, "Error al actualizar el itemMenu.");
+       //CATCH para las nuevas excepciones
+        } catch (VendedorNoEncontradoException ex) {
+            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CategoriaNoEncontradoException ex) {
+            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -174,6 +183,8 @@ public class InterfazItemMenu implements InformacionInterfaz{
     
     @Override
     public void crear() {
+        
+        
         ItemMenuDTO itemMenuDTO = new ItemMenuDTO(completar_nombre.getText(),
                 completar_descripcion.getText(), Float.parseFloat(completar_precio.getText()), 
                 Integer.parseInt(completar_categoria.getText()), Integer.parseInt(completar_vendedor.getText())
@@ -187,6 +198,10 @@ public class InterfazItemMenu implements InformacionInterfaz{
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal, "Error al crear el item menu.");
+        } catch (VendedorNoEncontradoException ex) {
+            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CategoriaNoEncontradoException ex) {
+            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

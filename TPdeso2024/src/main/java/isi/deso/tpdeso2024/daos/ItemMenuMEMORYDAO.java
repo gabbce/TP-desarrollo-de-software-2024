@@ -15,9 +15,8 @@ import java.util.stream.Collectors;
  */
 
 public class ItemMenuMEMORYDAO implements ItemMenuDAO {
-
+//muy probable que no se use esta clase
     private List<ItemMenu> itemsPedido;
-
     // Constructor para inicializar la lista
     public ItemMenuMEMORYDAO(List<ItemMenu> itemsPedido) {
         this.itemsPedido = itemsPedido;
@@ -95,5 +94,30 @@ public class ItemMenuMEMORYDAO implements ItemMenuDAO {
         }
 
         return new ArrayList<>(resultados);
+    }
+
+    @Override
+    public boolean crear(ItemMenu it) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean eliminar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean actualizar(ItemMenu it) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ItemMenu> listar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<ItemMenu> buscar(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

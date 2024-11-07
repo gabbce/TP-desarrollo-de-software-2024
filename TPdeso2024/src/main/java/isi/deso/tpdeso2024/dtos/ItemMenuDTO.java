@@ -29,7 +29,7 @@ public class ItemMenuDTO {
         this.precio = precio;
         this.categoria = categoria;
         this.vendedor = vendedor;
-        this.esComida = esComida;
+        //this.esComida = esComida;
     }
     
     public ItemMenuDTO(int id, String nombre, String descripcion, float precio, int categoria, int vendedor) {

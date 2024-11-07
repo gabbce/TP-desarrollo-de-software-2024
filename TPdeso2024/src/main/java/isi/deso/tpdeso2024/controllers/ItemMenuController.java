@@ -79,7 +79,7 @@ public class ItemMenuController {
         Vendedor v = FactoryDAO.getFactory(1).getVendedorDAO().buscarPorID(idVendedor);
         Categoria c = this.catdao.buscarPorID(dto.getCategoria().getId());
         
-        if(dto.esComida()){
+        /*if(dto.esComida()){
         Plato it = new Plato(
                 0,//arbitrario
                 dto.getNombre(),
@@ -102,6 +102,6 @@ public class ItemMenuController {
 				v
 				);
 			this.itemdao.crear(it);
-        }
+        }*/
     }
 }

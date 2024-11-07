@@ -17,5 +17,5 @@ public interface ClienteDAO {
     public boolean eliminar(int id);
     public boolean actualizar(ClienteDTO vdto);
     public List<Cliente> listar();
-    public List<Cliente> buscar(String nombre);
+    public List<Cliente> buscar(int cuit);
 }

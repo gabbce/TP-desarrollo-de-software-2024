@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class VendedorMEMORYDAO implements VendedorDAO {
 
-    private static List<Vendedor> vendedores; //mantiene orden por id
-    private int ultimaID; //se auto incrementa
+    private static List<Vendedor> vendedores= new LinkedList<>();; //mantiene orden por id
+    private static int ultimaID = 1; //se auto incrementa
     // Constructor para inicializar la lista
     public VendedorMEMORYDAO() {
-        VendedorMEMORYDAO.vendedores = new LinkedList<>();
-        ultimaID = 1; 
     }
 
     @Override
@@ -38,7 +36,8 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     public boolean eliminar(int id) {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(id);
-        vendedores.remove(id-1);
+		//es una linked list, no hay mas rapido que recorrer :v
+        for(Vendedor v:vendedores) if(v.getId()==id)vendedores.remove(v);
         return true;  
     }
 

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024;
+package isi.deso.tpdeso2024.dtos;
 
 /**
  *
@@ -16,7 +16,7 @@ public class PlatoDTO extends ItemMenuDTO {
     private boolean aptoCeliaco;
     private boolean aptoVegano;
 
-    public Plato(int id,float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor) {
+    public PlatoDTO(int id,float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor) {
        // super(id, nombre, descripcion, precio, categoria);
        super(id,nombre,descripcion,precio,categoria,vendedor); 
        this.peso = peso;

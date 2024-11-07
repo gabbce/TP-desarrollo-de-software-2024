@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024;
+package isi.deso.tpdeso2024.dtos;
 
 /**
  *
@@ -13,7 +13,7 @@ public class BebidaDTO extends ItemMenuDTO{
     private float tam; //mililitros?
     
     
-    public Bebida(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, float graduacionAlcoholica, float tam, VendedorDTO vendedor){
+    public BebidaDTO(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, float graduacionAlcoholica, float tam, VendedorDTO vendedor){
     
         super(id,nombre,descripcion,precio,categoria,vendedor);
         this.graduacionAlcoholica=graduacionAlcoholica;

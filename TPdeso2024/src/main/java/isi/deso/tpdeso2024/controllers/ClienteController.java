@@ -45,49 +45,51 @@ public class ClienteController {
                 dto.getCuit(),
                 dto.getEmail(),
                 dto.getDireccion(),
-                 c
+                c
         );        
+		ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+		dao.crear(v);
         //this.dao.crear(v);
     }
     
     
     public List<ClienteDTO> listar(){
-        
-        /*List<Cliente> lista = this.dao.listar();
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        List<Cliente> lista = dao.listar();
         
         List<ClienteDTO> resultado = new ArrayList<>();
         
         for(Cliente c:lista) resultado.add(this.convertirADTO(c));
         
-        return resultado;*/
-        
-        return new ArrayList<>();
-    }
+        return resultado;
+		}
     
     
     
     public void eliminar(int id){
-        
-       // this.dao.eliminar(id);
+       ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+       dao.eliminar(id);
     
     }
     
-    public List<ClienteDTO> buscar(String nombreSubstring){
+    public List<ClienteDTO> buscar(int cuit){
         //nombre es substring de nombre. Ignore case
         
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
         
-       /* List<Cliente> l = this.dao.buscar(nombreSubstring);
+		List<Cliente> l = dao.buscar(cuit);
         
         List<ClienteDTO> resultado = new ArrayList<>();
         for(Cliente v: l)resultado.add(convertirADTO(v));
         
-        return resultado;*/ return new ArrayList<>();
+        return resultado;// return new ArrayList<>();
     }
     
     public void actualizar(ClienteDTO dto){
         //buscar el id del dto y actualizar con los otros datos
-        
-        //this.dao.actualizar(dto);
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        dao.actualizar(dto);
+		
     }
     
     private ClienteDTO convertirADTO(Cliente v){

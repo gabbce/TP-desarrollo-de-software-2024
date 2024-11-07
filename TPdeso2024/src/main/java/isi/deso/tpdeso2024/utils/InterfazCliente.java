@@ -144,7 +144,7 @@ public class InterfazCliente implements InformacionInterfaz{
 
     @Override
     public void buscar(String nombre) {
-        if("".equals(nombre)){
+        /*if("".equals(nombre)){
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
         }
         else{
@@ -152,7 +152,7 @@ public class InterfazCliente implements InformacionInterfaz{
             System.out.println(clienteController.buscar(nombre));
         }
         
-        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
+        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);*/
     }
 
     @Override
