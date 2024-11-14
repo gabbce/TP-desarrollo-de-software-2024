@@ -8,7 +8,7 @@ package isi.deso.tpdeso2024.daos;
  * @author augus
  */
 public abstract class FactoryDAO {
-    public static final int MEMORY = 1;
+    public static final int SQL = 1;
 
     public abstract VendedorDAO getVendedorDAO();
     public abstract ClienteDAO getClienteDAO();
@@ -18,7 +18,7 @@ public abstract class FactoryDAO {
     public static FactoryDAO getFactory(int claveFactory){
         switch (claveFactory) {
             case MEMORY -> {
-                return new MEMORYFactoryDAO();
+                return new SQLFactoryDAO();
             }
         }
         return null; //Netbeans exige que retorne
