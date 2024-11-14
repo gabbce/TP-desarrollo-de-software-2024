@@ -7,6 +7,7 @@ package isi.deso.tpdeso2024.daos;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,12 @@ public class ClienteMEMORYDAO implements ClienteDAO {
             if(v.getCuit()==cuit) res.add(v);
         }
         return res;
+    }
+    
+    @Override
+    public Cliente buscarPorID(int id) throws ClienteNoEncontradoException{
+        for (int i = 0; i < clientes.size(); i++) if(clientes.get(i).getId()==id)return clientes.get(i);
+        throw new ClienteNoEncontradoException("No existe el cliente con id " + id);
     }
 
     @Override

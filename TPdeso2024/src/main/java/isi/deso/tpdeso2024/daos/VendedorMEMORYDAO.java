@@ -80,6 +80,6 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     @Override
     public Vendedor buscarPorID(int id) throws VendedorNoEncontradoException{
         for (int i = 0; i < vendedores.size(); i++) if(vendedores.get(i).getId()==id)return vendedores.get(i);
-        throw new VendedorNoEncontradoException("");
+        throw new VendedorNoEncontradoException("no existe el vendedor con id " + id);
     }
 }

@@ -60,8 +60,9 @@ public class ModeloTablaVendedor extends AbstractTableModel {
             case 0 -> vendedor.getId();
             case 1 -> vendedor.getNombre();
             case 2 -> vendedor.getDireccion();
-            case 3 -> vendedor.getCoordenada().getLatitud();
-            case 4 -> vendedor.getCoordenada().getLongitud();
+            case 3 -> "(" + String.valueOf(vendedor.getCoordenada().getLatitud()) + "; " + String.valueOf(vendedor.getCoordenada().getLongitud()) + ")";
+            /*case 3 -> vendedor.getCoordenada().getLatitud();
+            case 4 -> vendedor.getCoordenada().getLongitud();*/
             default -> null;
         };
     }
@@ -75,8 +76,8 @@ public class ModeloTablaVendedor extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> Integer.class;
-            case 1, 2 -> String.class;
-            case 3, 4 -> Double.class;
+            case 1, 2, 3 -> String.class;
+            //case 3, 4 -> Double.class;
             default -> Object.class;
         };
     }

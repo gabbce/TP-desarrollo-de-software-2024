@@ -14,6 +14,7 @@ import isi.deso.tpdeso2024.dtos.CategoriaDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import java.util.*;
 
 /**
@@ -83,6 +84,14 @@ public class ClienteController {
         for(Cliente v: l)resultado.add(convertirADTO(v));
         
         return resultado;// return new ArrayList<>();
+    }
+    
+    public ClienteDTO buscarPorID(int id) throws ClienteNoEncontradoException{
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        
+        ClienteDTO c = convertirADTO(dao.buscarPorID(id));
+        
+        return c;
     }
     
     public void actualizar(ClienteDTO dto){

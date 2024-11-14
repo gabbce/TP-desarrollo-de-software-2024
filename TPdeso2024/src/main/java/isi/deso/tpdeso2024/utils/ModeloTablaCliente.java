@@ -58,8 +58,7 @@ public class ModeloTablaCliente extends AbstractTableModel {
             case 1 -> cliente.getCuit();
             case 2 -> cliente.getEmail();
             case 3 -> cliente.getDireccion();
-            case 4 -> cliente.getCoordenadas().getLatitud();
-            case 5 -> cliente.getCoordenadas().getLongitud();
+            case 4 -> "(" + String.valueOf(cliente.getCoordenadas().getLatitud()) + "; " + String.valueOf(cliente.getCoordenadas().getLongitud()) + ")";
             default -> null;
         };
     }
@@ -73,8 +72,7 @@ public class ModeloTablaCliente extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0, 1 -> Integer.class;
-            case 2, 3 -> String.class;
-            case 4, 5 -> Double.class;
+            case 2, 3, 4 -> String.class;
             default -> Object.class;
         };
     }

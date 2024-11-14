@@ -1161,7 +1161,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_rbutton_mp_pActionPerformed
 
     private void mostrarModal(JDialog modal) {
-        modal.setSize(500, 350);
+        modal.setSize(520, 350);
         modal.setLocationRelativeTo(this);
         modal.setVisible(true);
     }

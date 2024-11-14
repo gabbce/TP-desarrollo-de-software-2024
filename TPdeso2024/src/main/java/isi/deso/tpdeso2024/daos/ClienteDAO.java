@@ -6,6 +6,7 @@ package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import java.util.List;
 
 /**
@@ -18,4 +19,5 @@ public interface ClienteDAO {
     public boolean actualizar(ClienteDTO vdto);
     public List<Cliente> listar();
     public List<Cliente> buscar(int cuit);
+    public Cliente buscarPorID(int id) throws ClienteNoEncontradoException;
 }

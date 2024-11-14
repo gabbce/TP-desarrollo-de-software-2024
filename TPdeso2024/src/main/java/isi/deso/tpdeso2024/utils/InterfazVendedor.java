@@ -4,11 +4,15 @@
  */
 package isi.deso.tpdeso2024.utils;
 
+import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.controllers.VendedorController;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.VendedorDTO;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.awt.HeadlessException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -63,7 +67,7 @@ public class InterfazVendedor implements InformacionInterfaz{
         this.label_buscar = label_buscar;
         
         this.modeloVendedor = new ModeloTablaVendedor();
-        this.modeloVendedor.setNombreColumnas(List.of("Id", "Nombre", "Dirección", "Latitud", "Longitud"));
+        this.modeloVendedor.setNombreColumnas(List.of("Id", "Nombre", "Dirección", "Coordenadas"/*, "Latitud", "Longitud"*/));
     }
     
     
@@ -106,8 +110,13 @@ public class InterfazVendedor implements InformacionInterfaz{
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
         String nombre = (String) tabla.getValueAt(filaSeleccionada, 1);
         String direccion = (String) tabla.getValueAt(filaSeleccionada, 2);
-        String latitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 3));
-        String longitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
+        String coordenada = (String) tabla.getValueAt(filaSeleccionada, 3);
+        
+        // Quitar paréntesis y dividir por el punto y coma
+        String[] partes = coordenada.replace("(", "").replace(")", "").split(";");
+        
+        String latitud = partes[0].trim();
+        String longitud = partes[1].trim();
 
         completar_nombre.setText(nombre);
         completar_direccion.setText(direccion);

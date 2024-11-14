@@ -10,11 +10,11 @@ package isi.deso.tpdeso2024.dtos;
  */
 public class CoordenadaDTO {
 
-    
-    private double longitud;
     private double latitud;
+    private double longitud;
+   
 
-    public CoordenadaDTO(double longitud, double latitud) {
+    public CoordenadaDTO(double latitud, double longitud) {
         this.longitud = longitud;
         this.latitud = latitud;
     }

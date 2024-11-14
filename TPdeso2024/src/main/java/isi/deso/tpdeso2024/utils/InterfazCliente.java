@@ -64,7 +64,7 @@ public class InterfazCliente implements InformacionInterfaz{
         this.label_buscar = label_buscar;
         
         modeloCliente = new ModeloTablaCliente();
-        modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Dirección", "Latitud", "Longitud"));
+        modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Dirección", "Coordenadas"));
 
     }
     
@@ -109,8 +109,13 @@ public class InterfazCliente implements InformacionInterfaz{
         String cuit = String.valueOf(tabla.getValueAt(filaSeleccionada, 1));
         String email = (String) tabla.getValueAt(filaSeleccionada, 2);
         String direccion = (String) tabla.getValueAt(filaSeleccionada, 3);
-        String latitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
-        String longitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 5));
+        String coordenada = (String) tabla.getValueAt(filaSeleccionada, 4);
+        
+        // Quitar paréntesis y dividir por el punto y coma
+        String[] partes = coordenada.replace("(", "").replace(")", "").split(";");
+        
+        String latitud = partes[0].trim();
+        String longitud = partes[1].trim();
 
         completar_cuit.setText(cuit);
         completar_email.setText(email);
@@ -144,15 +149,15 @@ public class InterfazCliente implements InformacionInterfaz{
 
     @Override
     public void buscar(String nombre) {
-        /*if("".equals(nombre)){
+        if("".equals(nombre)){
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
         }
         else{
-            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscar(nombre));
-            System.out.println(clienteController.buscar(nombre));
+            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscar(Integer.parseInt(nombre)));
+            //System.out.println(clienteController.buscar(Integer.getInteger(nombre)));
         }
         
-        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);*/
+        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
     }
 
     @Override
