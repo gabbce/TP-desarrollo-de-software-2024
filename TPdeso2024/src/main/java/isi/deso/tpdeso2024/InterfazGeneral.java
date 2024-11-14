@@ -11,14 +11,11 @@ package isi.deso.tpdeso2024;
 
 
 import isi.deso.tpdeso2024.controllers.*;
-import isi.deso.tpdeso2024.dtos.*;
 import isi.deso.tpdeso2024.utils.*;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
 import java.awt.CardLayout;
-import java.util.Arrays;
 
 public class InterfazGeneral extends javax.swing.JFrame {
 
@@ -31,7 +28,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private JDialog modal_actual;
     private final VendedorController vendedorController;
     private CardLayout cardLayout;
-    
     private ButtonGroup tipo_pago_group;
     
     
@@ -150,9 +146,8 @@ public class InterfazGeneral extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         text_field_cliente_p = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        rbutton_transferencia_p = new javax.swing.JRadioButton();
         rbutton_mp_p = new javax.swing.JRadioButton();
+        rbutton_transferencia_p = new javax.swing.JRadioButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         panel_botones = new javax.swing.JPanel();
         botonListaVendedores = new javax.swing.JButton();
@@ -174,6 +169,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_modal_vendedor.setBackground(new java.awt.Color(255, 204, 204));
 
         boton_confirmar_vendedor.setBackground(new java.awt.Color(0, 102, 0));
+        boton_confirmar_vendedor.setForeground(new java.awt.Color(255, 255, 255));
         boton_confirmar_vendedor.setText("Crear");
         boton_confirmar_vendedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +178,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         boton_cancelar_vendedor.setBackground(new java.awt.Color(102, 0, 0));
+        boton_cancelar_vendedor.setForeground(new java.awt.Color(255, 255, 255));
         boton_cancelar_vendedor.setText("Cancelar");
         boton_cancelar_vendedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,33 +227,33 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_modal_vendedor.setLayout(panel_modal_vendedorLayout);
         panel_modal_vendedorLayout.setHorizontalGroup(
             panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modal_vendedorLayout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
-                .addComponent(boton_cancelar_vendedor)
-                .addGap(97, 97, 97)
-                .addComponent(boton_confirmar_vendedor)
-                .addGap(101, 101, 101))
             .addComponent(label_titulo_modal_vendedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_modal_vendedorLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(129, 129, 129)
+                .addComponent(boton_cancelar_vendedor)
+                .addGap(90, 90, 90)
+                .addComponent(boton_confirmar_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modal_vendedorLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel11)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(text_field_longitud_v)
-                    .addComponent(text_field_latitud_v)
-                    .addComponent(text_field_nombre_v)
-                    .addComponent(text_field_direccion_v))
-                .addContainerGap())
+                .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(text_field_direccion_v, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(text_field_latitud_v, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(text_field_longitud_v, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(text_field_nombre_v, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
         panel_modal_vendedorLayout.setVerticalGroup(
             panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_modal_vendedorLayout.createSequentialGroup()
                 .addComponent(label_titulo_modal_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(text_field_nombre_v, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -272,26 +269,28 @@ public class InterfazGeneral extends javax.swing.JFrame {
                 .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(text_field_longitud_v, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(panel_modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton_confirmar_vendedor)
-                    .addComponent(boton_cancelar_vendedor))
-                .addGap(20, 20, 20))
+                    .addComponent(boton_cancelar_vendedor)
+                    .addComponent(boton_confirmar_vendedor))
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout modal_vendedorLayout = new javax.swing.GroupLayout(modal_vendedor.getContentPane());
         modal_vendedor.getContentPane().setLayout(modal_vendedorLayout);
         modal_vendedorLayout.setHorizontalGroup(
             modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_modal_vendedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(modal_vendedorLayout.createSequentialGroup()
+                    .addComponent(panel_modal_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         modal_vendedorLayout.setVerticalGroup(
             modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
             .addGroup(modal_vendedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_modal_vendedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel_modal_vendedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         modal_eliminar.setBackground(new java.awt.Color(51, 0, 51));
@@ -299,6 +298,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_modal_eliminar.setBackground(new java.awt.Color(204, 204, 204));
 
         boton_confirmar_eliminar.setBackground(new java.awt.Color(0, 102, 0));
+        boton_confirmar_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         boton_confirmar_eliminar.setText("Confirmar");
         boton_confirmar_eliminar.setMaximumSize(new java.awt.Dimension(76, 23));
         boton_confirmar_eliminar.setMinimumSize(new java.awt.Dimension(76, 23));
@@ -309,6 +309,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         boton_cancelar_eliminar.setBackground(new java.awt.Color(102, 0, 0));
+        boton_cancelar_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         boton_cancelar_eliminar.setText("Cancelar");
         boton_cancelar_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +363,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_modal_cliente.setBackground(new java.awt.Color(255, 204, 204));
 
         boton_confirmar_cliente.setBackground(new java.awt.Color(0, 102, 0));
+        boton_confirmar_cliente.setForeground(new java.awt.Color(255, 255, 255));
         boton_confirmar_cliente.setText("Crear");
         boton_confirmar_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,6 +372,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
         });
 
         boton_cancelar_cliente.setBackground(new java.awt.Color(102, 0, 0));
+        boton_cancelar_cliente.setForeground(new java.awt.Color(255, 255, 255));
         boton_cancelar_cliente.setText("Cancelar");
         boton_cancelar_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,12 +433,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_modal_cliente.setLayout(panel_modal_clienteLayout);
         panel_modal_clienteLayout.setHorizontalGroup(
             panel_modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modal_clienteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(boton_cancelar_cliente)
-                .addGap(97, 97, 97)
-                .addComponent(boton_confirmar_cliente)
-                .addGap(101, 101, 101))
             .addComponent(label_titulo_modal_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_modal_clienteLayout.createSequentialGroup()
                 .addContainerGap()
@@ -451,8 +448,14 @@ public class InterfazGeneral extends javax.swing.JFrame {
                     .addComponent(text_field_longitud_c)
                     .addComponent(text_field_latitud_c)
                     .addComponent(text_field_cuit_c)
-                    .addComponent(text_field_direccion_c, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                    .addComponent(text_field_direccion_c))
                 .addContainerGap())
+            .addGroup(panel_modal_clienteLayout.createSequentialGroup()
+                .addGap(123, 123, 123)
+                .addComponent(boton_cancelar_cliente)
+                .addGap(97, 97, 97)
+                .addComponent(boton_confirmar_cliente)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         panel_modal_clienteLayout.setVerticalGroup(
             panel_modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,32 +481,26 @@ public class InterfazGeneral extends javax.swing.JFrame {
                 .addGroup(panel_modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(text_field_longitud_c, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(panel_modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_confirmar_cliente)
                     .addComponent(boton_cancelar_cliente))
-                .addGap(20, 20, 20))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout modal_clienteLayout = new javax.swing.GroupLayout(modal_cliente.getContentPane());
         modal_cliente.getContentPane().setLayout(modal_clienteLayout);
         modal_clienteLayout.setHorizontalGroup(
             modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(modal_clienteLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(panel_modal_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(panel_modal_cliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modal_clienteLayout.setVerticalGroup(
             modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
             .addGroup(modal_clienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(modal_clienteLayout.createSequentialGroup()
-                    .addGap(0, 3, Short.MAX_VALUE)
-                    .addComponent(panel_modal_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 3, Short.MAX_VALUE)))
+                .addComponent(panel_modal_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         modal_item_menu.setBackground(new java.awt.Color(0, 0, 0));
@@ -581,35 +578,32 @@ public class InterfazGeneral extends javax.swing.JFrame {
                         .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel16))
+                        .addGap(18, 18, 18)
                         .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(boton_cancelar_item_menu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(boton_confirmar_item_menu)
-                                .addGap(107, 107, 107))
-                            .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(text_field_nombre_i)
-                                    .addComponent(jScrollPane2))
-                                .addContainerGap())))
+                            .addComponent(text_field_nombre_i)
+                            .addComponent(jScrollPane2)))
                     .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
                         .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel17))
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel15))
                         .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(text_field_categoria_i, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(text_field_vendedor_i, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
+                                .addComponent(boton_cancelar_item_menu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(boton_confirmar_item_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105))
                             .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(text_field_precio_i)))
-                        .addContainerGap())))
+                                .addGap(12, 12, 12)
+                                .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panel_modal_item_menuLayout.createSequentialGroup()
+                                        .addComponent(text_field_categoria_i, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(text_field_vendedor_i, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(text_field_precio_i))))))
+                .addContainerGap())
         );
         panel_modal_item_menuLayout.setVerticalGroup(
             panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,7 +616,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
@@ -633,24 +627,24 @@ public class InterfazGeneral extends javax.swing.JFrame {
                     .addComponent(text_field_categoria_i, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(text_field_vendedor_i, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton_confirmar_item_menu)
-                    .addComponent(boton_cancelar_item_menu))
-                .addGap(20, 20, 20))
+                    .addComponent(boton_cancelar_item_menu)
+                    .addComponent(boton_confirmar_item_menu))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout modal_item_menuLayout = new javax.swing.GroupLayout(modal_item_menu.getContentPane());
         modal_item_menu.getContentPane().setLayout(modal_item_menuLayout);
         modal_item_menuLayout.setHorizontalGroup(
             modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panel_modal_item_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modal_item_menuLayout.setVerticalGroup(
             modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 302, Short.MAX_VALUE)
             .addGroup(modal_item_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panel_modal_item_menu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -693,12 +687,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
         jLabel22.setLabelFor(text_field_direccion_v);
         jLabel22.setText("Tipo de pago");
 
-        jPanel1.setBackground(new java.awt.Color(255, 153, 153));
-
-        rbutton_transferencia_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        rbutton_transferencia_p.setText("Transferencia");
-        rbutton_transferencia_p.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
         rbutton_mp_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         rbutton_mp_p.setText("Mercado pago");
         rbutton_mp_p.addActionListener(new java.awt.event.ActionListener() {
@@ -707,28 +695,9 @@ public class InterfazGeneral extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rbutton_transferencia_p)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rbutton_mp_p)
-                .addContainerGap())
-        );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {rbutton_mp_p, rbutton_transferencia_p});
-
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(rbutton_transferencia_p)
-                .addComponent(rbutton_mp_p))
-        );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {rbutton_mp_p, rbutton_transferencia_p});
+        rbutton_transferencia_p.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        rbutton_transferencia_p.setText("Transferencia");
+        rbutton_transferencia_p.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout panel_modal_pedidoLayout = new javax.swing.GroupLayout(panel_modal_pedido);
         panel_modal_pedido.setLayout(panel_modal_pedidoLayout);
@@ -736,56 +705,59 @@ public class InterfazGeneral extends javax.swing.JFrame {
             panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(label_titulo_modal_pedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addGap(21, 21, 21)
-                        .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
-                                .addComponent(boton_cancelar_pedido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                                .addComponent(boton_confirmar_pedido)
-                                .addGap(107, 107, 107))
-                            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
-                                .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addGap(41, 41, 41)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(85, 85, 85))))
+                .addGap(106, 106, 106)
+                .addComponent(boton_cancelar_pedido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                .addComponent(boton_confirmar_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(113, 113, 113))
+            .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel22)
+                .addGap(18, 18, 18)
+                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rbutton_mp_p, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rbutton_transferencia_p, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46))
         );
         panel_modal_pedidoLayout.setVerticalGroup(
             panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
                 .addComponent(label_titulo_modal_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(69, 69, 69)
                 .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(text_field_cliente_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel21))
+                    .addGroup(panel_modal_pedidoLayout.createSequentialGroup()
+                        .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbutton_mp_p)
+                            .addComponent(jLabel22))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbutton_transferencia_p)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(panel_modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton_confirmar_pedido)
-                    .addComponent(boton_cancelar_pedido))
+                    .addComponent(boton_cancelar_pedido)
+                    .addComponent(boton_confirmar_pedido))
                 .addGap(20, 20, 20))
         );
+
+        panel_modal_pedidoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {rbutton_mp_p, rbutton_transferencia_p});
 
         javax.swing.GroupLayout modal_pedidoLayout = new javax.swing.GroupLayout(modal_pedido.getContentPane());
         modal_pedido.getContentPane().setLayout(modal_pedidoLayout);
         modal_pedidoLayout.setHorizontalGroup(
             modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panel_modal_pedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modal_pedidoLayout.setVerticalGroup(
             modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
             .addGroup(modal_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panel_modal_pedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -970,21 +942,21 @@ public class InterfazGeneral extends javax.swing.JFrame {
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_infoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(boton_crear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(label_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_infoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(panel_infoLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(boton_crear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addComponent(label_buscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panel_infoLayout.setVerticalGroup(
@@ -992,10 +964,10 @@ public class InterfazGeneral extends javax.swing.JFrame {
             .addGroup(panel_infoLayout.createSequentialGroup()
                 .addComponent(panel_info_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(text_field_buscar))
+                    .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -1189,7 +1161,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_rbutton_mp_pActionPerformed
 
     private void mostrarModal(JDialog modal) {
-        modal.setSize(500, 300);
+        modal.setSize(500, 350);
         modal.setLocationRelativeTo(this);
         modal.setVisible(true);
     }
@@ -1286,7 +1258,6 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
