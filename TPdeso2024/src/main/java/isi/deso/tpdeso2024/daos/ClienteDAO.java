@@ -16,8 +16,8 @@ import java.util.List;
 public interface ClienteDAO {
     public boolean crear(Cliente v);
     public boolean eliminar(int id);
-    public boolean actualizar(ClienteDTO vdto);
+    public boolean actualizar(Cliente v);
     public List<Cliente> listar();
-    public List<Cliente> buscar(int cuit);
+    public List<Cliente> buscarPorCuit(int cuit);
     public Cliente buscarPorID(int id) throws ClienteNoEncontradoException;
 }

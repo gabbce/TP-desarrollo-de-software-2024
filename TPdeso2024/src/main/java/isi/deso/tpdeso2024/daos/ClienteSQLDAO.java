@@ -6,7 +6,9 @@ package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Cliente;
-import isi.deso.tpdeso2024.dtos.ClienteDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,10 +36,10 @@ public class ClienteSQLDAO implements ClienteDAO {
         
         //setear valores
         preparedStatement.setInt(1, v.getCuit());
-        preparedStatement.setString(2, v.getMail());
+        preparedStatement.setString(2, v.getEmail());
         preparedStatement.setString(3, v.getDireccion());
-        preparedStatement.setFloat(4, v.getCoordenadas().getLatitud());
-        preparedStatement.setFloat(5, v.getCoordenadas().getLongitud());
+        preparedStatement.setDouble(4, v.getCoordenadas().getLatitud());
+        preparedStatement.setDouble(5, v.getCoordenadas().getLongitud());
 
         
         preparedStatement.executeUpdate();
@@ -45,7 +47,7 @@ public class ClienteSQLDAO implements ClienteDAO {
         this.conector.cerrar();
         }
         catch(Exception e){
-            System.out.println("excepcion en "+ Class.getSimpleName() + ".create() " + e.getMessage());
+            System.out.println("excepcion en "+ this.getClass().getName() + ".create() " + e.getMessage());
             return false;
         } 
         return true;
@@ -69,7 +71,7 @@ public class ClienteSQLDAO implements ClienteDAO {
         this.conector.cerrar();
         }
         catch(Exception e){
-            System.out.println("excepcion en "+ Class.getSimpleName() + ".eliminar() " + e.getMessage());
+            System.out.println("excepcion en "+ this.getClass().getName() + ".eliminar() " + e.getMessage());
             return false;
         } 
         return true;  
@@ -77,35 +79,30 @@ public class ClienteSQLDAO implements ClienteDAO {
 
 
     @Override
-	public List<Cliente> buscar(int cuit) {
-		System.out.println("no tengo ganas de ir a la interfaz");
-		return null;
-	}
-	
-    public List<ClienteDTO> buscar(int cuit) {
+    public List<Cliente> buscarPorCuit(int cuit) {
 		try{
         this.conector.conectar();
         
-       
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT FROM Cliente WHERE cuit = ?;								
-		""");
+                SELECT * FROM Cliente WHERE CAST(cuit AS TEXT) LIKE ?;
+            """);
+
+                    preparedStatement.setString(1, cuit + "%");
+
         
-        //setear valores
-        preparedStatement.setString(1, cuit);
         
 		
-		ArrayList<ClienteDTO> ret = new ArrayList<>();
+		ArrayList<Cliente> ret = new ArrayList<>();
         ResultSet resultados = preparedStatement.executeQuery();
 		while(resultados.next()){
-			ClienteDTO tmp = new ClienteDTO(
+			Cliente tmp = new Cliente(
 				resultados.getInt(1),
 				resultados.getInt(2),
 				resultados.getString(3),
 				resultados.getString(4),
-				new CoordenadaDTO(
+				new Coordenada(
 					resultados.getFloat(5),
-					resultados.getFloat(6),
+					resultados.getFloat(6)
 				)
 			);
 			ret.add(tmp);
@@ -115,77 +112,71 @@ public class ClienteSQLDAO implements ClienteDAO {
 		
         preparedStatement.close();
         this.conector.cerrar();
+        
+        return ret;
         }
         catch(Exception e){
-            System.out.println("excepcion en "+ Class.getSimpleName() + ".buscar() " + e.getMessage());
+            System.out.println("excepcion en "+ this.getClass().getName() + ".buscar() " + e.getMessage());
             return null;
         } 
-        return ret;
-    }
-
-    @Override
-	public List<Cliente> listar() {
-		System.out.println("no tengo ganas de ir a la interfaz");
-		return null;
-	}
-
-    public List<ClienteDTO> listar() {
-		
-		try{
-        this.conector.conectar();
         
-       
-        PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT FROM Cliente WHERE;								
-		""");
-		
-		ArrayList<ClienteDTO> ret = new ArrayList<>();
-        ResultSet resultados = preparedStatement.executeQuery();
-		while(resultados.next()){
-			ClienteDTO tmp = new ClienteDTO(
-				resultados.getInt(1),
-				resultados.getInt(2),
-				resultados.getString(3),
-				resultados.getString(4),
-				new CoordenadaDTO(
-					resultados.getFloat(5),
-					resultados.getFloat(6),
-				)
-			);
-			ret.add(tmp);
-		}
+    }
 
-		
-		
-        preparedStatement.close();
-        this.conector.cerrar();
+    @Override
+    public List<Cliente> listar() {
+		      ArrayList<Cliente> ret = new ArrayList<>();
+
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM Cliente;								
+		""");
+
+            ResultSet resultados = preparedStatement.executeQuery();
+            while (resultados.next()) {
+                Cliente tmp = new Cliente(
+                        resultados.getInt(1),
+                        resultados.getInt(2),
+                        resultados.getString(3),
+                        resultados.getString(4),
+                        new Coordenada(
+                                resultados.getFloat(5),
+                                resultados.getFloat(6)
+                        )
+                );
+                ret.add(tmp);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".listar() " + e.getMessage());
         }
-        catch(Exception e){	
-            System.out.println("excepcion en "+ Class.getSimpleName() + ".listar() " + e.getMessage());
-            return null;
-        } 
+
         return ret;
     }
 
     @Override
-    public boolean actualizar(ClienteDTO v) {
+    public boolean actualizar(Cliente v) {
 		try{
         this.conector.conectar();
         
        
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
 			UPDATE Cliente
-			SET cuit = ?, mail = ?, direccion = ?, latitud= ?, longitud = ?;
+			SET cuit = ?, mail = ?, direccion = ?, latitud= ?, longitud = ?
 			WHERE id = ?
 			
 			""");
         
         //setear valores
         preparedStatement.setInt(1, v.getCuit());
-        preparedStatement.setString(2, v.getMail());
+        preparedStatement.setString(2, v.getEmail());
         preparedStatement.setString(3, v.getDireccion());
-        preparedStatement.setFloat(4, v.getCoordenadas().getLatitud());
-        preparedStatement.setFloat(5, v.getCoordenadas().getLongitud());
+        preparedStatement.setDouble(4, v.getCoordenadas().getLatitud());
+        preparedStatement.setDouble(5, v.getCoordenadas().getLongitud());
         preparedStatement.setInt(6, v.getId());
         
         preparedStatement.executeUpdate();
@@ -193,10 +184,54 @@ public class ClienteSQLDAO implements ClienteDAO {
         this.conector.cerrar();
         }
         catch(Exception e){
-            System.out.println("excepcion en "+ Class.getSimpleName() + ".actualizar() " + e.getMessage());
+            System.out.println("excepcion en "+ this.getClass().getName() + ".actualizar() " + e.getMessage());
             return false;
         } 
         
         return true;
+    }
+    
+
+    @Override
+    public Cliente buscarPorID(int id) throws ClienteNoEncontradoException {
+       try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM Cliente WHERE id = ?;								
+		""");
+
+            //setear valores
+            preparedStatement.setInt(1, id);
+
+            Cliente ret = null;
+            ResultSet resultados = preparedStatement.executeQuery();
+            int contador = 0;
+            while (resultados.next()) {
+                ret = new Cliente(
+                        resultados.getInt(1),
+				resultados.getInt(2),
+				resultados.getString(3),
+				resultados.getString(4),
+				new Coordenada(
+					resultados.getFloat(5),
+					resultados.getFloat(6)
+				)
+                );
+                contador++;
+            }
+            if (contador == 0) {
+                throw new ClienteNoEncontradoException("No existe Cliente con id " + id);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+            
+            return ret;
+            
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
+            return null;
+        }
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public interface VendedorDAO {
     public boolean crear(Vendedor v);
     public boolean eliminar(int id);
-    public boolean actualizar(VendedorDTO vdto);
+    public boolean actualizar(Vendedor vdto);
     public List<Vendedor> listar();
     public List<Vendedor> buscar(String nombre) ;
 

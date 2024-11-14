@@ -42,7 +42,7 @@ public class ClienteMEMORYDAO implements ClienteDAO {
 
 
     @Override
-    public List<Cliente> buscar(int cuit) {
+    public List<Cliente> buscarPorCuit(int cuit) {
         ArrayList<Cliente> res = new ArrayList<>();
         for(Cliente v:clientes) {
             if(v.getCuit()==cuit) res.add(v);
@@ -62,8 +62,8 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean actualizar(ClienteDTO vdto) {
-        //ahora mismo estan ordenados por id
+    public boolean actualizar(Cliente v) {
+      /*  //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
 	Cliente v = null;
         for(Cliente v1:clientes) {
@@ -82,7 +82,9 @@ public class ClienteMEMORYDAO implements ClienteDAO {
         v.setCoordenadas(c);
         v.setEmail(vdto.getEmail());
         
-        
+        */
         return true;
     }
+    
 }
+

@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class PedidoDetalle {
     private ArrayList<ItemMenu> items;
+    private int cantidad;
     
     public float peso(){
         float suma = 0;
@@ -30,7 +31,19 @@ public class PedidoDetalle {
         this.items = items;
     }
 
-    public PedidoDetalle(ArrayList<ItemMenu> items) {
+    public PedidoDetalle(ArrayList<ItemMenu> items, int cantidad) {
         this.items = items;
+        this.cantidad = cantidad;
     }
+    
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+    
 }

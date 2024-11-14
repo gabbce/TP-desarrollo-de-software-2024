@@ -1,0 +1,81 @@
+CREATE TABLE vendedor(
+id SERIAL PRIMARY KEY,
+nombre VARCHAR(30),
+direccion VARCHAR(50),
+latitud DOUBLE PRECISION,
+longitud DOUBLE PRECISION
+);
+
+CREATE TABLE categoria(
+id SERIAL PRIMARY KEY,
+descripcion VARCHAR(100),
+tipo VARCHAR(20)
+);
+
+CREATE TABLE item_menu(
+id SERIAL PRIMARY KEY,
+es_comida BOOLEAN,
+nombre VARCHAR(20),
+descripcion VARCHAR(100),
+id_vendedor INTEGER REFERENCES vendedor (id),
+id_categoria INTEGER REFERENCES categoria (id),
+precio REAL,
+graduacion_alcoholica REAL,
+tam REAL,
+peso REAL,
+calorias REAL,
+apto_celiaco BOOLEAN,
+apto_vegano BOOLEAN 
+);
+
+CREATE TABLE cliente(
+id SERIAL PRIMARY KEY,
+cuit INTEGER,
+mail VARCHAR(50),
+direccion VARCHAR(50),
+latitud DOUBLE PRECISION,
+longitud DOUBLE PRECISION
+);
+ALTER TABLE cliente 
+ADD CONSTRAINT unique_cuit UNIQUE (cuit);
+
+CREATE TABLE estado_pedido(
+tipo VARCHAR(20) PRIMARY KEY
+);
+
+INSERT INTO estado_pedido (tipo) VALUES
+('PENDIENTE'),
+('RECIBIDO'),
+('EN_ENVIO'),
+('RECIBIDO_CLIENTE');
+
+CREATE TABLE pago_type(
+tipo VARCHAR(20) PRIMARY KEY
+);
+
+INSERT INTO pago_type (tipo) VALUES 
+('MERCADO_PAGO'),
+('TRANSFERENCIA');
+
+CREATE TABLE pedido(
+id SERIAL PRIMARY KEY,
+id_estado_pedido VARCHAR(20) REFERENCES estado_pedido (tipo),
+changed BOOLEAN,
+id_cliente INTEGER REFERENCES cliente (id)
+);
+
+CREATE TABLE pago(
+id SERIAL PRIMARY KEY,
+id_pedido INTEGER REFERENCES pedido (id),
+id_pagoType VARCHAR(20) REFERENCES pago_type (tipo),
+alias_cbu VARCHAR(40),
+fecha_pago DATE
+);
+
+CREATE TABLE pedido_detalle(
+id_pedido INTEGER REFERENCES pedido (id),
+id_item_menu INTEGER REFERENCES item_menu (id),
+PRIMARY KEY (id_pedido, id_item_menu),
+cantidad INTEGER NOT NULL
+);
+

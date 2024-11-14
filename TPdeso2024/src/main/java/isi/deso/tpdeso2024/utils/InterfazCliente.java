@@ -153,7 +153,7 @@ public class InterfazCliente implements InformacionInterfaz{
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
         }
         else{
-            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscar(Integer.parseInt(nombre)));
+            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscarPorCuit(Integer.parseInt(nombre)));
             //System.out.println(clienteController.buscar(Integer.getInteger(nombre)));
         }
         

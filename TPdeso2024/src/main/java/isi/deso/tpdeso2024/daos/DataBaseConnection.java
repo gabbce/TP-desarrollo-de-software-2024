@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024.database;
+package isi.deso.tpdeso2024.daos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -15,9 +16,9 @@ import java.sql.SQLException;
  */
 public class DataBaseConnection {
         Connection con = null;
-        String url="jdbc:postgresql://localhost:6432/DDS2024";
+        String url="jdbc:postgresql://localhost:5432/tp_deso";
         String usuario="postgres";
-        String clave="root";
+        String clave="postgres";
         
         public Connection conectar(){
             try{
@@ -39,5 +40,4 @@ public class DataBaseConnection {
             }
             return con;
         }
-}
 }

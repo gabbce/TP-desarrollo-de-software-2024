@@ -33,7 +33,7 @@ public class ClienteController {
     }
     
     
-    //private ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+    //private ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
     private ClienteController(){
     }
     
@@ -48,19 +48,21 @@ public class ClienteController {
                 dto.getDireccion(),
                 c
         );        
-		ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+		ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
 		dao.crear(v);
         //this.dao.crear(v);
     }
     
     
     public List<ClienteDTO> listar(){
-        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
         List<Cliente> lista = dao.listar();
         
         List<ClienteDTO> resultado = new ArrayList<>();
         
         for(Cliente c:lista) resultado.add(this.convertirADTO(c));
+        
+        
         
         return resultado;
 		}
@@ -68,17 +70,17 @@ public class ClienteController {
     
     
     public void eliminar(int id){
-       ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+       ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
        dao.eliminar(id);
     
     }
     
-    public List<ClienteDTO> buscar(int cuit){
+    public List<ClienteDTO> buscarPorCuit(int cuit){
         //nombre es substring de nombre. Ignore case
         
-        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
         
-		List<Cliente> l = dao.buscar(cuit);
+		List<Cliente> l = dao.buscarPorCuit(cuit);
         
         List<ClienteDTO> resultado = new ArrayList<>();
         for(Cliente v: l)resultado.add(convertirADTO(v));
@@ -87,7 +89,7 @@ public class ClienteController {
     }
     
     public ClienteDTO buscarPorID(int id) throws ClienteNoEncontradoException{
-        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
         
         ClienteDTO c = convertirADTO(dao.buscarPorID(id));
         
@@ -96,8 +98,8 @@ public class ClienteController {
     
     public void actualizar(ClienteDTO dto){
         //buscar el id del dto y actualizar con los otros datos
-        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getClienteDAO();
-        dao.actualizar(dto);
+        ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
+        dao.actualizar(convertirAModelo(dto));
 		
     }
     
@@ -111,6 +113,21 @@ public class ClienteController {
                 new CoordenadaDTO(
                         v.getCoordenadas().getLongitud(),
                         v.getCoordenadas().getLatitud()
+                )
+        );
+
+    }
+    
+    private Cliente convertirAModelo(ClienteDTO vdto){
+        
+        return new Cliente(
+                vdto.getId(),
+                vdto.getCuit(),
+                vdto.getEmail(),
+                vdto.getDireccion(),
+                new Coordenada(
+                        vdto.getCoordenadas().getLongitud(),
+                        vdto.getCoordenadas().getLatitud()
                 )
         );
 

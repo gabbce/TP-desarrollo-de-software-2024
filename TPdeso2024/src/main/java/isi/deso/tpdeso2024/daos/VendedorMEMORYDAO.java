@@ -58,16 +58,16 @@ public class VendedorMEMORYDAO implements VendedorDAO {
     }
 
     @Override
-    public boolean actualizar(VendedorDTO vdto) {
+    public boolean actualizar(Vendedor vs) {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
-        Vendedor v = vendedores.get(vdto.getId()-1);
+        Vendedor v = vendedores.get(vs.getId()-1);
         
-        v.setNombre(vdto.getNombre());
-        v.setDireccion(vdto.getDireccion());
+        v.setNombre(vs.getNombre());
+        v.setDireccion(vs.getDireccion());
         Coordenada c = new Coordenada(
-                vdto.getCoordenada().getLatitud(),
-                vdto.getCoordenada().getLongitud()
+                vs.getCoordenadas().getLatitud(),
+                vs.getCoordenadas().getLongitud()
         );
         
         v.setCoordenadas(c);

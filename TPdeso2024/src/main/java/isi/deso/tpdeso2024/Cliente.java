@@ -137,7 +137,10 @@ public class Cliente{
         }
         
         pagoSeleccionado.tomarDatos();
-        Pedido p = new Pedido(new PedidoDetalle(listaItems), pagoSeleccionado, this);
+        Pedido p = new Pedido(/*new PedidoDetalle(listaItems),*/ pagoSeleccionado, this);
+        for(ItemMenu i : listaItems){
+            PedidoDetalle pd = new PedidoDetalle(p, i, 1);
+        }
         
         p.setEstado(EstadoPedido.RECIBIDO);
         //aca tendria que ir a DB

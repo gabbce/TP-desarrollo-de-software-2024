@@ -15,11 +15,13 @@ public abstract class FactoryDAO {
     public abstract ItemMenuDAO getItemMenuDAO();
     public abstract PedidoDAO getPedidoDAO();
     public abstract CategoriaDAO getCategoriaDAO();
+    
     public static FactoryDAO getFactory(int claveFactory){
         switch (claveFactory) {
-            case MEMORY -> {
+            case SQL -> {
                 return new SQLFactoryDAO();
             }
+            
         }
         return null; //Netbeans exige que retorne
     }

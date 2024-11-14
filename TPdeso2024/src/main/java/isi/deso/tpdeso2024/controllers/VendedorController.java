@@ -33,7 +33,7 @@ public class VendedorController {
     }
     
     
-    private VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.MEMORY).getVendedorDAO();
+    private VendedorDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO();
     private VendedorController(){
     }
     
@@ -100,7 +100,8 @@ public class VendedorController {
     public void actualizar(VendedorDTO vdto){
         //buscar el id del dto y actualizar con los otros datos
         
-        this.dao.actualizar(vdto);
+        
+        this.dao.actualizar(convertirAModelo(vdto));
     }
     
     private VendedorDTO convertirADTO(Vendedor v){
@@ -121,6 +122,25 @@ public class VendedorController {
         );
 
     }
+    
+    private Vendedor convertirAModelo(VendedorDTO vdto){
+        ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
+        /*for(ItemMenuDTO it:v.getItemsMenu()){
+            listaItems.add(this.convertirItemADTO(it));
+        }*/
+        
+        return new Vendedor(
+                vdto.getId(),
+                vdto.getNombre(),
+                vdto.getDireccion(),
+                new Coordenada(
+                        vdto.getCoordenada().getLongitud(),
+                        vdto.getCoordenada().getLatitud()
+                )/*,
+                listaItems*/
+        );
+    }
+     
     
     private ItemMenuDTO convertirItemADTO(ItemMenuDTO it){
     return new ItemMenuDTO(

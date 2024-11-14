@@ -15,22 +15,20 @@ public class Pedido implements Observable {
 
     private int id;
 
-    private PedidoDetalle detalle;
+    //private PedidoDetalle detalle;
     private Pago pago;
     private EstadoPedido estado;
     private Cliente cliente;
     boolean changed = false;
 
-    public Pedido(int id, PedidoDetalle detalle, Pago pago, EstadoPedido estado, Cliente cliente) {
+    public Pedido(int id, Pago pago, EstadoPedido estado, Cliente cliente) {
         this.id = id;
-        this.detalle = detalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
     }
     
-    public Pedido(PedidoDetalle detalle, Pago pago, Cliente cliente) {
-        this.detalle = detalle;
+    public Pedido(Pago pago, Cliente cliente) {
         this.pago = pago;
         this.cliente = cliente;
         this.estado = EstadoPedido.PENDIENTE;
@@ -60,16 +58,6 @@ public class Pedido implements Observable {
         this.estado = estado;
         this.setChanged();
         this.notifyObservers();
-    }
-
-    
-
-    public PedidoDetalle getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(PedidoDetalle detalle) {
-        this.detalle = detalle;
     }
 
     public Pago getPago() {
@@ -106,4 +94,12 @@ public class Pedido implements Observable {
         this.clearChanged();
     }
 
+    /*public float peso(){
+        float suma = 0;
+        for(ItemMenu i: items){
+            suma+=i.peso();
+        
+        }
+        return suma;
+    }*/
 }

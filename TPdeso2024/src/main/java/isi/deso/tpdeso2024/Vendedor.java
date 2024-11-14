@@ -172,7 +172,7 @@ public class Vendedor {
     
     public List<Pedido> FiltrarPedidosPorEstado(List<Pedido> lista, EstadoPedido estado){
         List<Pedido> resultados = lista.stream()
-            .filter(item -> item.getDetalle().getItems().get(0).getVendedor() == this)
+            //.filter(item -> item.getDetalle().getItems().get(0).getVendedor() == this)
             .filter(item -> item.getEstado().equals(estado))
             .collect(Collectors.toList());
         
