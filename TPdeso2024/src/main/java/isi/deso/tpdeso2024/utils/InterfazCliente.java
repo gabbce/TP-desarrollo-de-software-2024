@@ -64,7 +64,7 @@ public class InterfazCliente implements InformacionInterfaz{
         this.label_buscar = label_buscar;
         
         modeloCliente = new ModeloTablaCliente();
-        modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Latitud", "Longitud"));
+        modeloCliente.setNombreColumnas(List.of("Id", "Cuit", "Email", "Dirección", "Latitud", "Longitud"));
 
     }
     
@@ -106,7 +106,7 @@ public class InterfazCliente implements InformacionInterfaz{
     public void mostrarEditar(int filaSeleccionada) {
         
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
-        String cuit = (String) tabla.getValueAt(filaSeleccionada, 1);
+        String cuit = String.valueOf(tabla.getValueAt(filaSeleccionada, 1));
         String email = (String) tabla.getValueAt(filaSeleccionada, 2);
         String direccion = (String) tabla.getValueAt(filaSeleccionada, 3);
         String latitud = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
