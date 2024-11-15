@@ -25,6 +25,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
 	@Override
 	public boolean crear(ItemMenu v){
+		if(!FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
 		if(v.esComida()){
 			return crear((Plato)v);
 		}
@@ -181,7 +182,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
 
     @Override
-	public boolean actualizar(ItemMenu v){
+	public boolean actualizar(ItemMenu v) throws VendedorNoEncontradoExcepcion{
+		if(!FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
 		if(v.esComida()){
 			return actualizar((Plato)v);
 		}
@@ -260,15 +262,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
 
 
-	//falta de aca para abajo
-
-	//BUSQUEDAS: por criterios independientes. Controller coordina para combinar criterios
-	//y la excepcion la tira el controller
-	/*buscar por nombre,Categoria.tipo, id_vendedor, id de item
-		Se me ocurrio hacer busqueda por un criterio y luego pasar al proximo 
-		llevando un arreglo con los resultados, y lo vas recortando 
-	*/
-    public ItemMenu buscarPorID(int id){
+    public ItemMenu buscarPorID(int id) throws ItemNoEncontradoExcepcion{
         try {
             this.conector.conectar();
 
@@ -283,19 +277,49 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             ResultSet resultados = preparedStatement.executeQuery();
             int contador = 0;
             while (resultados.next()) {
-                ret = new ItemMenu(
-                        resultados.getInt(1),
-                        resultados.getString(2),
-                        resultados.getString(3),
-                        new Coordenada(
-                                resultados.getFloat(4),
-                                resultados.getFloat(5)
-                        )
-                );
-                contador++;
+                if(resultados.getBoolean(1)){ //es comida
+					Plato p = new Plato(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(10);
+						resultados.getFloat(11);
+						resultados.getBoolean(12);
+						resultados.getBoolean(13);
+					);
+					
+					ret = (ItemMenu)p;		//upcastea para el ret
+				}
+				else{
+					Bebida b = new Bebida(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(8);
+						resultados.getFloat(9);
+					);
+					
+					
+					ret = (ItemMenu)b;
+				}
+				contador++;
             }
             if (contador == 0) {
-                throw new ItemMenuNoEncontradoException("No existe vendedor con id " + id);
+                throw new ItemNoEncontradoExcepcion("No existe vendedor con id " + id);
             }
 
             preparedStatement.close();
@@ -317,33 +341,78 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
     
 	
 	
-	public List<ItemMenu> buscar(String nombre) throws ItemMenuNoEncontradoException{
-		
+	public List<ItemMenu> buscar(Boolean esComida, String nombre, String idVendedor, String tipoCategoria){
+		if(esComida == null && nombre.equals("") && idVendedor == null && tipoCategoria.equals("")) return listar();
         try {
+			//segun nulls armar el string de la query
+			String tabla;
+			if(!tipoCategoria.equals(""))tabla = "ItemMenu join Categoria c on id_categoria = c.id";
+			else tabla = "ItemMenu";
+			String queryBase = "SELECT * FROM "+ tabla +" WHERE ";
+			
+			if(esComida != null){
+			if(esComida)queryBase += "es_comida = true";
+			else queryBase += "es_comida = false ";
+			}
+			
+			if(!nombre.equals("")){
+				if(esComida!=null)queryBase+="AND ";
+				queryBase += "nombre = "+ nombre +" ";
+			}
+			
+			if(idVendedor.equals("")){
+				if(esComida!=null || !nombre.equals(""))queryBase+="AND ";
+				queryBase += "id_vendedor = "+ idVendedor +" ";
+			}
+			
+			//consulta
             this.conector.conectar();
 
-            PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT * FROM ItemMenu WHERE nombre LIKE ?;								
-		""");
-
-            //setear valores
-            preparedStatement.setString(1, "%" + nombre + "%");
-
+            PreparedStatement preparedStatement = conector.con.prepareStatement(queryBase);
+			
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-                ItemMenu tmp = new ItemMenu(
-                        resultados.getInt(1),
-                        resultados.getString(2),
-                        resultados.getString(3),
-                        new Coordenada(
-                                resultados.getFloat(4),
-                                resultados.getFloat(5)
-                        )
-                );
-                ret.add(tmp);
-            }
-
+				if(resultados.getBoolean(1)){ //es comida
+					Plato p = new Plato(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(10);
+						resultados.getFloat(11);
+						resultados.getBoolean(12);
+						resultados.getBoolean(13);
+					);
+					ret.add((ItemMenu)p);		//upcastea para el ret
+				}
+				else{
+					Bebida b = new Bebida(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(8);
+						resultados.getFloat(9);
+					);
+					
+					
+					ret.add((ItemMenu)b);
+				
+					}
+			}
             preparedStatement.close();
             this.conector.cerrar();
 
