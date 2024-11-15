@@ -4,27 +4,215 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Pedido;
+import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  *
- * @author gabic
+ * @author augus
  */
 public class PedidoSQLDAO implements PedidoDAO {
 
+    private DataBaseConnection conector;
     public PedidoSQLDAO() {
+		conector = new DataBaseConnection();
     }
 
     @Override
     public boolean crear(Pedido v) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try{
+        this.conector.conectar();
+        
+       
+        PreparedStatement preparedStatement = conector.con.prepareStatement("""
+                                                                            INSERT INTO Pedido (estado_pedido,id_cliente) 
+                                                                            VALUES ('Pendiente',?);""",
+                PreparedStatement.RETURN_GENERATED_KEYS);
+        
+        //setear valores
+        preparedStatement.setInt(1, v.getCliente().getId());
+
+        preparedStatement.executeUpdate();
+            
+        
+        ResultSet claveGenerada = preparedStatement.getGeneratedKeys();
+        claveGenerada.next();
+        int parentId = claveGenerada.getInt(1);
+        
+        for(PedidoDetalle pd: v.getPedidoDetalle()){
+        
+        preparedStatement = conector.con.prepareStatement("INSERT INTO Pedido_detalle (id_pedido,id_item_menu,cantidad)  VALUES (?,?,?);");
+        
+        //setear valores
+        preparedStatement.setInt(1, parentId);
+        preparedStatement.setInt(2, pd.getItem().getId());
+        preparedStatement.setInt(3, pd.getCantidad());
+        
+        preparedStatement.executeUpdate();        
+        }
+        preparedStatement.close();
+        this.conector.cerrar();
+        }
+        catch(Exception e){
+            System.out.println("excepcion en "+ this.getClass().getName() + ".create() " + e.getMessage());
+            return false;
+        } 
+        return true;
     }
 
+
+
+    public boolean actualizar(Pedido v) {
+		try{
+        this.conector.conectar();
+        
+       
+       
+        PreparedStatement preparedStatement = conector.con.prepareStatement("""
+                                                                            UPDATE Pedido
+                                                                            SET estado_pedido = ?, id_cliente = ?
+                                                                            WHERE id = ?;""");
+        
+        //setear valores
+        preparedStatement.setString(1, (v.getEstado().toString()));
+        preparedStatement.setInt(2, v.getCliente().getId());
+        preparedStatement.setInt(3, v.getId());
+
+        preparedStatement.executeUpdate();
+        
+        for(PedidoDetalle pd: v.getPedidoDetalle()){
+        
+        preparedStatement = conector.con.prepareStatement("""           UPDATE Pedido        SET estado_pedido = ?, id_cliente = ?            WHERE id = ?;""");
+        
+        //setear valores
+        preparedStatement.setInt(1, parentId);
+        preparedStatement.setInt(2, pd.getItem().getId());
+        preparedStatement.setInt(3, pd.getCantidad());
+        
+        preparedStatement.executeUpdate();        
+        }
+        this.conector.cerrar();
+        }
+        catch(Exception e){
+            System.out.println("excepcion en "+ this.getClass().getName() + ".actualizar() " + e.getMessage());
+            return false;
+        } 
+        
+        return true;
+    }
+    
+    
+
+    @Override
+    public List<Pedido> listar() {
+		      ArrayList<Pedido> ret = new ArrayList<>();
+
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM Pedido;								
+		""");
+
+            ResultSet resultados = preparedStatement.executeQuery();
+            while (resultados.next()) {
+                Pedido tmp = new Pedido(
+                        resultados.getInt(1),
+                        resultados.getInt(2),
+                        resultados.getString(3),
+                        resultados.getString(4),
+                        new Coordenada(
+                                resultados.getFloat(5),
+                                resultados.getFloat(6)
+                        )
+                );
+                ret.add(tmp);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".listar() " + e.getMessage());
+        }
+
+        return ret;
+    }
+    
     @Override
     public boolean eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		try{
+        this.conector.conectar();
+        
+       
+        PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		DELETE FROM Pedido WHERE id = ?;
+                DELETE FROM Pedido_detalle WHERE id_pedido = ?;
+		""");
+        
+        //setear valores
+        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(2, id);
+        
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+        this.conector.cerrar();
+        }
+        catch(Exception e){
+            System.out.println("excepcion en "+ this.getClass().getName() + ".eliminar() " + e.getMessage());
+            return false;
+        } 
+        return true;  
+    }
+
+    public Pedido buscarPorID(int id) {
+       try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM Pedido WHERE id = ?;								
+		""");
+
+            //setear valores
+            preparedStatement.setInt(1, id);
+
+            Pedido ret = null;
+            ResultSet resultados = preparedStatement.executeQuery();
+            int contador = 0;
+            while (resultados.next()) {
+                ret = new Pedido(
+                        resultados.getInt(1),
+				resultados.getInt(2),
+				resultados.getString(3),
+				resultados.getString(4),
+				new Coordenada(
+					resultados.getFloat(5),
+					resultados.getFloat(6)
+				)
+                );
+                contador++;
+            }
+            if (contador == 0) {
+                throw new PedidoNoEncontradoException("No existe Pedido con id " + id);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+            
+            return ret;
+            
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -33,13 +221,7 @@ public class PedidoSQLDAO implements PedidoDAO {
     }
 
     @Override
-    public List<Pedido> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public List<Pedido> buscar(String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }
