@@ -16,6 +16,8 @@ import java.util.List;
  */
 public interface CategoriaDAO {
     public boolean crear(Categoria c);
+    public List<Categoria> listar();
     public Categoria buscarPorID(int id) throws CategoriaNoEncontradoException;
+    public Categoria buscarPorTipo(String tipo) throws CategoriaNoEncontradoException;
 }
 

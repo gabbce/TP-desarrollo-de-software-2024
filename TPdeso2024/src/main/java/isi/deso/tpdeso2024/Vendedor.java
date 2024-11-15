@@ -21,6 +21,8 @@ public class Vendedor {
     public Vendedor() {
         this.itemsMenu = new ArrayList<>();
     }
+    
+    
 
     public Vendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         this.id = id;

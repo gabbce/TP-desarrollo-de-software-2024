@@ -12,41 +12,44 @@ public class ItemMenuDTO {
     private int id; 
     private String nombre;
     private String descripcion;
-    
+    private boolean esComida;
 
-    private float precio;
+    
     private CategoriaDTO categoria;
     private VendedorDTO vendedor; //null desde lado de vendedor
-
+    private float precio;
+    
     public int getId() {
         return id;
     }
 
-    public ItemMenuDTO(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor) {
+    public ItemMenuDTO(int id, String nombre, String descripcion,  Boolean esComida, VendedorDTO vendedor, CategoriaDTO categoria, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.esComida = esComida;
         this.precio = precio;
         this.categoria = categoria;
         this.vendedor = vendedor;
-        //this.esComida = esComida;
     }
     
-    public ItemMenuDTO(int id, String nombre, String descripcion, float precio, int categoria, int vendedor) {
+    public ItemMenuDTO(int id, String nombre, String descripcion, Boolean esComida, String categoria, int vendedor, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.esComida = esComida;
         this.precio = precio;
-        this.categoria = new CategoriaDTO(categoria, null,null);
+        this.categoria = new CategoriaDTO(categoria);
         this.vendedor = new VendedorDTO(vendedor, null, null, null);
     }
     
-    public ItemMenuDTO(String nombre, String descripcion, float precio, int categoria, int vendedor) {
+    public ItemMenuDTO(String nombre, String descripcion, Boolean esComida, String categoria, int vendedor, float precio) {
 
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.esComida = esComida;
         this.precio = precio;
-        this.categoria = new CategoriaDTO(categoria, null,null);
+        this.categoria = new CategoriaDTO(categoria);
         this.vendedor = new VendedorDTO(vendedor, null, null, null);
     }
 
@@ -64,6 +67,14 @@ public class ItemMenuDTO {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public boolean EsComida() {
+        return esComida;
+    }
+
+    public void setEsComida(boolean esComida) {
+        this.esComida = esComida;
     }
 
     public void setDescripcion(String descripcion) {

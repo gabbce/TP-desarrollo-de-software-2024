@@ -35,11 +35,11 @@ public class InterfazItemMenu implements InformacionInterfaz{
     
     ModeloTablaItemMenu modeloItemMenu;
     JTable tabla;
-    JTextField completar_nombre;
-    JTextArea completar_descripcion;
-    JTextField completar_vendedor;
-    JTextField completar_precio;
-    JTextField completar_categoria;
+    JTextField text_field_nombre;
+    JTextArea text_area_descripcion;
+    JTextField text_field_vendedor;
+    JTextField text_field_precio;
+    JTextField text_field_categoria;
     JLabel titulo_modal;
     JButton boton_confirmar;
     JLabel titulo_modal_eliminar;
@@ -49,15 +49,15 @@ public class InterfazItemMenu implements InformacionInterfaz{
     //JTextField text_field_buscar;
     JLabel label_buscar;
 
-    public InterfazItemMenu(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_nombre, JTextArea completar_descripcion, JTextField completar_vendedor, JTextField completar_precio, JTextField completar_categoria, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+    public InterfazItemMenu(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField text_field_nombre, JTextArea text_area_descripcion, JTextField text_field_vendedor, JTextField text_field_precio, JTextField text_field_categoria, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
         this.modal = modal;
         this.modal_eliminar = modal_eliminar;
         this.tabla = tabla;
-        this.completar_nombre = completar_nombre;
-        this.completar_descripcion = completar_descripcion;
-        this.completar_vendedor = completar_vendedor;
-        this.completar_precio = completar_precio;
-        this.completar_categoria = completar_categoria;
+        this.text_field_nombre = text_field_nombre;
+        this.text_area_descripcion = text_area_descripcion;
+        this.text_field_vendedor = text_field_vendedor;
+        this.text_field_precio = text_field_precio;
+        this.text_field_categoria = text_field_categoria;
         this.titulo_modal = titulo_modal;
         this.boton_confirmar = boton_confirmar;
         this.titulo_modal_eliminar = titulo_modal_eliminar;
@@ -68,17 +68,13 @@ public class InterfazItemMenu implements InformacionInterfaz{
         
         modeloItemMenu = new ModeloTablaItemMenu();
         modeloItemMenu.setNombreColumnas(List.of("Id", "Nombre", "Descripcion", "Precio", "Id Categoria", "Id Vendedor"));
-
+        tabla.setModel(modeloItemMenu);
     }
     
     
-    @Override
-    public void cambiarPanel() {
-        boton_crear.setText("Agregar item Menu");
-        panel_info_titulo.setText("Lista de items Menu");
-        label_buscar.setText("buscar por nombre:");
+    //@Override
+    public void actualizarTabla() {
         
-        tabla.setModel(modeloItemMenu);
         ((AbstractTableModel)tabla.getModel()).fireTableChanged(null);
     }
 
@@ -116,11 +112,11 @@ public class InterfazItemMenu implements InformacionInterfaz{
         String vendedor = String.valueOf(tabla.getValueAt(filaSeleccionada, 5));
 
         
-        completar_nombre.setText(nombre);
-        completar_descripcion.setText(descripcion);
-        completar_precio.setText(precio);
-        completar_categoria.setText(categoria);
-        completar_vendedor.setText(vendedor);
+        text_field_nombre.setText(nombre);
+        text_area_descripcion.setText(descripcion);
+        text_field_precio.setText(precio);
+        text_field_categoria.setText(categoria);
+        text_field_vendedor.setText(vendedor);
 
         boton_confirmar.putClientProperty("tipoAccion", "editar");
         boton_confirmar.putClientProperty("id", id);
@@ -130,9 +126,9 @@ public class InterfazItemMenu implements InformacionInterfaz{
     
     @Override
     public void editar(int id) {
-        ItemMenuDTO itemMenuDTO = new ItemMenuDTO(id, completar_nombre.getText(),
-                completar_descripcion.getText(), Float.parseFloat(completar_precio.getText()), 
-                Integer.parseInt(completar_categoria.getText()), Integer.parseInt(completar_vendedor.getText())
+        /*ItemMenuDTO itemMenuDTO = new ItemMenuDTO(id, text_field_nombre.getText(),
+                text_area_descripcion.getText(), Float.parseFloat(text_field_precio.getText()), 
+                Integer.parseInt(text_field_categoria.getText()), Integer.parseInt(text_field_vendedor.getText())
         );
         
 
@@ -149,12 +145,12 @@ public class InterfazItemMenu implements InformacionInterfaz{
             Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoriaNoEncontradoException ex) {
             Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     @Override
     public void buscar(String nombre) {
-        if("".equals(nombre)){
+        /*if("".equals(nombre)){
             ((ModeloTablaItemMenu) tabla.getModel()).resetListaItemsMenu();
         }
         else{
@@ -162,17 +158,17 @@ public class InterfazItemMenu implements InformacionInterfaz{
             System.out.println(itemMenuController.buscar(nombre));
         }
         
-        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
+        ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);*/
     }
 
     @Override
     public void mostrarCrear() {
        
-        completar_nombre.setText("");
-        completar_descripcion.setText("");
-        completar_precio.setText("");
-        completar_categoria.setText("");
-        completar_vendedor.setText("");
+        text_field_nombre.setText("");
+        text_area_descripcion.setText("");
+        text_field_precio.setText("");
+        text_field_categoria.setText("");
+        text_field_vendedor.setText("");
         
        boton_confirmar.putClientProperty("tipoAccion", "crear");
        
@@ -185,9 +181,9 @@ public class InterfazItemMenu implements InformacionInterfaz{
     public void crear() {
         
         
-        ItemMenuDTO itemMenuDTO = new ItemMenuDTO(completar_nombre.getText(),
-                completar_descripcion.getText(), Float.parseFloat(completar_precio.getText()), 
-                Integer.parseInt(completar_categoria.getText()), Integer.parseInt(completar_vendedor.getText())
+        /*ItemMenuDTO itemMenuDTO = new ItemMenuDTO(text_field_nombre.getText(),
+                text_area_descripcion.getText(), Float.parseFloat(text_field_precio.getText()), 
+                Integer.parseInt(text_field_categoria.getText()), Integer.parseInt(text_field_vendedor.getText())
         );
 
         try {
@@ -202,7 +198,7 @@ public class InterfazItemMenu implements InformacionInterfaz{
             Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoriaNoEncontradoException ex) {
             Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /*@Override

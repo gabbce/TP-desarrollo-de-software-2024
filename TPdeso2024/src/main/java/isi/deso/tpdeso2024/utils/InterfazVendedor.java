@@ -34,10 +34,10 @@ public class InterfazVendedor implements InformacionInterfaz{
     
     ModeloTablaVendedor modeloVendedor;
     JTable tabla;
-    JTextField completar_nombre;
-    JTextField completar_direccion;
-    JTextField completar_latitud;
-    JTextField completar_longitud;
+    JTextField text_field_nombre;
+    JTextField text_field_direccion;
+    JTextField text_field_latitud;
+    JTextField text_field_longitud;
     JLabel titulo_modal;
     JButton boton_confirmar;
     JLabel titulo_modal_eliminar;
@@ -50,14 +50,14 @@ public class InterfazVendedor implements InformacionInterfaz{
     
     // armar constructor con todos los componentes usados!!!
 
-    public InterfazVendedor(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_nombre, JTextField completar_direccion, JTextField completar_latitud, JTextField completar_longitud, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+    public InterfazVendedor(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField text_field_nombre, JTextField text_field_direccion, JTextField text_field_latitud, JTextField text_field_longitud, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
         this.modal = modal;
         this.modal_eliminar = modal_eliminar;
         this.tabla = tabla;
-        this.completar_nombre = completar_nombre;
-        this.completar_direccion = completar_direccion;
-        this.completar_latitud = completar_latitud;
-        this.completar_longitud = completar_longitud;
+        this.text_field_nombre = text_field_nombre;
+        this.text_field_direccion = text_field_direccion;
+        this.text_field_latitud = text_field_latitud;
+        this.text_field_longitud = text_field_longitud;
         this.titulo_modal = titulo_modal;
         this.boton_confirmar = boton_confirmar;
         this.titulo_modal_eliminar = titulo_modal_eliminar;
@@ -71,7 +71,7 @@ public class InterfazVendedor implements InformacionInterfaz{
     }
     
     
-    @Override
+    //@Override
     public void cambiarPanel() {
         boton_crear.setText("Agregar vendedor");
         panel_info_titulo.setText("Lista de vendedores");
@@ -118,10 +118,10 @@ public class InterfazVendedor implements InformacionInterfaz{
         String latitud = partes[0].trim();
         String longitud = partes[1].trim();
 
-        completar_nombre.setText(nombre);
-        completar_direccion.setText(direccion);
-        completar_latitud.setText(latitud);
-        completar_longitud.setText(longitud);
+        text_field_nombre.setText(nombre);
+        text_field_direccion.setText(direccion);
+        text_field_latitud.setText(latitud);
+        text_field_longitud.setText(longitud);
 
         boton_confirmar.putClientProperty("tipoAccion", "editar");
         boton_confirmar.putClientProperty("id", id);
@@ -131,9 +131,9 @@ public class InterfazVendedor implements InformacionInterfaz{
     
     @Override
     public void editar(int id) {
-        VendedorDTO vendedorDTO = new VendedorDTO(id, completar_nombre.getText(),
-                completar_direccion.getText(),
-                new CoordenadaDTO(Double.valueOf(completar_latitud.getText()), Double.valueOf(completar_longitud.getText()))
+        VendedorDTO vendedorDTO = new VendedorDTO(id, text_field_nombre.getText(),
+                text_field_direccion.getText(),
+                new CoordenadaDTO(Double.valueOf(text_field_latitud.getText()), Double.valueOf(text_field_longitud.getText()))
         );
 
         try {
@@ -163,10 +163,10 @@ public class InterfazVendedor implements InformacionInterfaz{
     @Override
     public void mostrarCrear() {
        
-        completar_nombre.setText("");
-        completar_direccion.setText("");
-        completar_latitud.setText("");
-        completar_longitud.setText("");
+        text_field_nombre.setText("");
+        text_field_direccion.setText("");
+        text_field_latitud.setText("");
+        text_field_longitud.setText("");
         
        boton_confirmar.putClientProperty("tipoAccion", "crear");
        
@@ -177,9 +177,9 @@ public class InterfazVendedor implements InformacionInterfaz{
     
     @Override
     public void crear() {
-        VendedorDTO vendedorDTO = new VendedorDTO(completar_nombre.getText(),
-                completar_direccion.getText(),
-                new CoordenadaDTO(Double.valueOf(completar_latitud.getText()), Double.valueOf(completar_longitud.getText()))
+        VendedorDTO vendedorDTO = new VendedorDTO(text_field_nombre.getText(),
+                text_field_direccion.getText(),
+                new CoordenadaDTO(Double.valueOf(text_field_latitud.getText()), Double.valueOf(text_field_longitud.getText()))
         );
 
         try {

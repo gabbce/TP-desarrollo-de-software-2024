@@ -13,9 +13,9 @@ public class BebidaDTO extends ItemMenuDTO{
     private float tam; //mililitros?
     
     
-    public BebidaDTO(int id, String nombre, String descripcion, float precio, CategoriaDTO categoria, float graduacionAlcoholica, float tam, VendedorDTO vendedor){
+    public BebidaDTO(int id, String nombre, String descripcion,VendedorDTO vendedor,CategoriaDTO categoria,  float precio,  float graduacionAlcoholica, float tam){
     
-        super(id,nombre,descripcion,precio,categoria,vendedor);
+        super(id, nombre, descripcion, false, vendedor, categoria, precio);
         this.graduacionAlcoholica=graduacionAlcoholica;
         this.tam=tam;
     }

@@ -52,14 +52,17 @@ public class ModeloTablaItemMenu extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ItemMenuDTO itemMenu = listaItemsMenu.get(rowIndex);
-
+        String tipo;
+        if(itemMenu.EsComida()) tipo = "Comida";
+        else tipo = "Bebida";
         return switch (columnIndex) {
             case 0 -> itemMenu.getId();
-            case 1 -> itemMenu.getNombre();
-            case 2 -> itemMenu.getDescripcion();
-            case 3 -> itemMenu.getPrecio();
-            case 4 -> itemMenu.getCategoria().getId();
-            case 5 -> itemMenu.getVendedor().getId();
+            case 1 -> tipo;
+            case 2 -> itemMenu.getNombre();
+            case 3 -> itemMenu.getDescripcion();
+            case 4 -> itemMenu.getPrecio();
+            case 5 -> itemMenu.getCategoria().getTipo();
+            case 6 -> itemMenu.getVendedor().getId();
             default -> null;
         };
     }
@@ -72,9 +75,9 @@ public class ModeloTablaItemMenu extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 4, 5 -> Integer.class;
-            case 1, 2 -> String.class;
-            case 3 -> Double.class;
+            case 0, 6 -> Integer.class;
+            case 1, 2, 3, 5 -> String.class;
+            case 4 -> Double.class;
             default -> Object.class;
         };
     }

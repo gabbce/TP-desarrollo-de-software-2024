@@ -16,14 +16,14 @@ public class PlatoDTO extends ItemMenuDTO {
     private boolean aptoCeliaco;
     private boolean aptoVegano;
 
-    public PlatoDTO(int id,float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano, String nombre, String descripcion, float precio, CategoriaDTO categoria, VendedorDTO vendedor) {
-       // super(id, nombre, descripcion, precio, categoria);
-       super(id,nombre,descripcion,precio,categoria,vendedor); 
-       this.peso = peso;
+    public PlatoDTO(int id, String nombre, String descripcion, VendedorDTO vendedor, CategoriaDTO categoria, float precio, float peso, float calorias, boolean aptoCeliaco, boolean aptoVegano) {
+        super(id, nombre, descripcion, true, vendedor ,categoria, precio);
+        this.peso = peso;
         this.calorias = calorias;
         this.aptoCeliaco = aptoCeliaco;
         this.aptoVegano = aptoVegano;
     }
+    
 
     public float getPeso() {
         return peso;

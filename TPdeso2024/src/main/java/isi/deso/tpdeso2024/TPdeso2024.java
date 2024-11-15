@@ -102,12 +102,12 @@ public class TPdeso2024 {
         }
         */
        
-       Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1));
+       /*Cliente c1 = new Cliente(1,01,"pedro@gmail.com","Lavaise 800", new Coordenada(1,1));
        Vendedor v1 = new Vendedor(1,"Agustin","Lavaise 800", new Coordenada(1,1));
        Vendedor v2 = new Vendedor(2,"Agustin","Lavaise 800", new Coordenada(1,1));
        Vendedor v3 = new Vendedor(3,"Agustin","Lavaise 800", new Coordenada(1,1));
        Bebida b1 = new Bebida(1,"Coca","una coca", (float)1.05,
-               new Categoria(1,"las gaseosas","gaseosas"),0,(float)1.0,v1);
+               new Categoria(1,"las gaseosas","gaseosas"),0,(float)1.0,v1);*/
      // public Bebida(int id, String nombre, String descripcion, float precio, 
      //Categoria categoria, float graduacionAlcoholica, float tam, Vendedor vendedor){
     
@@ -128,7 +128,7 @@ public class TPdeso2024 {
        System.out.println("Fecha de pago del pedido: " + pedidosRecibidos.get(0).getPago().getFechaPago().format(DateTimeFormatter.ISO_DATE));*/
        
         InterfazGeneral miVentana = new InterfazGeneral();
-        miVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         miVentana.setVisible(true);
      
     }

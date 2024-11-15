@@ -121,16 +121,5 @@ public class PedidoController {
        return null;
     }
     
-    private ItemMenuDTO convertirItemADTO(ItemMenu it) {
-        return new ItemMenuDTO(
-                it.getId(),
-                it.getNombre(),
-                it.getDescripcion(),
-                it.getPrecio(),
-                new CategoriaDTO(it.getCategoria().getId(), it.getCategoria().getDescripcion(), it.getCategoria().getTipo()),
-                null
-        );
-
-    }
     
 }

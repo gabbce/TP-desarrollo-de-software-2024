@@ -11,29 +11,30 @@ import java.util.ArrayList;
  * @author augus
  */
 public class PedidoDetalle {
-    private ArrayList<ItemMenu> items;
+    private Pedido pedido;
+    private ItemMenu item;
     private int cantidad;
-    
-    public float peso(){
-        float suma = 0;
-        for(ItemMenu i: items){
-            suma+=i.peso();
-        
-        }
-        return suma;
-    }
 
-    public ArrayList<ItemMenu> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<ItemMenu> items) {
-        this.items = items;
-    }
-
-    public PedidoDetalle(ArrayList<ItemMenu> items, int cantidad) {
-        this.items = items;
+    public PedidoDetalle(Pedido pedido, ItemMenu item, int cantidad) {
+        this.pedido = pedido;
+        this.item = item;
         this.cantidad = cantidad;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public ItemMenu getItem() {
+        return item;
+    }
+
+    public void setItem(ItemMenu item) {
+        this.item = item;
     }
     
 

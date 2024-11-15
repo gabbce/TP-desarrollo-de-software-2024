@@ -19,6 +19,10 @@ public class CategoriaDTO {
         this.tipo = tipo;
     }
 
+    public CategoriaDTO(String tipo) {
+        this.tipo = tipo;
+    }
+
     public int getId() {
         return id;
     }

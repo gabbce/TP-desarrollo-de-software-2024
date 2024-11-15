@@ -9,8 +9,14 @@ longitud DOUBLE PRECISION
 CREATE TABLE categoria(
 id SERIAL PRIMARY KEY,
 descripcion VARCHAR(100),
-tipo VARCHAR(20)
+tipo VARCHAR(20) UNIQUE
 );
+
+INSERT INTO categoria (descripcion, tipo) VALUES
+('Comida rápida','Fast food'),
+('Bebida con gas','Gaseosa'),
+('Bebidas con graduación alcoholica','Alcohol'),
+('Comida china', 'Comida china');
 
 CREATE TABLE item_menu(
 id SERIAL PRIMARY KEY,

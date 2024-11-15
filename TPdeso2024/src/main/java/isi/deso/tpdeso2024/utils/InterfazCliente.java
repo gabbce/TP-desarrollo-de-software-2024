@@ -32,11 +32,11 @@ public class InterfazCliente implements InformacionInterfaz{
     
     ModeloTablaCliente modeloCliente;
     JTable tabla;
-    JTextField completar_cuit;
-    JTextField completar_email;
-    JTextField completar_direccion;
-    JTextField completar_latitud;
-    JTextField completar_longitud;
+    JTextField text_field_cuit;
+    JTextField text_field_email;
+    JTextField text_field_direccion;
+    JTextField text_field_latitud;
+    JTextField text_field_longitud;
     JLabel titulo_modal;
     JButton boton_confirmar;
     JLabel titulo_modal_eliminar;
@@ -46,15 +46,15 @@ public class InterfazCliente implements InformacionInterfaz{
     //JTextField text_field_buscar;
     JLabel label_buscar;
 
-    public InterfazCliente(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_cuit, JTextField completar_email, JTextField completar_direccion, JTextField completar_latitud, JTextField completar_longitud, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+    public InterfazCliente(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField text_field_cuit, JTextField text_field_email, JTextField text_field_direccion, JTextField text_field_latitud, JTextField text_field_longitud, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
         this.modal = modal;
         this.modal_eliminar = modal_eliminar;
         this.tabla = tabla;
-        this.completar_cuit = completar_cuit;
-        this.completar_email = completar_email;
-        this.completar_direccion = completar_direccion;
-        this.completar_latitud = completar_latitud;
-        this.completar_longitud = completar_longitud;
+        this.text_field_cuit = text_field_cuit;
+        this.text_field_email = text_field_email;
+        this.text_field_direccion = text_field_direccion;
+        this.text_field_latitud = text_field_latitud;
+        this.text_field_longitud = text_field_longitud;
         this.titulo_modal = titulo_modal;
         this.boton_confirmar = boton_confirmar;
         this.titulo_modal_eliminar = titulo_modal_eliminar;
@@ -69,7 +69,7 @@ public class InterfazCliente implements InformacionInterfaz{
     }
     
     
-    @Override
+    //@Override
     public void cambiarPanel() {
         boton_crear.setText("Agregar cliente");
         panel_info_titulo.setText("Lista de clientes");
@@ -117,11 +117,11 @@ public class InterfazCliente implements InformacionInterfaz{
         String latitud = partes[0].trim();
         String longitud = partes[1].trim();
 
-        completar_cuit.setText(cuit);
-        completar_email.setText(email);
-        completar_direccion.setText(direccion);
-        completar_latitud.setText(latitud);
-        completar_longitud.setText(longitud);
+        text_field_cuit.setText(cuit);
+        text_field_email.setText(email);
+        text_field_direccion.setText(direccion);
+        text_field_latitud.setText(latitud);
+        text_field_longitud.setText(longitud);
 
         boton_confirmar.putClientProperty("tipoAccion", "editar");
         boton_confirmar.putClientProperty("id", id);
@@ -131,9 +131,9 @@ public class InterfazCliente implements InformacionInterfaz{
     
     @Override
     public void editar(int id) {
-        ClienteDTO clienteDTO = new ClienteDTO(id, Integer.parseInt(completar_cuit.getText()), completar_email.getText(),
-                completar_direccion.getText(),
-                new CoordenadaDTO(Double.parseDouble(completar_latitud.getText()), Double.parseDouble(completar_longitud.getText()))
+        ClienteDTO clienteDTO = new ClienteDTO(id, Integer.parseInt(text_field_cuit.getText()), text_field_email.getText(),
+                text_field_direccion.getText(),
+                new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
 
         try {
@@ -163,11 +163,11 @@ public class InterfazCliente implements InformacionInterfaz{
     @Override
     public void mostrarCrear() {
        
-        completar_cuit.setText("");
-        completar_email.setText("");
-        completar_direccion.setText("");
-        completar_latitud.setText("");
-        completar_longitud.setText("");
+        text_field_cuit.setText("");
+        text_field_email.setText("");
+        text_field_direccion.setText("");
+        text_field_latitud.setText("");
+        text_field_longitud.setText("");
         
        boton_confirmar.putClientProperty("tipoAccion", "crear");
        
@@ -178,9 +178,9 @@ public class InterfazCliente implements InformacionInterfaz{
     
     @Override
     public void crear() {
-        ClienteDTO clienteDTO = new ClienteDTO(Integer.parseInt(completar_cuit.getText()), completar_email.getText(),
-                completar_direccion.getText(),
-                new CoordenadaDTO(Double.parseDouble(completar_latitud.getText()), Double.parseDouble(completar_longitud.getText()))
+        ClienteDTO clienteDTO = new ClienteDTO(Integer.parseInt(text_field_cuit.getText()), text_field_email.getText(),
+                text_field_direccion.getText(),
+                new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
 
         try {

@@ -37,7 +37,7 @@ public class InterfazPedido implements InformacionInterfaz{
     ModeloTablaPedido modeloPedido;
     
     JTable tabla;
-    JTextField completar_cliente;
+    JTextField text_field_cliente;
     JRadioButton rbutton_mp;
     JRadioButton rbutton_transferencia;
     JLabel titulo_modal;
@@ -49,11 +49,11 @@ public class InterfazPedido implements InformacionInterfaz{
     //JTextField text_field_buscar;
     JLabel label_buscar;
 
-    public InterfazPedido(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField completar_cliente, JRadioButton rbutton_mp, JRadioButton rbutton_transferencia, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
+    public InterfazPedido(JDialog modal, JDialog modal_eliminar, JTable tabla, JTextField text_field_cliente, JRadioButton rbutton_mp, JRadioButton rbutton_transferencia, JLabel titulo_modal, JButton boton_confirmar, JLabel titulo_modal_eliminar, JButton boton_confirmar_eliminar, JButton boton_crear, JLabel panel_info_titulo, JLabel label_buscar) {
         this.modal = modal;
         this.modal_eliminar = modal_eliminar;
         this.tabla = tabla;
-        this.completar_cliente = completar_cliente;
+        this.text_field_cliente = text_field_cliente;
         this.rbutton_mp = rbutton_mp;
         this.rbutton_transferencia = rbutton_transferencia;
         this.titulo_modal = titulo_modal;
@@ -71,7 +71,7 @@ public class InterfazPedido implements InformacionInterfaz{
 
     
     
-    @Override
+    //@Override
     public void cambiarPanel() {
         boton_crear.setText("Agregar pedido");
         panel_info_titulo.setText("Lista de pedidos");
@@ -112,7 +112,7 @@ public class InterfazPedido implements InformacionInterfaz{
         //EstadoPedido estado = (EstadoPedido) tabla.getValueAt(filaSeleccionada, 2);
         String cliente = String.valueOf(tabla.getValueAt(filaSeleccionada, 3));
 
-        completar_cliente.setText(cliente);
+        text_field_cliente.setText(cliente);
         
         if(pago == PagoType.MERCADO_PAGO){
             rbutton_mp.setSelected(true);
@@ -166,7 +166,7 @@ public class InterfazPedido implements InformacionInterfaz{
     @Override
     public void mostrarCrear() {
        
-        completar_cliente.setText("");
+        text_field_cliente.setText("");
         rbutton_mp.setSelected(false);
         rbutton_transferencia.setSelected(false);
         
@@ -179,9 +179,9 @@ public class InterfazPedido implements InformacionInterfaz{
     
     @Override
     public void crear() {
-        /*PedidoDTO pedidoDTO = new PedidoDTO(Integer.parseInt(completar_cuit.getText()), completar_email.getText(),
-                completar_direccion.getText(),
-                new CoordenadaDTO(Double.parseDouble(completar_latitud.getText()), Double.parseDouble(completar_longitud.getText()))
+        /*PedidoDTO pedidoDTO = new PedidoDTO(Integer.parseInt(text_field_cuit.getText()), text_field_email.getText(),
+                text_field_direccion.getText(),
+                new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
 
         try {

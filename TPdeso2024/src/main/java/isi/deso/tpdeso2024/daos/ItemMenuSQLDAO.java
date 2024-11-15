@@ -4,8 +4,14 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.Bebida;
+import isi.deso.tpdeso2024.Categoria;
 import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.Plato;
+import isi.deso.tpdeso2024.Vendedor;
 import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +31,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
 	@Override
 	public boolean crear(ItemMenu v){
-		if(!FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
+		//if(! FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
 		if(v.esComida()){
 			return crear((Plato)v);
 		}
@@ -36,7 +42,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-                                                                            INSERT INTO ItemMenu (es_comida,nombre,descripcion,id_vendedor,id_categoria,precio,peso,calorias,apto_celiaco,apto_vegano) 
+                                                                            INSERT INTO Item_menu (es_comida,nombre,descripcion,id_vendedor,id_categoria,precio,peso,calorias,apto_celiaco,apto_vegano) 
                                                                             VALUES (?,?,?,?,?,?,?,?,?,?);""");
 
             //setear valores
@@ -67,7 +73,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-                                                                            INSERT INTO ItemMenu (es_comida,nombre,descripcion,id_vendedor,id_categoria,precio,graduacion_alcoholica,tam) 
+                                                                            INSERT INTO item_menu (es_comida,nombre,descripcion,id_vendedor,id_categoria,precio,graduacion_alcoholica,tam) 
                                                                             VALUES (?,?,?,?,?,?,?,?);""");
 
             //setear valores
@@ -98,7 +104,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		DELETE FROM ItemMenu WHERE id = ?;
+		DELETE FROM item_menu WHERE id = ?;
 		""");
 
             //setear valores
@@ -121,28 +127,28 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT * FROM ItemMenu;								
+		SELECT * FROM item_menu;								
 		""");
 
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-				if(resultados.getBoolean(1)){ //es comida
+				if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
 						resultados.getInt(1),
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+                                                FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+                                                FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(10);
-						resultados.getFloat(11);
-						resultados.getBoolean(12);
-						resultados.getBoolean(13);
+						resultados.getFloat(10),
+						resultados.getFloat(11),
+						resultados.getBoolean(12),
+						resultados.getBoolean(13)
 					);
 					ret.add((ItemMenu)p);		//upcastea para el ret
 				}
@@ -153,13 +159,13 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(8);
-						resultados.getFloat(9);
+						resultados.getFloat(8),
+						resultados.getFloat(9)
 					);
 					
 					
@@ -182,8 +188,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
 
     @Override
-	public boolean actualizar(ItemMenu v) throws VendedorNoEncontradoExcepcion{
-		if(!FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
+	public boolean actualizar(ItemMenu v){
+		//if(!FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(v.getVendedor().getId()))throw new VendedorNoEncontradoExcepcion("No existe el vendedor asociado al item");
 		if(v.esComida()){
 			return actualizar((Plato)v);
 		}
@@ -194,7 +200,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-			UPDATE ItemMenu
+			UPDATE item_menu
 			SET es_comida = ?, nombre = ?, descripcion = ?, id_vendedor= ?, id_categoria = ?, precio = ?,
 			
 			peso = ?, calorias = ?, aptoCeliaco = ?, aptoVegano = ?
@@ -230,7 +236,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-			UPDATE ItemMenu
+			UPDATE item_menu
 			SET es_comida = ?, nombre = ?, descripcion = ?, id_vendedor= ?, id_categoria = ?, precio = ?,
 			
 			graduacion_alcoholica = ?, tam = ?
@@ -261,13 +267,13 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 	}
 
 
-
+     @Override
     public ItemMenu buscarPorID(int id) throws ItemNoEncontradoExcepcion{
         try {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT * FROM ItemMenu WHERE id = ?;								
+		SELECT * FROM item_menu WHERE id = ?;								
 		""");
 
             //setear valores
@@ -277,22 +283,22 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             ResultSet resultados = preparedStatement.executeQuery();
             int contador = 0;
             while (resultados.next()) {
-                if(resultados.getBoolean(1)){ //es comida
+                if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
 						resultados.getInt(1),
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(10);
-						resultados.getFloat(11);
-						resultados.getBoolean(12);
-						resultados.getBoolean(13);
+						resultados.getFloat(10),
+						resultados.getFloat(11),
+						resultados.getBoolean(12),
+						resultados.getBoolean(13)
 					);
 					
 					ret = (ItemMenu)p;		//upcastea para el ret
@@ -304,13 +310,13 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(8);
-						resultados.getFloat(9);
+						resultados.getFloat(8),
+						resultados.getFloat(9)
 					);
 					
 					
@@ -340,30 +346,35 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 	}
     
 	
-	
+    @Override
 	public List<ItemMenu> buscar(Boolean esComida, String nombre, String idVendedor, String tipoCategoria){
-		if(esComida == null && nombre.equals("") && idVendedor == null && tipoCategoria.equals("")) return listar();
+		if(esComida == null && nombre.equals("") && idVendedor.equals("") && tipoCategoria.equals("Todas")) return listar();
         try {
 			//segun nulls armar el string de la query
-			String tabla;
-			if(!tipoCategoria.equals(""))tabla = "ItemMenu join Categoria c on id_categoria = c.id";
-			else tabla = "ItemMenu";
-			String queryBase = "SELECT * FROM "+ tabla +" WHERE ";
+			String queryBase;
+			if(!tipoCategoria.equals("Todas"))queryBase = "SELECT * FROM item_menu join Categoria c on id_categoria = c.id WHERE c.tipo LIKE '" + tipoCategoria +"' ";
+			else queryBase = "SELECT * FROM item_menu";
 			
+                        if(tipoCategoria.equals("Todas") && (esComida != null || !nombre.equals("") || !idVendedor.equals(""))) queryBase += " WHERE ";
+                        
 			if(esComida != null){
-			if(esComida)queryBase += "es_comida = true";
+                            if(!tipoCategoria.equals("Todas")) queryBase+="AND ";
+			if(esComida)queryBase += "es_comida = true ";
 			else queryBase += "es_comida = false ";
 			}
 			
 			if(!nombre.equals("")){
-				if(esComida!=null)queryBase+="AND ";
-				queryBase += "nombre = "+ nombre +" ";
+				if(!tipoCategoria.equals("Todas") || esComida!=null) queryBase+="AND ";
+				queryBase += "nombre LIKE '%"+ nombre +"%' ";
 			}
 			
-			if(idVendedor.equals("")){
-				if(esComida!=null || !nombre.equals(""))queryBase+="AND ";
-				queryBase += "id_vendedor = "+ idVendedor +" ";
+			if(!idVendedor.equals("")){
+				if(!tipoCategoria.equals("Todas") || esComida!=null || !nombre.equals("")) queryBase+="AND ";
+				queryBase += "id_vendedor = "+ idVendedor + " ";
 			}
+                        
+                        queryBase += ";";
+                        System.out.println(queryBase);
 			
 			//consulta
             this.conector.conectar();
@@ -373,22 +384,22 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-				if(resultados.getBoolean(1)){ //es comida
+				if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
 						resultados.getInt(1),
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(10);
-						resultados.getFloat(11);
-						resultados.getBoolean(12);
-						resultados.getBoolean(13);
+						resultados.getFloat(10),
+						resultados.getFloat(11),
+						resultados.getBoolean(12),
+						resultados.getBoolean(13)
 					);
 					ret.add((ItemMenu)p);		//upcastea para el ret
 				}
@@ -399,13 +410,13 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						resultados.getInt(5),
-						resultados.getInt(6),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
+						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
 						
 						resultados.getFloat(7),
 					//especifico
-						resultados.getFloat(8);
-						resultados.getFloat(9);
+						resultados.getFloat(8),
+						resultados.getFloat(9)
 					);
 					
 					

@@ -38,6 +38,16 @@ public class CategoriaMEMORYDAO implements CategoriaDAO{
         return true;
     }
 
+    @Override
+    public List<Categoria> listar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Categoria buscarPorTipo(String tipo) throws CategoriaNoEncontradoException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
     
 }

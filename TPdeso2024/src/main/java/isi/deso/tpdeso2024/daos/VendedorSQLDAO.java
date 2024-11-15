@@ -10,6 +10,7 @@ import isi.deso.tpdeso2024.dtos.VendedorDTO;
 import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -211,7 +212,11 @@ public class VendedorSQLDAO implements VendedorDAO {
             
             return ret;
             
-        } catch (Exception e) {
+        } catch (VendedorNoEncontradoException e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
+            throw new VendedorNoEncontradoException("No existe vendedor con id " + id);
+            //return null;
+        } catch (SQLException e) {
             System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
             return null;
         }

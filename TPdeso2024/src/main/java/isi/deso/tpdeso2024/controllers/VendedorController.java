@@ -104,7 +104,7 @@ public class VendedorController {
         this.dao.actualizar(convertirAModelo(vdto));
     }
     
-    private VendedorDTO convertirADTO(Vendedor v){
+    public VendedorDTO convertirADTO(Vendedor v){
         ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
         /*for(ItemMenuDTO it:v.getItemsMenu()){
             listaItems.add(this.convertirItemADTO(it));
@@ -123,7 +123,7 @@ public class VendedorController {
 
     }
     
-    private Vendedor convertirAModelo(VendedorDTO vdto){
+    public Vendedor convertirAModelo(VendedorDTO vdto){
         ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
         /*for(ItemMenuDTO it:v.getItemsMenu()){
             listaItems.add(this.convertirItemADTO(it));
@@ -141,17 +141,5 @@ public class VendedorController {
         );
     }
      
-    
-    private ItemMenuDTO convertirItemADTO(ItemMenuDTO it){
-    return new ItemMenuDTO(
-    it.getId(),
-    it.getNombre(),
-    it.getDescripcion(),
-    it.getPrecio(),
-    new CategoriaDTO(it.getCategoria().getId(), it.getCategoria().getDescripcion(), it.getCategoria().getTipo()),
-            null
-    );
-    
-    }
     
 }

@@ -18,7 +18,10 @@ public interface ItemMenuDAO {
     public ArrayList<ItemMenu> OrdenarPorCriterios(Comparator<ItemMenu> criterio)throws ItemNoEncontradoExcepcion;
     public ArrayList<ItemMenu> BuscarPorRangoDePrecios(float precioMin, float precioMax)throws ItemNoEncontradoExcepcion;
     public ArrayList<ItemMenu> BuscarPorRestaurante(int idVendedor)throws ItemNoEncontradoExcepcion;
-
+    public ItemMenu buscarPorID(int id) throws ItemNoEncontradoExcepcion;
+    
+    public List<ItemMenu> buscar(Boolean esComida, String nombre, String idVendedor, String tipoCategoria);
+    
     public boolean crear(ItemMenu it);
     public boolean eliminar(int id);
     public boolean actualizar(ItemMenu it);
