@@ -9,17 +9,20 @@ import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.Pago;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
 import isi.deso.tpdeso2024.daos.PedidoDAO;
 import isi.deso.tpdeso2024.dtos.CategoriaDTO;
+import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.dtos.PedidoDetalleDTO;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
+import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,24 +103,29 @@ public class PedidoController {
        // this.dao.actualizar(vdto);
     }
     
-    private PedidoDTO convertirADTO(Pedido v){
-       /* ArrayList<ItemMenuDTO> listaItems  = new ArrayList<>();
-        for(ItemMenu it:v.getItemsMenu()){
-            listaItems.add(this.convertirItemADTO(it));
-        }
+    public PedidoDTO convertirADTO(Pedido v){
         
-        return new PedidoDTO(
-                v.getId(),
-                v.getNombre(),
-                v.getDireccion(),
-                new CoordenadaDTO(
-                        v.getCoordenadas().getLongitud(),
-                        v.getCoordenadas().getLatitud()
-                ),
-                listaItems
-        );*/
-       
-       return null;
+        LinkedList<PedidoDetalleDTO> pedidoDetalleDTO = new LinkedList<>();
+        
+        ClienteDTO clienteDTO = ClienteController.getInstance().convertirADTO(v.getCliente());
+        
+        PedidoDTO ret = new PedidoDTO(v.getId(),pedidoDetalleDTO,null, v.getEstado(),clienteDTO);
+               
+        for(PedidoDetalle pd:v.getPedidoDetalle())pedidoDetalleDTO.add(convertirADTO(pd,ret));
+        
+        
+        return  ret;
+    }
+    
+    public PedidoDetalleDTO convertirADTO(PedidoDetalle pd,PedidoDTO pdto){
+        
+    ItemMenuDTO itemdto = null;
+        try {
+            itemdto = ItemMenuController.getInstance().convertirADTO(pd.getItem(), pd.getItem().esComida());
+        } catch (VendedorNoEncontradoException ex) {
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return new PedidoDetalleDTO(pdto, itemdto, pd.getCantidad());  
     }
 
     public Pedido convertirAModelo(PedidoDTO vdto,Cliente c) {

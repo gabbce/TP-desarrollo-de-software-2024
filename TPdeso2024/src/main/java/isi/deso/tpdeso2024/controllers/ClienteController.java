@@ -103,7 +103,7 @@ public class ClienteController {
 		
     }
     
-    private ClienteDTO convertirADTO(Cliente v){
+    public ClienteDTO convertirADTO(Cliente v){
         
         return new ClienteDTO(
                 v.getId(),
@@ -118,7 +118,7 @@ public class ClienteController {
 
     }
     
-    private Cliente convertirAModelo(ClienteDTO vdto){
+    public Cliente convertirAModelo(ClienteDTO vdto){
         
         return new Cliente(
                 vdto.getId(),

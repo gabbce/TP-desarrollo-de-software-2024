@@ -158,7 +158,7 @@ public class ItemMenuController {
     }
     
     
-    private ItemMenuDTO convertirADTO(ItemMenu v, Boolean esComida) throws VendedorNoEncontradoException{
+    public ItemMenuDTO convertirADTO(ItemMenu v, Boolean esComida) throws VendedorNoEncontradoException{
         if(esComida) {
             Plato p = (Plato) v;
             return new PlatoDTO(
@@ -189,7 +189,7 @@ public class ItemMenuController {
 
     }
     
-    private ItemMenu convertirAModelo(ItemMenuDTO vdto, Boolean esComida, Vendedor v, Categoria c){
+    public ItemMenu convertirAModelo(ItemMenuDTO vdto, Boolean esComida, Vendedor v, Categoria c){
         
         if(esComida) {
             PlatoDTO p = (PlatoDTO) vdto;
