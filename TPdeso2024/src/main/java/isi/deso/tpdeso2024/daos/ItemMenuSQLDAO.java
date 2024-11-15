@@ -114,10 +114,7 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
     }
 
 
-	//falta de aca para abajo
-	//agregar metodos para crear los objetos, segun sea plato o bebida
-	//para devolver upcastear y meter en la List
-    @Override
+	@Override
     public List<ItemMenu> listar() {
         try {
             this.conector.conectar();
@@ -129,16 +126,45 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-                ItemMenu tmp = new ItemMenu(
-                        resultados.getInt(1),
-                        resultados.getString(2),
-                        resultados.getString(3),
-                        new Coordenada(
-                                resultados.getFloat(4),
-                                resultados.getFloat(5)
-                        )
-                );
-                ret.add(tmp);
+				if(resultados.getBoolean(1)){ //es comida
+					Plato p = new Plato(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(10);
+						resultados.getFloat(11);
+						resultados.getBoolean(12);
+						resultados.getBoolean(13);
+					);
+					ret.add((ItemMenu)p);		//upcastea para el ret
+				}
+				else{
+					Bebida b = new Bebida(
+					//general a ItemMenu
+						resultados.getInt(1),
+						resultados.getString(3),
+						resultados.getString(4),
+						//fks
+						resultados.getInt(5),
+						resultados.getInt(6),
+						
+						resultados.getFloat(7),
+					//especifico
+						resultados.getFloat(8);
+						resultados.getFloat(9);
+					);
+					
+					
+					ret.add((ItemMenu)b);
+					
+				}
             }
 
             preparedStatement.close();
@@ -152,24 +178,41 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
     }
 
+
+
     @Override
-    public boolean actualizar(ItemMenu v) {
-        try {
+	public boolean actualizar(ItemMenu v){
+		if(v.esComida()){
+			return actualizar((Plato)v);
+		}
+		return actualizar((Bebida)v);
+    }
+	private boolean actualizar(Plato v){
+		try {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
 			UPDATE ItemMenu
-			SET nombre = ?, direccion = ?, latitud= ?, longitud = ?
-			WHERE id = ?
+			SET es_comida = ?, nombre = ?, descripcion = ?, id_vendedor= ?, id_categoria = ?, precio = ?,
 			
+			peso = ?, calorias = ?, aptoCeliaco = ?, aptoVegano = ?
+			WHERE id = ?
 			""");
 
             //setear valores
-            preparedStatement.setString(1, v.getNombre());
-            preparedStatement.setString(2, v.getDireccion());
-            preparedStatement.setDouble(3, v.getCoordenadas().getLatitud());
-            preparedStatement.setDouble(4, v.getCoordenadas().getLongitud());
-            preparedStatement.setInt(5, v.getId());
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setString(2, v.getNombre());
+            preparedStatement.setString(3, v.getDescripcion());
+            preparedStatement.setInt(4, v.getVendedor().getId());
+			preparedStatement.setInt(5, v.getCategoria().getId());
+			preparedStatement.setFloat(6, v.getPrecio());
+			preparedStatement.setFloat(7, v.peso());
+			preparedStatement.setFloat(8, v.getCalorias());
+			preparedStatement.setBoolean(9, v.aptoCeliaco());
+			preparedStatement.setBoolean(10, v.aptoVegano());
+			preparedStatement.setInt(11,v.getId());
+			
+			
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -178,11 +221,54 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
             System.out.println("excepcion en " + this.getClass().getName() + ".actualizar() " + e.getMessage());
             return false;
         }
-
         return true;
-    }
+	}
+    private boolean actualizar(Bebida v){
+		try {
+            this.conector.conectar();
 
-    public ItemMenu buscarPorID(int id) throws ItemMenuNoEncontradoException {
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+			UPDATE ItemMenu
+			SET es_comida = ?, nombre = ?, descripcion = ?, id_vendedor= ?, id_categoria = ?, precio = ?,
+			
+			graduacion_alcoholica = ?, tam = ?
+			WHERE id = ?
+			""");
+
+            //setear valores
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.setString(2, v.getNombre());
+            preparedStatement.setString(3, v.getDescripcion());
+            preparedStatement.setInt(4, v.getVendedor().getId());
+			preparedStatement.setInt(5, v.getCategoria().getId());
+			preparedStatement.setFloat(6, v.getPrecio());
+			
+			preparedStatement.setFloat(7, v.getGraduacionAlcoholica());
+			preparedStatement.setFloat(8, v.getTam());
+			preparedStatement.setInt(9,v.getId());
+			
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            this.conector.cerrar();
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".actualizar() " + e.getMessage());
+            return false;
+        }
+        return true;
+	}
+
+
+
+	//falta de aca para abajo
+
+	//BUSQUEDAS: por criterios independientes. Controller coordina para combinar criterios
+	//y la excepcion la tira el controller
+	/*buscar por nombre,Categoria.tipo, id_vendedor, id de item
+		Se me ocurrio hacer busqueda por un criterio y luego pasar al proximo 
+		llevando un arreglo con los resultados, y lo vas recortando 
+	*/
+    public ItemMenu buscarPorID(int id){
         try {
             this.conector.conectar();
 
@@ -231,12 +317,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
     
 	
 	
-	//completar
 	public List<ItemMenu> buscar(String nombre) throws ItemMenuNoEncontradoException{
-		/*buscar por nombre,Categoria.tipo, id_vendedor
-		Se me ocurrio hacer busqueda por un criterio y luego pasar al proximo 
-		llevando un arreglo con los resultados, y lo vas recortando 
-		*/
+		
         try {
             this.conector.conectar();
 
