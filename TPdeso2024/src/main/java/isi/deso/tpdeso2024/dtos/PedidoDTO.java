@@ -7,6 +7,7 @@ package isi.deso.tpdeso2024.dtos;
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.Pago;
 import isi.deso.tpdeso2024.PedidoDetalle;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,15 +16,16 @@ import isi.deso.tpdeso2024.PedidoDetalle;
 public class PedidoDTO {
     private int id;
     
-    private PedidoDetalle detalle; // lista de items menu
+    private LinkedList<PedidoDetalleDTO> pedidoDetalle; // lista de items menu
+
     private Pago pago; // se consigue el tipo con getStrategyType();
     private EstadoPedido estado; // ENUM
     private ClienteDTO cliente;
     boolean changed;
 
-    public PedidoDTO(int id, PedidoDetalle detalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+    public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
         this.id = id;
-        this.detalle = detalle;
+        this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
@@ -38,34 +40,36 @@ public class PedidoDTO {
         this.changed = false;
     }
     
-    public PedidoDTO(PedidoDetalle detalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
-        this.detalle = detalle;
+    public PedidoDTO(LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+        this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
         this.changed = false;
     }
     
-    public PedidoDTO(int id, PedidoDetalle detalle, Pago pago, EstadoPedido estado, ClienteDTO cliente, boolean changed) {
+    public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente, boolean changed) {
         this.id = id;
-        this.detalle = detalle;
+        this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
         this.changed = changed;
+    }
+    
+    
+    public LinkedList<PedidoDetalleDTO> getPedidoDetalle() {
+        return pedidoDetalle;
+    }
+
+    public void setPedidoDetalle(LinkedList<PedidoDetalleDTO> pedidoDetalle) {
+        this.pedidoDetalle = pedidoDetalle;
     }
 
     public int getId() {
         return id;
     }
     
-    public PedidoDetalle getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(PedidoDetalle detalle) {
-        this.detalle = detalle;
-    }
 
     public Pago getPago() {
         return pago;

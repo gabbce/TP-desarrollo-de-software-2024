@@ -5,6 +5,7 @@
 package isi.deso.tpdeso2024;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,12 +21,22 @@ public class Pedido implements Observable {
     private EstadoPedido estado;
     private Cliente cliente;
     boolean changed = false;
+    private LinkedList<PedidoDetalle> pedidoDetalle;
+
+    public LinkedList<PedidoDetalle> getPedidoDetalle() {
+        return pedidoDetalle;
+    }
+
+    public void setPedidoDetalle(LinkedList<PedidoDetalle> pedidoDetalle) {
+        this.pedidoDetalle = pedidoDetalle;
+    }
 
     public Pedido(int id, Pago pago, EstadoPedido estado, Cliente cliente) {
         this.id = id;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
+        this.pedidoDetalle = new LinkedList<>();
     }
     
     public Pedido(Pago pago, Cliente cliente) {

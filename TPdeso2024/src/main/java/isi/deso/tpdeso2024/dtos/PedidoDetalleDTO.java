@@ -11,19 +11,38 @@ import java.util.ArrayList;
  * @author gabic
  */
 public class PedidoDetalleDTO {
-    private ArrayList<ItemMenuDTO> items;
+    private PedidoDTO pedido;
+    private ItemMenuDTO item;
+    private int cantidad;
 
-    public PedidoDetalleDTO(ArrayList<ItemMenuDTO> items) {
-        this.items = items;
+    public PedidoDTO getPedido() {
+        return pedido;
     }
 
-    public ArrayList<ItemMenuDTO> getItems() {
-        return items;
+    public void setPedido(PedidoDTO pedido) {
+        this.pedido = pedido;
     }
 
-    public void setItems(ArrayList<ItemMenuDTO> items) {
-        this.items = items;
+    public ItemMenuDTO getItem() {
+        return item;
     }
-    
+
+    public void setItem(ItemMenuDTO item) {
+        this.item = item;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public PedidoDetalleDTO(PedidoDTO pedido, ItemMenuDTO item, int cantidad) {
+        this.pedido = pedido;
+        this.item = item;
+        this.cantidad = cantidad;
+    }
     
 }

@@ -7,15 +7,22 @@ package isi.deso.tpdeso2024.controllers;
 
 import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
+import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Pedido;
+import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
 import isi.deso.tpdeso2024.daos.PedidoDAO;
 import isi.deso.tpdeso2024.dtos.CategoriaDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import isi.deso.tpdeso2024.dtos.PedidoDetalleDTO;
+import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,20 +45,12 @@ public class PedidoController {
     }
     
     
-    public void crear(PedidoDTO vdto) {
-        //crear el objeto y mandarlo a db
-        /*
-        Pedido v = new Pedido(
-                0, //implementado identity increment en this.dao
-                vdto.getDetalle(),
-                vdto.getPago(),
-                vdto.getEstado(),
-                /* un cliente ya existente *//* ClienteController.getInstance().buscarPorId(vdto.getCliente().getId()))
-        ); 
-
+    public void crear(PedidoDTO vdto) throws ClienteNoEncontradoException {
+        Cliente c = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(vdto.getCliente().getId());
         
+        Pedido v = convertirAModelo(vdto,c);
         
-        this.dao.crear(v);*/
+        FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().crear(v);
     }
     
     
@@ -119,6 +118,30 @@ public class PedidoController {
         );*/
        
        return null;
+    }
+
+    public Pedido convertirAModelo(PedidoDTO vdto,Cliente c) {
+        Pedido p = new Pedido(vdto.getId(),null,EstadoPedido.PENDIENTE,c);
+                
+        for(PedidoDetalleDTO pdto: vdto.getPedidoDetalle()){
+            p.getPedidoDetalle().add(
+            convertirAModelo(pdto,p)
+            );
+        }
+        return p;
+    }
+
+    public PedidoDetalle convertirAModelo(PedidoDetalleDTO pdto, Pedido p) {
+        
+        ItemMenu item;
+        item = null;
+        try {
+            item = FactoryDAO.getFactory(FactoryDAO.SQL).getItemMenuDAO().buscarPorID(pdto.getItem().getId());
+        } catch (ItemNoEncontradoExcepcion ex) {//no deberia suceder
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new PedidoDetalle(p, item, pdto.getCantidad());
+    
     }
     
     
