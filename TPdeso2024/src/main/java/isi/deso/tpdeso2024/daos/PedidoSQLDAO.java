@@ -4,7 +4,9 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
+import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
@@ -90,12 +92,14 @@ public class PedidoSQLDAO implements PedidoDAO {
         
         for(PedidoDetalle pd: v.getPedidoDetalle()){
         
-        preparedStatement = conector.con.prepareStatement("""           UPDATE Pedido        SET estado_pedido = ?, id_cliente = ?            WHERE id = ?;""");
-        
+        preparedStatement = conector.con.prepareStatement("""
+                                                              UPDATE Pedido_detalle
+                                                              SET id_item_menu = ?, cantidad = ?
+                                                              WHERE id_pedido = ?;""");
         //setear valores
-        preparedStatement.setInt(1, parentId);
-        preparedStatement.setInt(2, pd.getItem().getId());
-        preparedStatement.setInt(3, pd.getCantidad());
+        preparedStatement.setInt(1, pd.getItem().getId());
+        preparedStatement.setInt(2, pd.getCantidad());
+        preparedStatement.setInt(3, v.getId());
         
         preparedStatement.executeUpdate();        
         }
@@ -113,8 +117,11 @@ public class PedidoSQLDAO implements PedidoDAO {
 
     @Override
     public List<Pedido> listar() {
-		      ArrayList<Pedido> ret = new ArrayList<>();
-
+	ArrayList<Pedido> ret = new ArrayList<>();
+        //armar la query completa y despues parsear todo, sino va a ser lerdo
+        //porque hay que buscar el cliente y los items
+        
+        
         try {
             this.conector.conectar();
 
@@ -123,17 +130,14 @@ public class PedidoSQLDAO implements PedidoDAO {
 		""");
 
             ResultSet resultados = preparedStatement.executeQuery();
-            while (resultados.next()) {
-                Pedido tmp = new Pedido(
-                        resultados.getInt(1),
-                        resultados.getInt(2),
-                        resultados.getString(3),
-                        resultados.getString(4),
-                        new Coordenada(
-                                resultados.getFloat(5),
-                                resultados.getFloat(6)
-                        )
-                );
+            while (resultados.next()) { //CAMBIAR ORDEN EN CAPA DATOS
+                Cliente cliente = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(resultados.getInt(3));
+                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)), cliente);
+                //subconsulta, agregar pedidodetalle
+                
+                
+                
+                
                 ret.add(tmp);
             }
 
@@ -173,7 +177,9 @@ public class PedidoSQLDAO implements PedidoDAO {
         return true;  
     }
 
-    public Pedido buscarPorID(int id) {
+    
+    
+    /*public Pedido buscarPorID(int id) {
        try {
             this.conector.conectar();
 
@@ -214,7 +220,7 @@ public class PedidoSQLDAO implements PedidoDAO {
             return null;
         }
     }
-
+*/
     @Override
     public boolean actualizar(PedidoDTO vdto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
