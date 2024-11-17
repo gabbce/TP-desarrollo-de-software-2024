@@ -10,12 +10,16 @@ package isi.deso.tpdeso2024.dtos;
  */
 public class ClienteDTO {
     private int id;
-    private int cuit;
+    private String cuit;
     private String email;
     private String direccion;
     private CoordenadaDTO coordenadas;
 
-    public ClienteDTO(int id, int cuit, String email, String direccion, CoordenadaDTO coordenadas) {
+    public ClienteDTO(int id) {
+        this.id = id;
+    }
+
+    public ClienteDTO(int id, String cuit, String email, String direccion, CoordenadaDTO coordenadas) {
         this.id = id;
         this.cuit = cuit;
         this.email = email;
@@ -23,7 +27,7 @@ public class ClienteDTO {
         this.coordenadas = coordenadas;
     }
     
-    public ClienteDTO(int cuit, String email, String direccion, CoordenadaDTO coordenadas) {
+    public ClienteDTO(String cuit, String email, String direccion, CoordenadaDTO coordenadas) {
         
         this.cuit = cuit;
         this.email = email;
@@ -35,11 +39,11 @@ public class ClienteDTO {
         return id;
     }
     
-    public int getCuit() {
+    public String getCuit() {
         return cuit;
     }
 
-    public void setCuit(int cuit) {
+    public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 

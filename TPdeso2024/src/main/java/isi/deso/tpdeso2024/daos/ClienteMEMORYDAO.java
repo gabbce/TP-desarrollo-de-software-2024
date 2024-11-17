@@ -42,7 +42,7 @@ public class ClienteMEMORYDAO implements ClienteDAO {
 
 
     @Override
-    public List<Cliente> buscarPorCuit(int cuit) {
+    public List<Cliente> buscarPorCuit(String cuit) {
         ArrayList<Cliente> res = new ArrayList<>();
         for(Cliente v:clientes) {
             if(v.getCuit()==cuit) res.add(v);

@@ -13,17 +13,16 @@ import isi.deso.tpdeso2024.dtos.VendedorDTO;
 import isi.deso.tpdeso2024.excepciones.CategoriaNoEncontradoException;
 import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
 import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
-import isi.deso.tpdeso2024.utils.InterfazItemMenu;
-import isi.deso.tpdeso2024.utils.ModeloTablaItemMenu;
+import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaItemMenu;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 
@@ -42,12 +41,6 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
      */
     public PanelItemMenu() {
         initComponents();
-        
-        /*interfaz = new InterfazItemMenu(modal, modal_eliminar,
-                                                tabla, text_field_nombre, text_area_descripcion, text_field_vendedor, text_field_precio,  text_field_categoria,
-                                                    titulo_modal, boton_confirmar, titulo_modal_eliminar, boton_confirmar_eliminar,
-                                                        boton_crear, panel_info_titulo, label_buscar);
-        */
         
         inicializarTabla();
         modeloItemMenu = new ModeloTablaItemMenu();
@@ -94,7 +87,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }
     
     @Override
-    public void cerrarPanel() {
+    public void cerrarModales() {
        modal.dispose();
        modal_eliminar.dispose();
        modal_comida.dispose();
@@ -104,12 +97,15 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }
     
     private void cargarCategorias() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        modelo.addElement("Todas");
+
         List<CategoriaDTO> categorias = itemMenuController.listarCategorias();
-        
         for (CategoriaDTO categoria : categorias) {
-            combo_box_categoria.addItem(categoria.getTipo());
-            filtro_categoria.addItem(categoria.getTipo());
+            modelo.addElement(categoria.getTipo());
         }
+
+        filtro_categoria.setModel(modelo);
     }
 
     @Override
@@ -255,10 +251,10 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             JOptionPane.showMessageDialog(modal_comida, "Item menu " + id + " editado exitosamente.");
         }   catch (VendedorNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_comida, "<html>Error al editar el item menu<br>No existe el vendedor</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoriaNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_comida, "<html>Error al editar el item menu<br>No existe la categoria</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal_comida, "Error al editar el item menu.");
@@ -281,10 +277,10 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             JOptionPane.showMessageDialog(modal_bebida, "Item menu " + id + " editado exitosamente.");
         } catch (VendedorNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_bebida, "<html>Error al editar el item menu<br>No existe el vendedor</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoriaNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_bebida, "<html>Error al editar el item menu<br>No existe la categoria</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal_bebida, "Error al editar el item menu.");
@@ -380,10 +376,10 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             JOptionPane.showMessageDialog(modal_bebida, "Item menu creado exitosamente.");
         } catch (VendedorNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_bebida, "<html>Error al crear el item menu<br>No existe el vendedor</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoriaNoEncontradoException ex) {
             JOptionPane.showMessageDialog(modal_bebida, "<html>Error al crear el item menu<br>No existe la categoria</html>");
-            Logger.getLogger(InterfazItemMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PanelItemMenu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal_bebida, "Error al crear el item menu.");
@@ -781,19 +777,16 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         });
 
         titulo_modal_bebida.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        titulo_modal_bebida.setForeground(new java.awt.Color(0, 0, 0));
         titulo_modal_bebida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo_modal_bebida.setText("Completar datos del nuevo item menu - BEBIDA");
 
         jPanel10.setOpaque(false);
 
         jLabel20.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(0, 0, 0));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel20.setText("Graduación alcoholica");
 
         jLabel8.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("Tamaño (ml)");
 
@@ -905,31 +898,26 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         });
 
         titulo_modal_comida.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        titulo_modal_comida.setForeground(new java.awt.Color(0, 0, 0));
         titulo_modal_comida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo_modal_comida.setText("Completar datos del nuevo item menu - COMIDA");
 
         jPanel11.setOpaque(false);
 
         jLabel21.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel21.setText("Peso (gr)");
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Calorias (kcal)");
 
         apto_celiaco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        apto_celiaco.setForeground(new java.awt.Color(0, 0, 0));
         apto_celiaco.setText("Apto celiaco");
         apto_celiaco.setContentAreaFilled(false);
         apto_celiaco.setHideActionText(true);
         apto_celiaco.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         apto_vegano.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        apto_vegano.setForeground(new java.awt.Color(0, 0, 0));
         apto_vegano.setText("Apto vegano");
         apto_vegano.setContentAreaFilled(false);
         apto_vegano.setHideActionText(true);
@@ -1046,19 +1034,16 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         });
 
         titulo_modal_detalle_bebida.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        titulo_modal_detalle_bebida.setForeground(new java.awt.Color(0, 0, 0));
         titulo_modal_detalle_bebida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo_modal_detalle_bebida.setText("Detalles item menu - BEBIDA");
 
         jPanel12.setOpaque(false);
 
         jLabel22.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel22.setText("Graduación alcoholica");
 
         jLabel10.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setText("Tamaño (ml)");
 
@@ -1159,24 +1144,20 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         });
 
         titulo_modal_detalle_comida.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
-        titulo_modal_detalle_comida.setForeground(new java.awt.Color(0, 0, 0));
         titulo_modal_detalle_comida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo_modal_detalle_comida.setText("Detalles item menu - COMIDA");
 
         jPanel13.setOpaque(false);
 
         jLabel23.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel23.setText("Peso (gr)");
 
         jLabel11.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel11.setText("Calorias (kcal)");
 
         detalle_celiaco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        detalle_celiaco.setForeground(new java.awt.Color(0, 0, 0));
         detalle_celiaco.setText("Apto celiaco");
         detalle_celiaco.setContentAreaFilled(false);
         detalle_celiaco.setEnabled(false);
@@ -1184,7 +1165,6 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         detalle_celiaco.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 
         detalle_vegano.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        detalle_vegano.setForeground(new java.awt.Color(0, 0, 0));
         detalle_vegano.setText("Apto vegano");
         detalle_vegano.setContentAreaFilled(false);
         detalle_vegano.setEnabled(false);
@@ -1384,6 +1364,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
 
         panel_filtros.add(jPanel4, new java.awt.GridBagConstraints());
 
+        filtro_tipo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         filtro_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Comida", "Bebida" }));
         filtro_tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1409,9 +1390,9 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_buscar4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filtro_tipo))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filtro_tipo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_buscar4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1497,6 +1478,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
 
         panel_filtros.add(jPanel2, new java.awt.GridBagConstraints());
 
+        filtro_categoria.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         filtro_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas" }));
         filtro_categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1522,9 +1504,9 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_buscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filtro_categoria))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filtro_categoria, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_buscar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1569,8 +1551,8 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1738,7 +1720,16 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }//GEN-LAST:event_text_field_caloriasActionPerformed
 
     private void boton_detallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_detallesActionPerformed
-        mostrarDetalles(tabla.getSelectedRow());
+        
+        int filaSeleccionada = tabla.getSelectedRow();
+
+        if (filaSeleccionada != -1) {  // Verifica si hay una fila seleccionada
+
+            mostrarDetalles(tabla.getSelectedRow());
+
+        } else {
+            JOptionPane.showMessageDialog(panel_info, "Por favor, selecciona una fila para editar.");
+        }
     }//GEN-LAST:event_boton_detallesActionPerformed
 
     private void boton_continuar_detalle_bebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_continuar_detalle_bebidaActionPerformed

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024.utils;
+package isi.deso.tpdeso2024.utils.modelosTablas;
 
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.PagoType;
@@ -40,6 +40,9 @@ public class ModeloTablaPedido extends AbstractTableModel {
         this.nombreColumnas = nombreColumnas;
     }
     
+    public PedidoDTO getRow(int fila){
+        return listaPedidos.get(fila);
+    }
 
     @Override
     public int getRowCount() {
@@ -57,7 +60,7 @@ public class ModeloTablaPedido extends AbstractTableModel {
 
         return switch (columnIndex) {
             case 0 -> pedido.getId();
-            case 1 -> pedido.getPago().getStrategyType();
+            case 1 -> /*pedido.getPago().getStrategyType()*/ "X";
             case 2 -> pedido.getEstado();
             case 3 -> pedido.getCliente().getId();
             default -> null;
@@ -73,7 +76,7 @@ public class ModeloTablaPedido extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0, 3 -> Integer.class;
-            case 1 -> PagoType.class;
+            case 1 -> /*PagoType.class*/ String.class;
             case 2 -> EstadoPedido.class;
             default -> Object.class;
         };

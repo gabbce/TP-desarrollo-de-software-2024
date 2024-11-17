@@ -4,9 +4,10 @@
 
 package isi.deso.tpdeso2024;
 
+import isi.deso.tpdeso2024.utils.InterfazGeneral;
 import isi.deso.tpdeso2024.controllers.*;
 import isi.deso.tpdeso2024.dtos.*;
-import isi.deso.tpdeso2024.utils.ModeloTablaVendedor;
+import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaVendedor;
 
 
 import java.io.IOException;

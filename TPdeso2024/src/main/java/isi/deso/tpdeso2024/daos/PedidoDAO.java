@@ -4,6 +4,8 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.EstadoPedido;
+import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
@@ -19,4 +21,7 @@ public interface PedidoDAO {
     public boolean actualizar(Pedido v);
     public List<Pedido> listar();
     public Pedido buscarPorID(int id) throws PedidoNoEncontradoException;
+    
+    public List<EstadoPedido> getEstadosPedido();
+    public List<PagoType> getPagoTypes();
 }

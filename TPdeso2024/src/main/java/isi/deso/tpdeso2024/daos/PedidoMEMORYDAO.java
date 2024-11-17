@@ -5,6 +5,8 @@
 package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Coordenada;
+import isi.deso.tpdeso2024.EstadoPedido;
+import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
@@ -83,6 +85,16 @@ public class PedidoMEMORYDAO implements PedidoDAO {
 
     @Override
     public Pedido buscarPorID(int id) throws PedidoNoEncontradoException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<EstadoPedido> getEstadosPedido() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<PagoType> getPagoTypes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

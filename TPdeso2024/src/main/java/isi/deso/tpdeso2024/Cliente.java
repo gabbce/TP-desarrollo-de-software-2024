@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
  */
 public class Cliente{
     private int id;
-    private int cuit;
+    private String cuit;
     private String email;
     private String direccion;
     private Coordenada coordenadas;
 
-    public Cliente(int id, int cuit, String email, String direccion, Coordenada coordenadas) {
+    public Cliente(int id, String cuit, String email, String direccion, Coordenada coordenadas) {
         this.id = id;
         this.cuit = cuit;
         this.email = email;
@@ -38,11 +38,11 @@ public class Cliente{
         this.id = id;
     }
 
-    public int getCuit() {
+    public String getCuit() {
         return cuit;
     }
 
-    public void setCuit(int cuit) {
+    public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 

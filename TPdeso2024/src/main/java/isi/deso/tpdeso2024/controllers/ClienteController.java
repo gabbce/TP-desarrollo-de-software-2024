@@ -75,7 +75,7 @@ public class ClienteController {
     
     }
     
-    public List<ClienteDTO> buscarPorCuit(int cuit){
+    public List<ClienteDTO> buscarPorCuit(String cuit){
         //nombre es substring de nombre. Ignore case
         
         ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package isi.deso.tpdeso2024;
+package isi.deso.tpdeso2024.utils;
 
 /**
  *
@@ -105,6 +105,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         panel_botones = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         botonListaVendedores = new javax.swing.JButton();
         botonListaClientes = new javax.swing.JButton();
         botonListaItemsMenu = new javax.swing.JButton();
@@ -113,6 +114,8 @@ public class InterfazGeneral extends javax.swing.JFrame {
         panel_informacion = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestión App Delivery");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jSplitPane1.setBackground(new java.awt.Color(0, 0, 0));
         jSplitPane1.setDividerLocation(150);
@@ -121,6 +124,10 @@ public class InterfazGeneral extends javax.swing.JFrame {
 
         panel_botones.setBackground(new java.awt.Color(255, 255, 153));
         panel_botones.setPreferredSize(new java.awt.Dimension(150, 610));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("<html>Grupo 7 - Todos los derechos reservados ©</html>");
 
         botonListaVendedores.setBackground(new java.awt.Color(255, 102, 153));
         botonListaVendedores.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
@@ -142,7 +149,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
 
         botonListaItemsMenu.setBackground(new java.awt.Color(255, 102, 153));
         botonListaItemsMenu.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        botonListaItemsMenu.setText("ItemsMenu");
+        botonListaItemsMenu.setText("Items Menu");
         botonListaItemsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonListaItemsMenuActionPerformed(evt);
@@ -158,31 +165,34 @@ public class InterfazGeneral extends javax.swing.JFrame {
             }
         });
 
-        label_buscar1.setBackground(new java.awt.Color(102, 0, 102));
-        label_buscar1.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
-        label_buscar1.setForeground(new java.awt.Color(255, 255, 255));
+        label_buscar1.setBackground(new java.awt.Color(255, 102, 102));
+        label_buscar1.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         label_buscar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_buscar1.setText("GRUPO 10");
+        label_buscar1.setText("<html>GESTIÓN<br>DELIVERY</html>");
+        label_buscar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51), 5));
         label_buscar1.setOpaque(true);
 
         javax.swing.GroupLayout panel_botonesLayout = new javax.swing.GroupLayout(panel_botones);
         panel_botones.setLayout(panel_botonesLayout);
         panel_botonesLayout.setHorizontalGroup(
             panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_buscar1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(panel_botonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonListaVendedores, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .addComponent(botonListaItemsMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonListaPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addComponent(label_buscar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panel_botonesLayout.createSequentialGroup()
+                        .addGroup(panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonListaVendedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonListaItemsMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonListaPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
         panel_botonesLayout.setVerticalGroup(
             panel_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_botonesLayout.createSequentialGroup()
-                .addComponent(label_buscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label_buscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonListaVendedores, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -191,7 +201,8 @@ public class InterfazGeneral extends javax.swing.JFrame {
                 .addComponent(botonListaItemsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonListaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panel_botonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {botonListaClientes, botonListaItemsMenu, botonListaPedidos, botonListaVendedores});
@@ -322,6 +333,7 @@ public class InterfazGeneral extends javax.swing.JFrame {
     private javax.swing.JButton botonListaItemsMenu;
     private javax.swing.JButton botonListaPedidos;
     private javax.swing.JButton botonListaVendedores;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JLabel label_buscar1;
     private javax.swing.JPanel panel_botones;

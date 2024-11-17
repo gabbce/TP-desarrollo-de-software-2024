@@ -7,7 +7,7 @@ package isi.deso.tpdeso2024.utils.paneles;
 import isi.deso.tpdeso2024.controllers.ClienteController;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
-import isi.deso.tpdeso2024.utils.ModeloTablaCliente;
+import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaCliente;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.List;
@@ -63,7 +63,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
     }
     
     @Override
-    public void cerrarPanel() {
+    public void cerrarModales() {
        modal.dispose();
        modal_eliminar.dispose();
     }
@@ -95,7 +95,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
     public void mostrarEditar(int filaSeleccionada) {
         
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
-        String cuit = String.valueOf(tabla.getValueAt(filaSeleccionada, 1));
+        String cuit = (String) tabla.getValueAt(filaSeleccionada, 1);
         String email = (String) tabla.getValueAt(filaSeleccionada, 2);
         String direccion = (String) tabla.getValueAt(filaSeleccionada, 3);
         String coordenada = (String) tabla.getValueAt(filaSeleccionada, 4);
@@ -120,7 +120,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
     
     @Override
     public void editar(int id) {
-        ClienteDTO clienteDTO = new ClienteDTO(id, Integer.parseInt(text_field_cuit.getText()), text_field_email.getText(),
+        ClienteDTO clienteDTO = new ClienteDTO(id, text_field_cuit.getText(), text_field_email.getText(),
                 text_field_direccion.getText(),
                 new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
@@ -142,7 +142,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
         }
         else{
-            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscarPorCuit(Integer.parseInt(nombre)));
+            ((ModeloTablaCliente) tabla.getModel()).actualizarListaClientes(clienteController.buscarPorCuit(nombre));
             //System.out.println(clienteController.buscar(Integer.getInteger(nombre)));
         }
         
@@ -167,7 +167,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
     
     @Override
     public void crear() {
-        ClienteDTO clienteDTO = new ClienteDTO(Integer.parseInt(text_field_cuit.getText()), text_field_email.getText(),
+        ClienteDTO clienteDTO = new ClienteDTO(text_field_cuit.getText(), text_field_email.getText(),
                 text_field_direccion.getText(),
                 new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
@@ -518,22 +518,20 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
+                        .addComponent(boton_crear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                        .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
                     .addGroup(panel_infoLayout.createSequentialGroup()
-                        .addGap(15, 325, Short.MAX_VALUE)
                         .addComponent(label_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_infoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
-                                .addComponent(boton_crear)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panel_infoLayout.setVerticalGroup(
@@ -541,12 +539,12 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
             .addGroup(panel_infoLayout.createSequentialGroup()
                 .addComponent(panel_info_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(text_field_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(label_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)

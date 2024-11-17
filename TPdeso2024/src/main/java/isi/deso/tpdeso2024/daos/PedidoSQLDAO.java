@@ -9,6 +9,7 @@ import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.ItemMenu;
+import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.Plato;
@@ -17,6 +18,7 @@ import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,8 +41,8 @@ public class PedidoSQLDAO implements PedidoDAO {
         
        
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
-                                                                            INSERT INTO Pedido (estado_pedido,id_cliente) 
-                                                                            VALUES ('Pendiente',?);""",
+                                                                            INSERT INTO Pedido (id_estado_pedido,id_cliente) 
+                                                                            VALUES ('PENDIENTE',?);""",
                 PreparedStatement.RETURN_GENERATED_KEYS);
         
         //setear valores
@@ -85,7 +87,7 @@ public class PedidoSQLDAO implements PedidoDAO {
        
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
                                                                             UPDATE Pedido
-                                                                            SET estado_pedido = ?, id_cliente = ?
+                                                                            SET id_estado_pedido = ?, id_cliente = ?
                                                                             WHERE id = ?;""");
         
         //setear valores
@@ -160,7 +162,7 @@ public class PedidoSQLDAO implements PedidoDAO {
 
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-                Cliente aux = new Cliente(resultados.getInt(3), 0,null, null,null);
+                Cliente aux = new Cliente(resultados.getInt(3), null,null, null,null);
                 Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
                 ret.add(tmp);
             }
@@ -183,7 +185,6 @@ public class PedidoSQLDAO implements PedidoDAO {
     public void armarPedidoDetalleAux(Pedido p,boolean comida){
         try {
             
-            
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
@@ -201,12 +202,12 @@ public class PedidoSQLDAO implements PedidoDAO {
                 if(comida){
                     Plato aux = new Plato(resultados.getInt(1), null, null, null, null, 0, 0, 0, false, false);
 
-                    tmp = new PedidoDetalle(p, aux, resultados.getInt(3));
+                    tmp = new PedidoDetalle(p, aux, resultados.getInt(2));
                 }
                 else{
                 
                     Bebida aux = new Bebida(resultados.getInt(1), null,null,null,null, 0, 0, 0);
-                    tmp = new PedidoDetalle(p, aux, resultados.getInt(3));
+                    tmp = new PedidoDetalle(p, aux, resultados.getInt(2));
                 
                 }
                 p.getPedidoDetalle().add(tmp);
@@ -237,9 +238,10 @@ public class PedidoSQLDAO implements PedidoDAO {
             ResultSet resultados = preparedStatement.executeQuery();
             int contador =0;
             while (resultados.next()) {
-                Cliente aux = new Cliente(resultados.getInt(3), 0,null, null,null);
+                Cliente aux = new Cliente(resultados.getInt(3), null, null, null, null);
                 Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
                 contador++;
+                ret = tmp;
             }
 
             preparedStatement.close();
@@ -254,5 +256,57 @@ public class PedidoSQLDAO implements PedidoDAO {
         return ret;
     
     
+    }
+    
+    @Override
+    public List<EstadoPedido> getEstadosPedido(){
+        List<EstadoPedido> ret = new ArrayList<>();
+        
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM estado_pedido;								
+		""");
+            
+            ResultSet resultados = preparedStatement.executeQuery();
+            
+            while (resultados.next()) {
+                ret.add(EstadoPedido.valueOf(resultados.getString(1)));
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+        } catch(SQLException e){
+             System.out.println("excepcion en " + this.getClass().getName() + ".getEstadosPedido() " + e.getMessage());
+        }
+        
+        return ret;
+    }
+    
+    @Override
+    public List<PagoType> getPagoTypes(){
+        List<PagoType> ret = new ArrayList<>();
+        
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM pago_type;								
+		""");
+            
+            ResultSet resultados = preparedStatement.executeQuery();
+            
+            while (resultados.next()) {
+                ret.add(PagoType.valueOf(resultados.getString(1)));
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+        } catch(SQLException e){
+             System.out.println("excepcion en " + this.getClass().getName() + ".getPagoTypes() " + e.getMessage());
+        }
+        
+        return ret;
     }
 }

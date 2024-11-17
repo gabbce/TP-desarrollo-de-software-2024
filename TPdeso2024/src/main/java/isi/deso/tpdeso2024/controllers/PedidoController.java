@@ -10,6 +10,7 @@ import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Pago;
+import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
 import isi.deso.tpdeso2024.daos.FactoryDAO;
@@ -98,15 +99,21 @@ public class PedidoController {
        return ret;
     }
 
-    public PedidoDTO buscarPorID(int id) throws PedidoNoEncontradoException{
-        Pedido v = FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().buscarPorID(id);
-        armarPedido(v);
-        return this.convertirADTO(v);
+    public PedidoDTO buscarPorID(int id){
+        try {
+            Pedido v = FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().buscarPorID(id);
+            if(v == null) return null;
+            armarPedido(v);
+            return this.convertirADTO(v);
+        } catch (PedidoNoEncontradoException e){
+            return null;
+        }
+        
     }
     
     //utilidades
     
-    public void armarPedido(Pedido p){
+    public Pedido armarPedido(Pedido p){
            try{
                Cliente c = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(p.getCliente().getId());
                p.setCliente(c);
@@ -119,7 +126,18 @@ public class PedidoController {
            }
            catch(Exception e){
                System.out.println(e.getClass().getSimpleName()+" en isi.deso.tpdeso2024.controllers.PedidoController.armarPedido()");
+               return null;
            }
+           
+           return p;
+    }
+    
+    public List<EstadoPedido> getEstadosPedido(){
+        return FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().getEstadosPedido();
+    }
+    
+    public List<PagoType> getPagoTypes(){
+        return FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().getPagoTypes();
     }
     
     
@@ -149,7 +167,7 @@ public class PedidoController {
     }
 
     public Pedido convertirAModelo(PedidoDTO vdto,Cliente c) {
-        Pedido p = new Pedido(vdto.getId(),null,EstadoPedido.PENDIENTE,c);
+        Pedido p = new Pedido(vdto.getId(),null,vdto.getEstado(),c);
                 
         for(PedidoDetalleDTO pdto: vdto.getPedidoDetalle()){
             p.getPedidoDetalle().add(

@@ -18,6 +18,6 @@ public interface ClienteDAO {
     public boolean eliminar(int id);
     public boolean actualizar(Cliente v);
     public List<Cliente> listar();
-    public List<Cliente> buscarPorCuit(int cuit);
+    public List<Cliente> buscarPorCuit(String cuit);
     public Cliente buscarPorID(int id) throws ClienteNoEncontradoException;
 }

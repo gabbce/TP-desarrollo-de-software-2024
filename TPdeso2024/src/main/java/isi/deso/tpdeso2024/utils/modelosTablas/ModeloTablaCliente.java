@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024.utils;
+package isi.deso.tpdeso2024.utils.modelosTablas;
 
 import isi.deso.tpdeso2024.controllers.ClienteController;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
@@ -71,8 +71,8 @@ public class ModeloTablaCliente extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 1 -> Integer.class;
-            case 2, 3, 4 -> String.class;
+            case 0 -> Integer.class;
+            case 1, 2, 3, 4 -> String.class;
             default -> Object.class;
         };
     }

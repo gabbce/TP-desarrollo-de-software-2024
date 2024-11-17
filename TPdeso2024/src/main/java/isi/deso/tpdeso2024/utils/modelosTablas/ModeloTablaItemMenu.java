@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package isi.deso.tpdeso2024.utils;
+package isi.deso.tpdeso2024.utils.modelosTablas;
 
 import isi.deso.tpdeso2024.controllers.ItemMenuController;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
@@ -52,9 +52,7 @@ public class ModeloTablaItemMenu extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         ItemMenuDTO itemMenu = listaItemsMenu.get(rowIndex);
-        String tipo;
-        if(itemMenu.EsComida()) tipo = "Comida";
-        else tipo = "Bebida";
+        String tipo = itemMenu.EsComida() ? "Comida" : "Bebida";
         return switch (columnIndex) {
             case 0 -> itemMenu.getId();
             case 1 -> tipo;

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * @author gabic
  */
 public interface PanelInformacion{
-    public void cerrarPanel();
+    public void cerrarModales();
     public void abrirPanel();
     public void mostrarEliminar(int filaSeleccionada);
     public void eliminar(int id);

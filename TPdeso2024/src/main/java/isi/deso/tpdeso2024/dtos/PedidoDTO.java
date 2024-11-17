@@ -21,7 +21,7 @@ public class PedidoDTO {
     private Pago pago; // se consigue el tipo con getStrategyType();
     private EstadoPedido estado; // ENUM
     private ClienteDTO cliente;
-    boolean changed;
+    //boolean changed;
 
     public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
         this.id = id;
@@ -29,33 +29,22 @@ public class PedidoDTO {
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
-        this.changed = false;
     }
-    
-    public PedidoDTO(int id, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
-        this.id = id;
-        this.pago = pago;
-        this.estado = estado;
-        this.cliente = cliente;
-        this.changed = false;
-    }
-    
+
     public PedidoDTO(LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
         this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
-        this.changed = false;
     }
-    
-    public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente, boolean changed) {
-        this.id = id;
-        this.pedidoDetalle = pedidoDetalle;
+
+    public PedidoDTO(Pago pago, EstadoPedido estado, ClienteDTO cliente) {
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
-        this.changed = changed;
     }
+
+   
     
     
     public LinkedList<PedidoDetalleDTO> getPedidoDetalle() {
@@ -93,14 +82,6 @@ public class PedidoDTO {
 
     public void setCliente(ClienteDTO cliente) {
         this.cliente = cliente;
-    }
-
-    public boolean isChanged() {
-        return changed;
-    }
-
-    public void setChanged(boolean changed) {
-        this.changed = changed;
     }
 
     

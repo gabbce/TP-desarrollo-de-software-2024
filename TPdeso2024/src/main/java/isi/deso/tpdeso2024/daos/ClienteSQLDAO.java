@@ -35,7 +35,7 @@ public class ClienteSQLDAO implements ClienteDAO {
                                                                             VALUES (?,?,?,?,?);""");
         
         //setear valores
-        preparedStatement.setInt(1, v.getCuit());
+        preparedStatement.setString(1, v.getCuit());
         preparedStatement.setString(2, v.getEmail());
         preparedStatement.setString(3, v.getDireccion());
         preparedStatement.setDouble(4, v.getCoordenadas().getLatitud());
@@ -79,7 +79,7 @@ public class ClienteSQLDAO implements ClienteDAO {
 
 
     @Override
-    public List<Cliente> buscarPorCuit(int cuit) {
+    public List<Cliente> buscarPorCuit(String cuit) {
 		try{
         this.conector.conectar();
         
@@ -97,7 +97,7 @@ public class ClienteSQLDAO implements ClienteDAO {
 		while(resultados.next()){
 			Cliente tmp = new Cliente(
 				resultados.getInt(1),
-				resultados.getInt(2),
+				resultados.getString(2),
 				resultados.getString(3),
 				resultados.getString(4),
 				new Coordenada(
@@ -137,7 +137,7 @@ public class ClienteSQLDAO implements ClienteDAO {
             while (resultados.next()) {
                 Cliente tmp = new Cliente(
                         resultados.getInt(1),
-                        resultados.getInt(2),
+                        resultados.getString(2),
                         resultados.getString(3),
                         resultados.getString(4),
                         new Coordenada(
@@ -172,7 +172,7 @@ public class ClienteSQLDAO implements ClienteDAO {
 			""");
         
         //setear valores
-        preparedStatement.setInt(1, v.getCuit());
+        preparedStatement.setString(1, v.getCuit());
         preparedStatement.setString(2, v.getEmail());
         preparedStatement.setString(3, v.getDireccion());
         preparedStatement.setDouble(4, v.getCoordenadas().getLatitud());
@@ -210,7 +210,7 @@ public class ClienteSQLDAO implements ClienteDAO {
             while (resultados.next()) {
                 ret = new Cliente(
                         resultados.getInt(1),
-				resultados.getInt(2),
+				resultados.getString(2),
 				resultados.getString(3),
 				resultados.getString(4),
 				new Coordenada(
