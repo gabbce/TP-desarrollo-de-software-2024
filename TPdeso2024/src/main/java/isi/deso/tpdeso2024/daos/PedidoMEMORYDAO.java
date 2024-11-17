@@ -7,6 +7,7 @@ package isi.deso.tpdeso2024.daos;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +43,6 @@ public class PedidoMEMORYDAO implements PedidoDAO {
     }
 
 
-    @Override
     public List<Pedido> buscar(String nombre) {
         ArrayList<Pedido> res = new ArrayList<>();
         for(Pedido v:pedidos) {
@@ -57,7 +57,6 @@ public class PedidoMEMORYDAO implements PedidoDAO {
         return this.pedidos;
     }
 
-    @Override
     public boolean actualizar(PedidoDTO vdto) {
         //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
@@ -75,5 +74,15 @@ public class PedidoMEMORYDAO implements PedidoDAO {
         
         
         return true;
+    }
+
+    @Override
+    public boolean actualizar(Pedido v) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Pedido buscarPorID(int id) throws PedidoNoEncontradoException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

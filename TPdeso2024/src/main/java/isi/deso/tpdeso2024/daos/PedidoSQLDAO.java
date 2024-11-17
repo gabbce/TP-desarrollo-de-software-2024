@@ -4,13 +4,17 @@
  */
 package isi.deso.tpdeso2024.daos;
 
+import isi.deso.tpdeso2024.Bebida;
 import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.EstadoPedido;
+import isi.deso.tpdeso2024.ItemMenu;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
+import isi.deso.tpdeso2024.Plato;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -72,6 +76,7 @@ public class PedidoSQLDAO implements PedidoDAO {
 
 
 
+    @Override
     public boolean actualizar(Pedido v) {
 		try{
         this.conector.conectar();
@@ -114,43 +119,6 @@ public class PedidoSQLDAO implements PedidoDAO {
     }
     
     
-
-    @Override
-    public List<Pedido> listar() {
-	ArrayList<Pedido> ret = new ArrayList<>();
-        //armar la query completa y despues parsear todo, sino va a ser lerdo
-        //porque hay que buscar el cliente y los items
-        
-        
-        try {
-            this.conector.conectar();
-
-            PreparedStatement preparedStatement = conector.con.prepareStatement("""
-		SELECT * FROM Pedido;								
-		""");
-
-            ResultSet resultados = preparedStatement.executeQuery();
-            while (resultados.next()) { //CAMBIAR ORDEN EN CAPA DATOS
-                Cliente cliente = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(resultados.getInt(3));
-                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)), cliente);
-                //subconsulta, agregar pedidodetalle
-                
-                
-                
-                
-                ret.add(tmp);
-            }
-
-            preparedStatement.close();
-            this.conector.cerrar();
-
-        } catch (Exception e) {
-            System.out.println("excepcion en " + this.getClass().getName() + ".listar() " + e.getMessage());
-        }
-
-        return ret;
-    }
-    
     @Override
     public boolean eliminar(int id) {
 		try{
@@ -177,57 +145,114 @@ public class PedidoSQLDAO implements PedidoDAO {
         return true;  
     }
 
+
+    @Override
+    public List<Pedido> listar() {
+	ArrayList<Pedido> ret = new ArrayList<>();
+        
+        
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM Pedido;								
+		""");
+
+            ResultSet resultados = preparedStatement.executeQuery();
+            while (resultados.next()) {
+                Cliente aux = new Cliente(resultados.getInt(3), 0,null, null,null);
+                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
+                ret.add(tmp);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+            for(Pedido p:ret)armarPedidoDetalle(p);
+
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".listar() " + e.getMessage());
+        }
+
+        return ret;
+    }
+    
+    public void armarPedidoDetalle(Pedido p){
+        armarPedidoDetalleAux(p, true);
+        armarPedidoDetalleAux(p, false);
+    }
+    public void armarPedidoDetalleAux(Pedido p,boolean comida){
+        try {
+            
+            
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT id_item_menu,cantidad
+                FROM pedido_detalle JOIN item_menu it ON id_item_menu =  it.id
+                WHERE id_pedido = ? AND es_comida = ?;								
+		""");
+            preparedStatement.setInt(1,p.getId());
+            preparedStatement.setBoolean(2,comida);
+
+            ResultSet resultados = preparedStatement.executeQuery();
+            while (resultados.next()) {
+                
+                PedidoDetalle tmp;
+                if(comida){
+                    Plato aux = new Plato(resultados.getInt(1), null, null, null, null, 0, 0, 0, false, false);
+
+                    tmp = new PedidoDetalle(p, aux, resultados.getInt(3));
+                }
+                else{
+                
+                    Bebida aux = new Bebida(resultados.getInt(1), null,null,null,null, 0, 0, 0);
+                    tmp = new PedidoDetalle(p, aux, resultados.getInt(3));
+                
+                }
+                p.getPedidoDetalle().add(tmp);
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+        } catch (Exception e) {
+            System.out.println("excepcion en " + this.getClass().getName() + ".armarPedidoDetalle() " + e.getMessage());
+        }
     
     
-    /*public Pedido buscarPorID(int id) {
-       try {
+    }
+    
+    @Override
+    public Pedido buscarPorID(int id) throws PedidoNoEncontradoException{
+        Pedido ret=null;
+        try {
             this.conector.conectar();
 
             PreparedStatement preparedStatement = conector.con.prepareStatement("""
 		SELECT * FROM Pedido WHERE id = ?;								
 		""");
 
-            //setear valores
             preparedStatement.setInt(1, id);
-
-            Pedido ret = null;
+            
+            
             ResultSet resultados = preparedStatement.executeQuery();
-            int contador = 0;
+            int contador =0;
             while (resultados.next()) {
-                ret = new Pedido(
-                        resultados.getInt(1),
-				resultados.getInt(2),
-				resultados.getString(3),
-				resultados.getString(4),
-				new Coordenada(
-					resultados.getFloat(5),
-					resultados.getFloat(6)
-				)
-                );
+                Cliente aux = new Cliente(resultados.getInt(3), 0,null, null,null);
+                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
                 contador++;
-            }
-            if (contador == 0) {
-                throw new PedidoNoEncontradoException("No existe Pedido con id " + id);
             }
 
             preparedStatement.close();
             this.conector.cerrar();
             
-            return ret;
-            
+            if(contador==0)throw new PedidoNoEncontradoException();
+            armarPedidoDetalle(ret);
         } catch (Exception e) {
-            System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
-            return null;
+            System.out.println("excepcion en " + this.getClass().getName() + ".listar() " + e.getMessage());
         }
-    }
-*/
-    @Override
-    public boolean actualizar(PedidoDTO vdto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public List<Pedido> buscar(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return ret;
+    
+    
     }
 }

@@ -43,8 +43,21 @@ public class Pedido implements Observable {
         this.pago = pago;
         this.cliente = cliente;
         this.estado = EstadoPedido.PENDIENTE;
+
     }
 
+    public boolean itemsSonDelMismoVendedor(){
+    if(pedidoDetalle.isEmpty()) return true;
+    Vendedor v = pedidoDetalle.get(0).getItem().getVendedor();
+    for(PedidoDetalle pd:pedidoDetalle){
+        Vendedor v2 = pd.getItem().getVendedor();
+        if(v!=v2)return false;
+        v = v2;
+    }
+    return true;
+    }
+    
+    
     public int getId() {
         return id;
     }

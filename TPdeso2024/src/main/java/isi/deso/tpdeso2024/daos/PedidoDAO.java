@@ -6,6 +6,7 @@ package isi.deso.tpdeso2024.daos;
 
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 public interface PedidoDAO {
     public boolean crear(Pedido v);
     public boolean eliminar(int id);
-    public boolean actualizar(PedidoDTO vdto);
+    public boolean actualizar(Pedido v);
     public List<Pedido> listar();
-    public List<Pedido> buscar(String nombre);
+    public Pedido buscarPorID(int id) throws PedidoNoEncontradoException;
 }

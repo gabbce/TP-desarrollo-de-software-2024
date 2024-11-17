@@ -23,6 +23,8 @@ import isi.deso.tpdeso2024.dtos.PedidoDetalleDTO;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import isi.deso.tpdeso2024.excepciones.ItemNoEncontradoExcepcion;
 import isi.deso.tpdeso2024.excepciones.VendedorNoEncontradoException;
+import isi.deso.tpdeso2024.excepciones.ItemsNoSonDelMismoVendedorException;
+import isi.deso.tpdeso2024.excepciones.PedidoNoEncontradoException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,60 +50,78 @@ public class PedidoController {
     }
     
     
-    public void crear(PedidoDTO vdto) throws ClienteNoEncontradoException {
+    public void crear(PedidoDTO vdto) throws ClienteNoEncontradoException, ItemsNoSonDelMismoVendedorException {
         Cliente c = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(vdto.getCliente().getId());
         
         Pedido v = convertirAModelo(vdto,c);
+        
+        if(!v.itemsSonDelMismoVendedor())throw new ItemsNoSonDelMismoVendedorException("");
+        //chequear existencia de los items?
+        
+        
         
         FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().crear(v);
     }
     
     
-    public List<PedidoDTO> listar(){
+    
+    public void actualizar(PedidoDTO vdto) throws ClienteNoEncontradoException, ItemsNoSonDelMismoVendedorException{
+        Cliente c = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(vdto.getCliente().getId());
         
-        /*List<Pedido> lista = this.dao.listar();
+        Pedido v = convertirAModelo(vdto,c);
         
-        List<PedidoDTO> resultado = new ArrayList<>();
+        if(!v.itemsSonDelMismoVendedor())throw new ItemsNoSonDelMismoVendedorException("");
+        //chequear existencia de los items?
         
-        for(Pedido v:lista) resultado.add(this.convertirADTO(v));
-        
-        return resultado;*/
-        
-        return new ArrayList<>();
-        
-        /*List<PedidoDTO> listaPedidoes = new ArrayList<>();
-        listaPedidoes.add( new PedidoDTO("Agustin","Lavaise 800", new CoordenadaDTO(1,1)));
-        
-        return listaPedidoes;*/
+        FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().actualizar(v);
     }
     
     
     
     public void eliminar(int id){
         
-        //this.dao.eliminar(id);
-    
+       PedidoDAO pdao = FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO();
+       pdao.eliminar(id);
     }
     
-    public List<PedidoDTO> buscar(String nombreSubstring){
-        //nombre es substring de nombre. Ignore case
-        
-        /*
-        List<Pedido> l = this.dao.buscar(nombreSubstring);
-        
-        List<PedidoDTO> resultado = new ArrayList<>();
-        for(Pedido v: l)resultado.add(convertirADTO(v));
-        
-        return resultado;*/
-        
-        return new ArrayList<>();
+    public List<PedidoDTO> listar(){
+       PedidoDAO pdao = FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO();
+       
+       List<Pedido> lista = pdao.listar();
+       
+       //buscar al cliente y los items y linkearlos
+       for(Pedido p:lista)armarPedido(p);
+       
+       //convertir todo a dto, pedido e items
+       List<PedidoDTO> ret = new ArrayList<>();
+       for(Pedido p:lista)ret.add(convertirADTO(p));
+       return ret;
+    }
+
+    public PedidoDTO buscarPorID(int id) throws PedidoNoEncontradoException{
+        Pedido v = FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().buscarPorID(id);
+        armarPedido(v);
+        return this.convertirADTO(v);
     }
     
-    public void actualizar(PedidoDTO vdto){
-        //buscar el id del dto y actualizar con los otros datos
-        
-       // this.dao.actualizar(vdto);
+    //utilidades
+    
+    public void armarPedido(Pedido p){
+           try{
+               Cliente c = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO().buscarPorID(p.getCliente().getId());
+               p.setCliente(c);
+       
+            for(PedidoDetalle pd:p.getPedidoDetalle()){
+                ItemMenu it;
+                   it = FactoryDAO.getFactory(FactoryDAO.SQL).getItemMenuDAO().buscarPorID(pd.getItem().getId());
+                pd.setItem(it);
+            }
+           }
+           catch(Exception e){
+               System.out.println(e.getClass().getSimpleName()+" en isi.deso.tpdeso2024.controllers.PedidoController.armarPedido()");
+           }
     }
+    
     
     public PedidoDTO convertirADTO(Pedido v){
         
