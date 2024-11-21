@@ -700,11 +700,6 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="modal_tabla_items">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[800, 400]"/>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -1181,11 +1176,6 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="modal_ver_items">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[800, 400]"/>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -1413,11 +1403,13 @@
                   <EmptySpace pref="13" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="439" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="boton_editar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="boton_eliminar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="boton_crear" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="boton_detalles2" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="boton_editar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="boton_eliminar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="boton_crear" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               </Group>

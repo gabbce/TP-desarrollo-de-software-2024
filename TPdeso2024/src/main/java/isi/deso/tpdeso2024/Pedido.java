@@ -48,11 +48,15 @@ public class Pedido implements Observable {
 
     public boolean itemsSonDelMismoVendedor(){
     if(pedidoDetalle.isEmpty()) return true;
-    Vendedor v = pedidoDetalle.get(0).getItem().getVendedor();
-    for(PedidoDetalle pd:pedidoDetalle){
-        Vendedor v2 = pd.getItem().getVendedor();
-        if(v!=v2)return false;
-        v = v2;
+    //Vendedor v = pedidoDetalle.get(0).getItem().getVendedor();
+    int idV = pedidoDetalle.get(0).getItem().getVendedor().getId();
+    for(PedidoDetalle pd : pedidoDetalle){
+        /*Vendedor v2 = pd.getItem().getVendedor();
+        if(v!=v2)return false;*/
+        
+        int idVAux = pd.getItem().getVendedor().getId();
+        
+        if(idV != idVAux) return false;
     }
     return true;
     }

@@ -103,9 +103,11 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         List<CategoriaDTO> categorias = itemMenuController.listarCategorias();
         for (CategoriaDTO categoria : categorias) {
             modelo.addElement(categoria.getTipo());
+            combo_box_categoria.addItem(categoria.getTipo());
         }
 
         filtro_categoria.setModel(modelo);
+        
     }
 
     @Override

@@ -56,9 +56,8 @@ public class PedidoController {
         
         Pedido v = convertirAModelo(vdto,c);
         
-        if(!v.itemsSonDelMismoVendedor())throw new ItemsNoSonDelMismoVendedorException("");
+        if(!v.itemsSonDelMismoVendedor()) throw new ItemsNoSonDelMismoVendedorException("");
         //chequear existencia de los items?
-        
         
         
         FactoryDAO.getFactory(FactoryDAO.SQL).getPedidoDAO().crear(v);
@@ -179,8 +178,7 @@ public class PedidoController {
 
     public PedidoDetalle convertirAModelo(PedidoDetalleDTO pdto, Pedido p) {
         
-        ItemMenu item;
-        item = null;
+        ItemMenu item = null;
         try {
             item = FactoryDAO.getFactory(FactoryDAO.SQL).getItemMenuDAO().buscarPorID(pdto.getItem().getId());
         } catch (ItemNoEncontradoExcepcion ex) {//no deberia suceder

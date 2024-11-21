@@ -132,7 +132,12 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
+            
+           
+            
             while (resultados.next()) {
+                 Vendedor v = FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5));
+                Categoria c = FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6));
 				if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
@@ -140,8 +145,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-                                                FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-                                                FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+                                                v,
+                                                c,
 						
 						resultados.getFloat(7),
 					//especifico
@@ -159,8 +164,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+						v,
+                                                c,
 						
 						resultados.getFloat(7),
 					//especifico
@@ -278,11 +283,17 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 
             //setear valores
             preparedStatement.setInt(1, id);
-
+            
             ItemMenu ret = null;
             ResultSet resultados = preparedStatement.executeQuery();
             int contador = 0;
+            
+            
             while (resultados.next()) {
+                
+                Vendedor v = FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5));
+                Categoria c = FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6));
+            
                 if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
@@ -290,8 +301,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+						v,
+						c,
 						
 						resultados.getFloat(7),
 					//especifico
@@ -310,8 +321,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+						v,
+						c,
 						
 						resultados.getFloat(7),
 					//especifico
@@ -383,7 +394,12 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 			
             ArrayList<ItemMenu> ret = new ArrayList<>();
             ResultSet resultados = preparedStatement.executeQuery();
+            
+            
             while (resultados.next()) {
+                    Vendedor v = FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5));
+                    Categoria c = FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6));
+            
 				if(resultados.getBoolean(2)){ //es comida
 					Plato p = new Plato(
 					//general a ItemMenu
@@ -391,8 +407,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+						v,
+						c,
 						
 						resultados.getFloat(7),
 					//especifico
@@ -410,8 +426,8 @@ public class ItemMenuSQLDAO implements ItemMenuDAO {
 						resultados.getString(3),
 						resultados.getString(4),
 						//fks
-						FactoryDAO.getFactory(FactoryDAO.SQL).getVendedorDAO().buscarPorID(resultados.getInt(5)),
-						FactoryDAO.getFactory(FactoryDAO.SQL).getCategoriaDAO().buscarPorID(resultados.getInt(6)),
+						v, 
+                                                c,
 						
 						resultados.getFloat(7),
 					//especifico

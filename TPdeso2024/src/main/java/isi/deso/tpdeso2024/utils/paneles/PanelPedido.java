@@ -302,7 +302,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         confirmar_pedido.putClientProperty("tipoAccion", "crear");
         confirmar_pedido.setText("Crear pedido");
         titulo_modal_items.setText("Seleccione los items del pedido");
-        modal_tabla_items.setSize(815, 440);
+        modal_tabla_items.setSize(815, 455);
         modal_tabla_items.setLocationRelativeTo(this);
         modal_tabla_items.setVisible(true);
     }
@@ -937,8 +937,6 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                 .addComponent(panel_modal4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
         );
 
-        modal_tabla_items.setPreferredSize(new java.awt.Dimension(800, 400));
-
         panel_tabla_item.setBackground(new java.awt.Color(255, 255, 255));
         panel_tabla_item.setPreferredSize(new java.awt.Dimension(743, 382));
 
@@ -1242,8 +1240,6 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             .addComponent(panel_tabla_item, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
-        modal_ver_items.setPreferredSize(new java.awt.Dimension(800, 400));
-
         panel_ver_items.setBackground(new java.awt.Color(255, 255, 255));
         panel_ver_items.setPreferredSize(new java.awt.Dimension(800, 400));
 
@@ -1478,11 +1474,12 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boton_detalles2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(boton_detalles2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(7, 7, 7))
         );
 
