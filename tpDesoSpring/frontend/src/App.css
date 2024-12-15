@@ -1,0 +1,251 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #212121;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #ff9800;
+}
+
+/* Navigation Menu */
+.nav-menu {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #e68900;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+.search-bar .btn {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-bar .btn:hover {
+  background-color: #e68900;
+}
+
+/* Table Styles */
+.table-container {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #333;
+}
+
+table th, table td {
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+table tr:hover {
+  background-color: #444;
+}
+
+table th {
+  background-color: #2c2f3f;
+  color: white;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: #333;
+  border-radius: 8px;
+  width: 400px;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 1.5rem;
+  color: #ddd;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-content {
+  margin-top: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-actions .btn {
+  padding: 10px 20px;
+}
+
+.modal-actions .cancel {
+  background-color: #666;
+}
+
+.modal-actions .btn:hover,
+.modal-actions .cancel:hover {
+  opacity: 0.8;
+}
+
+/* Input Styling in Modal */
+input {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+button.cancel {
+  background-color: #666;
+}
+
+button.cancel:hover {
+  opacity: 0.8;
+}
+
+/* Estilo para el contenedor de la pregunta "¿Es comida?" */
+div label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Estilo para el checkbox */
+div input[type="checkbox"] {
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #d37f00;
+}
+
+.grupoBotones {
+  display: flex;
+  gap: 10px; /* Ajusta la separación entre los botones */
+  padding: 5px;
+}
+
+.eliminar {
+  padding: 10px 20px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.editar {
+  padding: 10px 20px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.eliminar:hover {
+  background-color: #da0000;
+}
+
+.editar:hover {
+  background-color: #d27e00;
+}
