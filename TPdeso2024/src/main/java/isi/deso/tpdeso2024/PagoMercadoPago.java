@@ -12,8 +12,40 @@ import java.util.Scanner;
  * @author augus
  */
 public class PagoMercadoPago implements Pago{
+    private Integer id;
+    private Integer id_pedido;
     private String alias;
     private LocalDateTime fechaPago;
+
+    public PagoMercadoPago(Integer id, Integer id_pedido, String alias, LocalDateTime fechaPago) {
+        this.id = id;
+        this.id_pedido = id_pedido;
+        this.alias = alias;
+        this.fechaPago = fechaPago;
+    }
+
+    public PagoMercadoPago() {
+    }
+    
+    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId_pedido() {
+        return id_pedido;
+    }
+
+    public void setId_pedido(Integer id_pedido) {
+        this.id_pedido = id_pedido;
+    }
+    
+    
 
     @Override
     public LocalDateTime getFechaPago() {

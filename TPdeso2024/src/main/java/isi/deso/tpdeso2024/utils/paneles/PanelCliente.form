@@ -387,7 +387,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="panel_info_titulo" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="boton_crear" min="-2" max="-2" attributes="0"/>
@@ -404,7 +404,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -417,15 +417,15 @@
                       <Component id="text_field_buscar" pref="29" max="32767" attributes="0"/>
                       <Component id="label_buscar" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="439" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="boton_editar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="boton_eliminar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="boton_crear" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <EmptySpace pref="8" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

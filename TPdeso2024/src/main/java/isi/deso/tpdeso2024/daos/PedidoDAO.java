@@ -23,5 +23,5 @@ public interface PedidoDAO {
     public Pedido buscarPorID(int id) throws PedidoNoEncontradoException;
     
     public List<EstadoPedido> getEstadosPedido();
-    public List<PagoType> getPagoTypes();
+    
 }

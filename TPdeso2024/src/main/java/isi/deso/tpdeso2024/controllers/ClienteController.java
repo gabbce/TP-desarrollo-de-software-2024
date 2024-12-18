@@ -15,6 +15,7 @@ import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -38,7 +39,7 @@ public class ClienteController {
     }
     
     
-    public void crear(ClienteDTO dto){
+    public void crear(ClienteDTO dto) throws SQLException{
         //crear el objeto y mandarlo a db
         Coordenada c = new Coordenada(dto.getCoordenadas().getLatitud(),dto.getCoordenadas().getLongitud());
         Cliente v = new Cliente(
@@ -96,7 +97,7 @@ public class ClienteController {
         return c;
     }
     
-    public void actualizar(ClienteDTO dto){
+    public void actualizar(ClienteDTO dto) throws SQLException{
         //buscar el id del dto y actualizar con los otros datos
         ClienteDAO dao = FactoryDAO.getFactory(FactoryDAO.SQL).getClienteDAO();
         dao.actualizar(convertirAModelo(dto));

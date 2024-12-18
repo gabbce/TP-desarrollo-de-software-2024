@@ -22,6 +22,7 @@ public class Pedido implements Observable {
     private Cliente cliente;
     boolean changed = false;
     private LinkedList<PedidoDetalle> pedidoDetalle;
+    private Float precioFinal;
 
     public LinkedList<PedidoDetalle> getPedidoDetalle() {
         return pedidoDetalle;
@@ -31,19 +32,20 @@ public class Pedido implements Observable {
         this.pedidoDetalle = pedidoDetalle;
     }
 
-    public Pedido(int id, Pago pago, EstadoPedido estado, Cliente cliente) {
+    public Pedido(int id, Pago pago, EstadoPedido estado, Cliente cliente, Float precioFinal) {
         this.id = id;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
         this.pedidoDetalle = new LinkedList<>();
+        this.precioFinal = precioFinal;
     }
     
-    public Pedido(Pago pago, Cliente cliente) {
+    public Pedido(Pago pago, Cliente cliente, Float precioFinal) {
         this.pago = pago;
         this.cliente = cliente;
         this.estado = EstadoPedido.PENDIENTE;
-
+        this.precioFinal = precioFinal;
     }
 
     public boolean itemsSonDelMismoVendedor(){
@@ -94,6 +96,14 @@ public class Pedido implements Observable {
 
     public void setPago(Pago pago) {
         this.pago = pago;
+    }
+
+    public Float getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public void setPrecioFinal(Float precioFinal) {
+        this.precioFinal = precioFinal;
     }
 
     public Cliente getCliente() {

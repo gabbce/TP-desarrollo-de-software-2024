@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public interface PanelInformacion{
     public void cerrarModales();
     public void abrirPanel();
+    public Boolean validarDatos();
     public void mostrarEliminar(int filaSeleccionada);
     public void eliminar(int id);
     public void mostrarEditar(int filaSeleccionada);

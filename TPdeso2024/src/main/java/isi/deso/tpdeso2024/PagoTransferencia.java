@@ -12,8 +12,42 @@ import java.util.Scanner;
  * @author augus
  */
 public class PagoTransferencia implements Pago{
+    private Integer id;
+    private Integer id_pedido;
     private String cbu;
+    private String cuit;
     private LocalDateTime fechaPago;
+
+    
+
+    public PagoTransferencia(Integer id, Integer id_pedido, String cbu, String cuit, LocalDateTime fechaPago) {
+        this.id = id;
+        this.id_pedido = id_pedido;
+        this.cbu = cbu;
+        this.cuit = cuit;
+        this.fechaPago = fechaPago;
+    }
+
+    public PagoTransferencia() {
+    }
+    
+    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId_pedido() {
+        return id_pedido;
+    }
+
+    public void setId_pedido(Integer id_pedido) {
+        this.id_pedido = id_pedido;
+    }
 
     @Override
     public LocalDateTime getFechaPago() {
@@ -40,7 +74,7 @@ public class PagoTransferencia implements Pago{
     public void setCuit(String cuit) {
         this.cuit = cuit;
     }
-    private String cuit;
+    
     @Override
     public float precioFinal(float precioTotal) {
         return (float) (1.02*precioTotal);

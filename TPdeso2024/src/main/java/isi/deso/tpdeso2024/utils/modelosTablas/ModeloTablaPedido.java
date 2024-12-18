@@ -8,6 +8,7 @@ import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.controllers.PedidoController;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -60,9 +61,12 @@ public class ModeloTablaPedido extends AbstractTableModel {
 
         return switch (columnIndex) {
             case 0 -> pedido.getId();
-            case 1 -> /*pedido.getPago().getStrategyType()*/ "X";
-            case 2 -> pedido.getEstado();
-            case 3 -> pedido.getCliente().getId();
+            case 1 -> pedido.getEstado();
+            case 2 -> pedido.getPrecioFinal();
+            case 3 -> pedido.getPago().getPagoType();
+            case 4 -> pedido.getPago().getAlias_cbu();
+            case 5 -> pedido.getPago().getFechaPago();
+            case 6 -> pedido.getCliente().getId();
             default -> null;
         };
     }
@@ -75,9 +79,13 @@ public class ModeloTablaPedido extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
-            case 0, 3 -> Integer.class;
-            case 1 -> /*PagoType.class*/ String.class;
-            case 2 -> EstadoPedido.class;
+            case 0, 6 -> Integer.class;
+            case 1 -> EstadoPedido.class;
+            case 2 -> Float.class;
+            case 3 -> PagoType.class;
+            case 4 -> String.class;
+            case 5 -> LocalDateTime.class;
+            
             default -> Object.class;
         };
     }

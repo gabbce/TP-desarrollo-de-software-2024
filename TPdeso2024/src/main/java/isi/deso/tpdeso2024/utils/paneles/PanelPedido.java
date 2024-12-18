@@ -12,6 +12,7 @@ import isi.deso.tpdeso2024.dtos.BebidaDTO;
 import isi.deso.tpdeso2024.dtos.CategoriaDTO;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import isi.deso.tpdeso2024.dtos.ItemMenuDTO;
+import isi.deso.tpdeso2024.dtos.PagoDTO;
 import isi.deso.tpdeso2024.dtos.PedidoDTO;
 import isi.deso.tpdeso2024.dtos.PedidoDetalleDTO;
 import isi.deso.tpdeso2024.dtos.PlatoDTO;
@@ -25,6 +26,8 @@ import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaItemMenuPedido;
 import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaPedido;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,7 +60,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         
         inicializarTabla();
         modeloPedido = new ModeloTablaPedido();
-        modeloPedido.setNombreColumnas(List.of("Id", "Tipo Pago", "Estado", "Id cliente"));
+        modeloPedido.setNombreColumnas(List.of("Id", "Estado", "Monto", "Tipo Pago", "Alias / CBU", "Fecha pago", "Id cliente"));
         tabla.setModel(modeloPedido);
         
         modeloItemMenu = new ModeloTablaItemMenuPedido();
@@ -151,6 +154,44 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         filtro_vendedor.setEnabled(b);
         filtro_categoria.setEnabled(b);
     }
+     
+     @Override
+     public Boolean validarDatos(){
+          // Validar vendedor no vacio
+             String idVendedorTexto = text_field_cliente.getText().trim();
+            if (idVendedorTexto .isEmpty()) {
+                JOptionPane.showMessageDialog(modal, "El ID del cliente no puede estar vacío.");
+                return false;
+            }
+            Integer idVendedor;
+            try {
+                idVendedor = Integer.parseInt(idVendedorTexto );
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(modal, "El ID del cliente debe ser numérico.");
+                return false;
+            }
+            
+            // Validar alias/cbu
+    String aliasCbu = text_field_alias_cbu.getText().trim();
+    
+    // Verificar que no esté vacío
+    if (aliasCbu.isEmpty()) {
+        JOptionPane.showMessageDialog(modal, "El Alias / CBU no puede estar vacío.");
+        return false;
+    }
+    
+    // Verificar que no exceda los 40 caracteres
+    if (aliasCbu.length() > 40) {
+        JOptionPane.showMessageDialog(modal, "El Alias / Cbu no puede exceder los 40 caracteres.");
+        return false;
+    }
+    
+    if (!aliasCbu.matches("[a-zA-Z0-9\\\\.]+$")) {
+        JOptionPane.showMessageDialog(modal, "El Alias / Cbu puede contener letras, números y puntos.");
+        return false;
+    }
+         return true;
+     }
     
     @Override
     public void mostrarEliminar(int filaSeleccionada) {
@@ -179,12 +220,13 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     public void mostrarEditar(int filaSeleccionada) {
         cerrarModales();
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
-        String pago = String.valueOf(tabla.getValueAt(filaSeleccionada, 1));
-        String estado = String.valueOf(tabla.getValueAt(filaSeleccionada, 2));
-        String cliente = String.valueOf(tabla.getValueAt(filaSeleccionada, 3));
-
+        String estado = String.valueOf(tabla.getValueAt(filaSeleccionada, 1));
+        String pago = String.valueOf(tabla.getValueAt(filaSeleccionada, 3));
+        String aliasCbu = String.valueOf(tabla.getValueAt(filaSeleccionada, 4));
+        String cliente = String.valueOf(tabla.getValueAt(filaSeleccionada, 6));
         
         text_field_cliente.setText(cliente);
+        text_field_alias_cbu.setText(aliasCbu);
         combo_box_tipo_pago.setSelectedItem(pago);
         combo_box_estado_pedido.setEnabled(true);
         combo_box_estado_pedido.setSelectedItem(estado);
@@ -220,7 +262,9 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     
     @Override
     public void editar(int id) {
-        PedidoDTO pedidoDTO = new PedidoDTO(id, null, null, EstadoPedido.valueOf(String.valueOf(combo_box_estado_pedido.getSelectedItem())), new ClienteDTO(Integer.parseInt(text_field_cliente.getText())));
+        PagoDTO pago = new PagoDTO(null, id, PagoType.valueOf((String)combo_box_tipo_pago.getSelectedItem()), text_field_alias_cbu.getText(), null, null);
+        
+        PedidoDTO pedidoDTO = new PedidoDTO(pago, EstadoPedido.valueOf((String)combo_box_estado_pedido.getSelectedItem()), new ClienteDTO(Integer.parseInt(text_field_cliente.getText())), null);
         
         LinkedList<PedidoDetalleDTO> detalle = new LinkedList<>();
         
@@ -228,7 +272,10 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         
         Map<Integer, Integer> cantidades = ((ModeloTablaItemMenuPedido) tabla_item.getModel()).getCantidadesSeleccionadas();
         
+        Float precioFinal = 0f;
+        
         for(ItemMenuDTO i : items){
+            precioFinal += i.getPrecio() * cantidades.get(i.getId());
             detalle.add(new PedidoDetalleDTO(pedidoDTO, i, cantidades.get(i.getId())));
         }
         
@@ -237,7 +284,14 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             return;
         }
         
+        if(pago.getPagoType() == PagoType.MERCADO_PAGO){
+            precioFinal *= 1.04f;
+        } else {
+            precioFinal *= 1.02f;
+        }
+        pedidoDTO.setPrecioFinal(precioFinal);
         pedidoDTO.setPedidoDetalle(detalle);
+        
         
         try {
            pedidoController.actualizar(pedidoDTO);
@@ -280,6 +334,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         cerrarModales();
       
        text_field_cliente.setText("");
+       text_field_alias_cbu.setText("");
        combo_box_estado_pedido.setEnabled(false);
        combo_box_estado_pedido.setSelectedItem("PENDIENTE");
         
@@ -323,8 +378,9 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     
     @Override
     public void crear() {
+        PagoDTO pago = new PagoDTO(PagoType.valueOf((String)combo_box_tipo_pago.getSelectedItem()), text_field_alias_cbu.getText(), null, LocalDateTime.now());
         
-        PedidoDTO pedidoDTO = new PedidoDTO(null, EstadoPedido.PENDIENTE, new ClienteDTO(Integer.parseInt(text_field_cliente.getText())));
+        PedidoDTO pedidoDTO = new PedidoDTO(pago, EstadoPedido.PENDIENTE, new ClienteDTO(Integer.parseInt(text_field_cliente.getText())), null);
         
         LinkedList<PedidoDetalleDTO> detalle = new LinkedList<>();
         
@@ -332,7 +388,10 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         
         Map<Integer, Integer> cantidades = ((ModeloTablaItemMenuPedido) tabla_item.getModel()).getCantidadesSeleccionadas();
         
+        Float precioFinal = 0f;
+        
         for(ItemMenuDTO i : items){
+            precioFinal += i.getPrecio() * cantidades.get(i.getId());
             detalle.add(new PedidoDetalleDTO(pedidoDTO, i, cantidades.get(i.getId())));
         }
         
@@ -341,6 +400,12 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             return;
         }
         
+        if(pago.getPagoType() == PagoType.MERCADO_PAGO){
+            precioFinal *= 1.04f;
+        } else {
+            precioFinal *= 1.02f;
+        }
+        pedidoDTO.setPrecioFinal(precioFinal);
         pedidoDTO.setPedidoDetalle(detalle);
         
         try {
@@ -442,6 +507,8 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         combo_box_tipo_pago = new javax.swing.JComboBox<>();
         combo_box_estado_pedido = new javax.swing.JComboBox<>();
         label_buscar12 = new javax.swing.JLabel();
+        label_buscar7 = new javax.swing.JLabel();
+        text_field_alias_cbu = new javax.swing.JTextField();
         modal_detalles_bebida = new javax.swing.JDialog();
         panel_modal3 = new javax.swing.JPanel();
         boton_continuar_detalle_bebida = new javax.swing.JButton();
@@ -485,7 +552,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         boton_detalles = new javax.swing.JButton();
         confirmar_pedido = new javax.swing.JButton();
         ver_items_seleccionados = new javax.swing.JButton();
-        boton_detalles1 = new javax.swing.JButton();
+        boton_regresar_items = new javax.swing.JButton();
         modal_ver_items = new javax.swing.JDialog();
         panel_ver_items = new javax.swing.JPanel();
         titulo_ver_items = new javax.swing.JLabel();
@@ -628,6 +695,16 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         label_buscar12.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         label_buscar12.setText("Estado del envio");
 
+        label_buscar7.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        label_buscar7.setText("Alias / CBU");
+
+        text_field_alias_cbu.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        text_field_alias_cbu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_field_alias_cbuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_modalLayout = new javax.swing.GroupLayout(panel_modal);
         panel_modal.setLayout(panel_modalLayout);
         panel_modalLayout.setHorizontalGroup(
@@ -644,12 +721,14 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                         .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_buscar12)
                             .addComponent(jLabel21)
-                            .addComponent(label_buscar6))
+                            .addComponent(label_buscar6)
+                            .addComponent(label_buscar7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(text_field_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combo_box_estado_pedido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(combo_box_tipo_pago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(combo_box_tipo_pago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(text_field_alias_cbu))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_modalLayout.setVerticalGroup(
@@ -668,7 +747,11 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_buscar6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(combo_box_tipo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_buscar7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(text_field_alias_cbu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_cancelar)
                     .addComponent(boton_confirmar))
@@ -1182,14 +1265,14 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             }
         });
 
-        boton_detalles1.setBackground(new java.awt.Color(204, 0, 0));
-        boton_detalles1.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        boton_detalles1.setForeground(new java.awt.Color(255, 255, 255));
-        boton_detalles1.setText("Cancelar");
-        boton_detalles1.setPreferredSize(new java.awt.Dimension(150, 28));
-        boton_detalles1.addActionListener(new java.awt.event.ActionListener() {
+        boton_regresar_items.setBackground(new java.awt.Color(51, 51, 51));
+        boton_regresar_items.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        boton_regresar_items.setForeground(new java.awt.Color(255, 255, 255));
+        boton_regresar_items.setText("Regresar");
+        boton_regresar_items.setPreferredSize(new java.awt.Dimension(150, 28));
+        boton_regresar_items.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_detalles1ActionPerformed(evt);
+                boton_regresar_itemsActionPerformed(evt);
             }
         });
 
@@ -1199,7 +1282,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             panel_tabla_itemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_tabla_itemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(boton_detalles1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(boton_regresar_items, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(boton_detalles, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1225,7 +1308,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                     .addComponent(boton_detalles, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ver_items_seleccionados, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmar_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boton_detalles1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(boton_regresar_items, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1445,7 +1528,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addComponent(boton_crear)
@@ -1461,7 +1544,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_infoLayout.setVerticalGroup(
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1473,14 +1556,14 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
                     .addComponent(text_field_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(boton_detalles2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(7, 7, 7))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1512,17 +1595,21 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     }//GEN-LAST:event_boton_cancelar_eliminarActionPerformed
 
     private void boton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmarActionPerformed
-        switch((String) boton_confirmar.getClientProperty("tipoAccion")){
-            case "crear":
-            mostrarCrearItems();
-            break;
-            case "editar":
-                editar((Integer) boton_confirmar.getClientProperty("id"));
-            //mostrarEditarItems((Integer) boton_confirmar.getClientProperty("fila"));
-            break;
-        }
+        
+        if(validarDatos()){
+            switch ((String) boton_confirmar.getClientProperty("tipoAccion")) {
+                case "crear":
+                    mostrarCrearItems();
+                    break;
+                case "editar":
+                    editar((Integer) boton_confirmar.getClientProperty("id"));
+                    //mostrarEditarItems((Integer) boton_confirmar.getClientProperty("fila"));
+                    break;
+            }
 
-        modal.dispose();
+            modal.dispose();
+        }
+        
     }//GEN-LAST:event_boton_confirmarActionPerformed
 
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
@@ -1604,9 +1691,10 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         
     }//GEN-LAST:event_combo_box_tipo_pagoActionPerformed
 
-    private void boton_detalles1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_detalles1ActionPerformed
-        
-    }//GEN-LAST:event_boton_detalles1ActionPerformed
+    private void boton_regresar_itemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_regresar_itemsActionPerformed
+        modal_tabla_items.dispose();
+        mostrarModal(modal);
+    }//GEN-LAST:event_boton_regresar_itemsActionPerformed
 
     private void boton_continuar_detalle_bebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_continuar_detalle_bebidaActionPerformed
         modal_detalles_bebida.dispose();
@@ -1684,6 +1772,10 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
         // TODO add your handling code here:
     }//GEN-LAST:event_text_field_clienteActionPerformed
 
+    private void text_field_alias_cbuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_field_alias_cbuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_field_alias_cbuActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton boton_cancelar;
@@ -1694,12 +1786,12 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     private javax.swing.JButton boton_continuar_detalle_comida;
     private javax.swing.JButton boton_crear;
     private javax.swing.JButton boton_detalles;
-    private javax.swing.JButton boton_detalles1;
     private javax.swing.JButton boton_detalles2;
     private javax.swing.JButton boton_detalles3;
     private javax.swing.JButton boton_detalles4;
     private javax.swing.JButton boton_editar;
     private javax.swing.JButton boton_eliminar;
+    private javax.swing.JButton boton_regresar_items;
     private javax.swing.JComboBox<String> combo_box_estado_pedido;
     private javax.swing.JComboBox<String> combo_box_tipo_pago;
     private javax.swing.JButton confirmar_pedido;
@@ -1736,6 +1828,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     private javax.swing.JLabel label_buscar4;
     private javax.swing.JLabel label_buscar5;
     private javax.swing.JLabel label_buscar6;
+    private javax.swing.JLabel label_buscar7;
     private javax.swing.JDialog modal;
     private javax.swing.JDialog modal_detalles_bebida;
     private javax.swing.JDialog modal_detalles_comida;
@@ -1754,6 +1847,7 @@ public class PanelPedido extends javax.swing.JPanel implements PanelInformacion{
     private javax.swing.JTable tabla;
     private javax.swing.JTable tabla_item;
     private javax.swing.JTable tabla_ver_items;
+    private javax.swing.JTextField text_field_alias_cbu;
     private javax.swing.JTextField text_field_buscar;
     private javax.swing.JTextField text_field_cliente;
     private javax.swing.JLabel titulo_modal;

@@ -9,6 +9,7 @@ import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ClienteSQLDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean crear(Cliente v) {
+    public boolean crear(Cliente v) throws SQLException{
     try{
         this.conector.conectar();
         
@@ -46,9 +47,10 @@ public class ClienteSQLDAO implements ClienteDAO {
         preparedStatement.close();
         this.conector.cerrar();
         }
-        catch(Exception e){
+        catch(SQLException e){
             System.out.println("excepcion en "+ this.getClass().getName() + ".create() " + e.getMessage());
-            return false;
+            throw new SQLException(e.getMessage());
+            //return false;
         } 
         return true;
     }
@@ -159,7 +161,7 @@ public class ClienteSQLDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean actualizar(Cliente v) {
+    public boolean actualizar(Cliente v) throws SQLException{
 		try{
         this.conector.conectar();
         
@@ -183,9 +185,10 @@ public class ClienteSQLDAO implements ClienteDAO {
         preparedStatement.close();
         this.conector.cerrar();
         }
-        catch(Exception e){
+        catch(SQLException e){
             System.out.println("excepcion en "+ this.getClass().getName() + ".actualizar() " + e.getMessage());
-            return false;
+            throw new SQLException(e.getMessage());
+            //return false;
         } 
         
         return true;

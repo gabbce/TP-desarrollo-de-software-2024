@@ -8,6 +8,7 @@ import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.dtos.ClienteDTO;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean crear(Cliente v) {
+    public boolean crear(Cliente v) throws SQLException{
         v.setId(ultimaID);
         ultimaID++;
         clientes.add(v);
@@ -62,7 +63,7 @@ public class ClienteMEMORYDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean actualizar(Cliente v) {
+    public boolean actualizar(Cliente v) throws SQLException{
       /*  //ahora mismo estan ordenados por id
         //int indice = this.buscarPorID(vdto.getId());
 	Cliente v = null;

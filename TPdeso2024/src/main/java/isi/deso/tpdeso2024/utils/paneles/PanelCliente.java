@@ -10,7 +10,10 @@ import isi.deso.tpdeso2024.dtos.CoordenadaDTO;
 import isi.deso.tpdeso2024.utils.modelosTablas.ModeloTablaCliente;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -67,6 +70,108 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
        modal.dispose();
        modal_eliminar.dispose();
     }
+    
+    @Override
+    public Boolean validarDatos() {
+    try {
+        // Validar CUIT
+        String cuit = text_field_cuit.getText().trim();
+        if (cuit.isEmpty()) {
+            JOptionPane.showMessageDialog(modal, "El CUIT no puede estar vacío.");
+            return false;
+        }
+        if (!cuit.matches("\\d{11}")) {
+            JOptionPane.showMessageDialog(modal, "El CUIT debe tener exactamente 11 dígitos numéricos.");
+            return false;
+        }
+
+        // Validar Email
+        String email = text_field_email.getText().trim();
+        if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(modal, "El correo electrónico no puede estar vacío.");
+            return false;
+        }
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(modal, "El correo electrónico no tiene un formato válido.");
+            return false;
+        }
+        if (email.length() > 50) {
+            JOptionPane.showMessageDialog(modal, "El correo electrónico no puede exceder los 50 caracteres.");
+            return false;
+        }
+
+        // Validar Dirección
+        String direccion = text_field_direccion.getText().trim();
+        if (direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(modal, "La dirección no puede estar vacía.");
+            return false;
+        }
+        if (direccion.length() > 50) {
+            JOptionPane.showMessageDialog(modal, "La dirección no puede exceder los 50 caracteres.");
+            return false;
+        }
+        if (!direccion.matches("[a-zA-ZÁÉÍÓÚÑáéíóúñ0-9\\s]+")) {
+            JOptionPane.showMessageDialog(modal, "La dirección solo puede contener letras, números, espacios, tildes o la letra Ñ.");
+            return false;
+        }
+
+        // Validar Latitud
+        String latitudTexto = text_field_latitud.getText().trim();
+        if (latitudTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(modal, "La latitud no puede estar vacía.");
+            return false;
+        }
+
+        Float latitud;
+        try {
+            latitud = Float.parseFloat(latitudTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(modal, "La latitud debe ser un número válido.");
+            return false;
+        }
+
+        if (latitud < -90 || latitud > 90) {
+            JOptionPane.showMessageDialog(modal, "La latitud debe estar entre -90 y 90 grados.");
+            return false;
+        }
+        if (latitudTexto.contains(".") && latitudTexto.substring(latitudTexto.indexOf(".") + 1).length() > 2) {
+            JOptionPane.showMessageDialog(modal, "La latitud no puede tener más de dos decimales.");
+            return false;
+        }
+
+        // Validar Longitud
+        String longitudTexto = text_field_longitud.getText().trim();
+        if (longitudTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(modal, "La longitud no puede estar vacía.");
+            return false;
+        }
+
+        Float longitud;
+        try {
+            longitud = Float.parseFloat(longitudTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(modal, "La longitud debe ser un número válido.");
+            return false;
+        }
+
+        if (longitud < -180 || longitud > 180) {
+            JOptionPane.showMessageDialog(modal, "La longitud debe estar entre -180 y 180 grados.");
+            return false;
+        }
+        if (longitudTexto.contains(".") && longitudTexto.substring(longitudTexto.indexOf(".") + 1).length() > 2) {
+            JOptionPane.showMessageDialog(modal, "La longitud no puede tener más de dos decimales.");
+            return false;
+        }
+
+        // Si todos los datos son válidos
+        return true;
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(modal, "Ocurrió un error inesperado al validar los datos.");
+        return false;
+    }
+}
+
     
     @Override
     public void mostrarEliminar(int filaSeleccionada) {
@@ -130,6 +235,9 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Cliente actualizado exitosamente.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(modal, "Ya existe un cliente con el CUIT ingresado");
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal, "Error al actualizar el cliente.");
@@ -171,16 +279,20 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
                 text_field_direccion.getText(),
                 new CoordenadaDTO(Double.parseDouble(text_field_latitud.getText()), Double.parseDouble(text_field_longitud.getText()))
         );
-
+        
+        
         try {
             clienteController.crear(clienteDTO);
             ((ModeloTablaCliente) tabla.getModel()).resetListaClientes();
             ((AbstractTableModel) tabla.getModel()).fireTableChanged(null);
             JOptionPane.showMessageDialog(modal, "Cliente creado exitosamente.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(modal, "Ya existe un cliente con el CUIT ingresado");
         } catch (HeadlessException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(modal, "Error al crear el cliente.");
-        }
+        } 
     }
 
     /**
@@ -518,7 +630,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addComponent(boton_crear)
@@ -532,7 +644,7 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(text_field_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_infoLayout.setVerticalGroup(
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -542,14 +654,14 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(text_field_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(label_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -605,16 +717,20 @@ public class PanelCliente extends javax.swing.JPanel implements PanelInformacion
     }//GEN-LAST:event_boton_eliminarActionPerformed
 
     private void boton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmarActionPerformed
-        switch((String) boton_confirmar.getClientProperty("tipoAccion")){
-            case "crear":
-            crear();
-            break;
-            case "editar":
-            editar((Integer) boton_confirmar.getClientProperty("id"));
-            break;
-        }
+        
+        if(validarDatos()){
+            switch ((String) boton_confirmar.getClientProperty("tipoAccion")) {
+                case "crear":
+                    crear();
+                    break;
+                case "editar":
+                    editar((Integer) boton_confirmar.getClientProperty("id"));
+                    break;
+            }
 
-        modal.dispose();
+            modal.dispose();
+        }
+        
     }//GEN-LAST:event_boton_confirmarActionPerformed
 
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed

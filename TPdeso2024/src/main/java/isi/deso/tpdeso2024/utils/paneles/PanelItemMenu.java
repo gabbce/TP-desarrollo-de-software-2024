@@ -109,6 +109,151 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         filtro_categoria.setModel(modelo);
         
     }
+    
+    @Override
+    public Boolean validarDatos() {
+        try {
+            // Validar nombre
+            String nombre = text_field_nombre.getText().trim();
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(modal_comida, "El nombre no puede estar vacío.");
+                return false;
+            }
+            if (nombre.length() > 20) {
+                JOptionPane.showMessageDialog(modal_comida, "El nombre no puede exceder los 20 caracteres.");
+                return false;
+            }
+
+            // Validar descripción
+            String descripcion = text_area_descripcion.getText().trim();
+            if (descripcion.isEmpty()) {
+                JOptionPane.showMessageDialog(modal_comida, "La descripción no puede estar vacía.");
+                return false;
+            }
+            if (descripcion.length() > 100) {
+                JOptionPane.showMessageDialog(modal_comida, "La descripción no puede exceder los 100 caracteres.");
+                return false;
+            }
+
+            // Validar precio
+            String precioTexto = text_field_precio.getText().trim();
+            if (precioTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(modal_comida, "El precio no puede estar vacío.");
+                return false;
+            }
+            Float precio;
+            try {
+                precio = Float.parseFloat(precioTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(modal_comida, "El precio debe ser un número válido.");
+                return false;
+            }
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(modal_comida, "El precio debe ser mayor a 0.");
+                return false;
+            }
+            
+            // Validar vendedor no vacio
+             String idVendedorTexto = text_field_vendedor.getText().trim();
+            if (idVendedorTexto .isEmpty()) {
+                JOptionPane.showMessageDialog(modal_comida, "El ID del Vendedor no puede estar vacío.");
+                return false;
+            }
+            Integer idVendedor;
+            try {
+                idVendedor = Integer.parseInt(idVendedorTexto );
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(modal_comida, "El ID del vendedor debe ser numérico.");
+                return false;
+            }
+
+            // Validar según el tipo seleccionado
+            if (combo_box_tipo.getSelectedItem().equals("Comida")) {
+                // Validar peso
+                String pesoTexto = text_field_peso.getText().trim();
+                if (pesoTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(modal_comida, "El peso no puede estar vacío.");
+                    return false;
+                }
+                Float peso;
+                try {
+                    peso = Float.parseFloat(pesoTexto);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(modal_comida, "El peso debe ser un número válido.");
+                    return false;
+                }
+                if (peso <= 0) {
+                    JOptionPane.showMessageDialog(modal_comida, "El peso debe ser mayor a 0.");
+                    return false;
+                }
+
+                // Validar calorías
+                String caloriasTexto = text_field_calorias.getText().trim();
+                if (caloriasTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(modal_comida, "Las calorías no pueden estar vacías.");
+                    return false;
+                }
+                Float calorias;
+                try {
+                    calorias = Float.parseFloat(caloriasTexto);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(modal_comida, "Las calorías deben ser un número válido.");
+                    return false;
+                }
+                if (calorias <= 0) {
+                    JOptionPane.showMessageDialog(modal_comida, "Las calorías deben ser mayores a 0.");
+                    return false;
+                }
+
+                
+
+            } else { // Si no es comida, es bebida
+                // Validar graduación alcohólica
+                String graduacionTexto = text_field_graduacion.getText().trim();
+                if (graduacionTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(modal_bebida, "La graduación alcohólica no puede estar vacía.");
+                    return false;
+                }
+                Float graduacion;
+                try {
+                    graduacion = Float.parseFloat(graduacionTexto);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(modal_bebida, "La graduación alcohólica debe ser un número válido.");
+                    return false;
+                }
+                if (graduacion < 0) {
+                    JOptionPane.showMessageDialog(modal_bebida, "La graduación alcohólica no puede ser negativa.");
+                    return false;
+                }
+
+                // Validar tamaño
+                String tamTexto = text_field_tam.getText().trim();
+                if (tamTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(modal_bebida, "El tamaño no puede estar vacío.");
+                    return false;
+                }
+                Float tam;
+                try {
+                    tam = Float.parseFloat(tamTexto);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(modal_bebida, "El tamaño debe ser un número válido.");
+                    return false;
+                }
+                if (tam <= 0) {
+                    JOptionPane.showMessageDialog(modal_bebida, "El tamaño debe ser mayor a 0.");
+                    return false;
+                }
+            }
+
+            // Si todos los datos son válidos
+            return true;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(modal_bebida, "Ocurrió un error inesperado al validar los datos.");
+            return false;
+        }
+    }
+
 
     @Override
     public void mostrarEliminar(int filaSeleccionada) {
@@ -243,7 +388,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         PlatoDTO platoDTO = new PlatoDTO(id, text_field_nombre.getText(),
                 text_area_descripcion.getText(), new VendedorDTO(Integer.parseInt(text_field_vendedor.getText()), null, null, null), 
                 new CategoriaDTO((String)combo_box_categoria.getSelectedItem()), Float.parseFloat(text_field_precio.getText()),
-                Float.parseFloat(text_field_peso.getText()), Float.parseFloat(text_field_calorias.getText()),
+                Float.parseFloat(text_field_peso.getText()) * 1.10f, Float.parseFloat(text_field_calorias.getText()),
                 apto_celiaco.isSelected(), apto_vegano.isSelected()
         );
 
@@ -266,11 +411,19 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }
     
     public void editarBebida(int id) {
+        Float peso = Float.parseFloat(text_field_tam.getText());
+        Float graduacionAlcoholica = Float.parseFloat(text_field_graduacion.getText());
+        if(graduacionAlcoholica > 0){
+            peso = peso * 0.99f * 1.20f;
+        } else {
+            peso = peso * 1.04f * 1.20f;
+        }
+        
         
         BebidaDTO bebidaDTO = new BebidaDTO(id, text_field_nombre.getText(),
                 text_area_descripcion.getText(), new VendedorDTO(Integer.parseInt(text_field_vendedor.getText()), null, null, null), 
                 new CategoriaDTO((String)combo_box_categoria.getSelectedItem()), Float.parseFloat(text_field_precio.getText()),
-                Float.parseFloat(text_field_graduacion.getText()), Float.parseFloat(text_field_tam.getText())
+                graduacionAlcoholica, peso
         );
 
          try {
@@ -342,7 +495,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         PlatoDTO platoDTO = new PlatoDTO(0, text_field_nombre.getText(),
                 text_area_descripcion.getText(), new VendedorDTO(Integer.parseInt(text_field_vendedor.getText()), null, null, null), 
                 new CategoriaDTO((String)combo_box_categoria.getSelectedItem()), Float.parseFloat(text_field_precio.getText()),
-                Float.parseFloat(text_field_peso.getText()), Float.parseFloat(text_field_calorias.getText()),
+                Float.parseFloat(text_field_peso.getText()) * 1.10f, Float.parseFloat(text_field_calorias.getText()),
                 apto_celiaco.isSelected(), apto_vegano.isSelected()
         );
 
@@ -366,10 +519,18 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     
     public void crearBebida() {
         
+        Float peso = Float.parseFloat(text_field_tam.getText());
+        Float graduacionAlcoholica = Float.parseFloat(text_field_graduacion.getText());
+        if(graduacionAlcoholica > 0){
+            peso = peso * 0.99f * 1.20f;
+        } else {
+            peso = peso * 1.04f * 1.20f;
+        }
+        
         BebidaDTO bebidaDTO = new BebidaDTO(0, text_field_nombre.getText(),
                 text_area_descripcion.getText(), new VendedorDTO(Integer.parseInt(text_field_vendedor.getText()), null, null, null), 
                 new CategoriaDTO((String)combo_box_categoria.getSelectedItem()), Float.parseFloat(text_field_precio.getText()),
-                Float.parseFloat(text_field_graduacion.getText()), Float.parseFloat(text_field_tam.getText())
+                graduacionAlcoholica, peso
         );
 
          try {
@@ -639,37 +800,35 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         panel_modalLayout.setVerticalGroup(
             panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_modalLayout.createSequentialGroup()
+                .addComponent(titulo_modal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(text_field_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_modalLayout.createSequentialGroup()
-                        .addComponent(titulo_modal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(text_field_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel15)
-                                .addComponent(combo_box_categoria))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modalLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(text_field_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel17)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(combo_box_categoria))
+                    .addComponent(text_field_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_modalLayout.createSequentialGroup()
                         .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
-                            .addComponent(combo_box_tipo))
+                            .addComponent(combo_box_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(5, 5, 5))
                     .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
-                        .addComponent(text_field_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addComponent(text_field_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(47, 47, 47)
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_cancelar)
                     .addComponent(boton_siguiente))
@@ -834,7 +993,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addContainerGap())
         );
 
-        boton_regresar_bebida.setBackground(new java.awt.Color(153, 153, 153));
+        boton_regresar_bebida.setBackground(new java.awt.Color(51, 51, 51));
         boton_regresar_bebida.setForeground(new java.awt.Color(204, 204, 204));
         boton_regresar_bebida.setText("Regresar");
         boton_regresar_bebida.addActionListener(new java.awt.event.ActionListener() {
@@ -847,15 +1006,15 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         panel_modal1.setLayout(panel_modal1Layout);
         panel_modal1Layout.setHorizontalGroup(
             panel_modal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titulo_modal_bebida, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
+            .addComponent(titulo_modal_bebida, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
             .addGroup(panel_modal1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(boton_regresar_bebida)
-                .addGap(69, 69, 69)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(boton_cancelar_bebida)
-                .addGap(77, 77, 77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(boton_confirmar_bebida)
-                .addGap(109, 109, 109))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panel_modal1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -879,9 +1038,11 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         modal_bebida.getContentPane().setLayout(modal_bebidaLayout);
         modal_bebidaLayout.setHorizontalGroup(
             modal_bebidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 523, Short.MAX_VALUE)
             .addGroup(modal_bebidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel_modal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(modal_bebidaLayout.createSequentialGroup()
+                    .addComponent(panel_modal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         modal_bebidaLayout.setVerticalGroup(
             modal_bebidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -993,7 +1154,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addGap(9, 9, 9))
         );
 
-        boton_regresar_comida.setBackground(new java.awt.Color(153, 153, 153));
+        boton_regresar_comida.setBackground(new java.awt.Color(51, 51, 51));
         boton_regresar_comida.setForeground(new java.awt.Color(204, 204, 204));
         boton_regresar_comida.setText("Regresar");
         boton_regresar_comida.addActionListener(new java.awt.event.ActionListener() {
@@ -1014,7 +1175,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                         .addComponent(boton_regresar_comida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(boton_cancelar_comida)
-                        .addGap(57, 57, 57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(boton_confirmar_comida))
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1552,7 +1713,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoLayout.createSequentialGroup()
                         .addComponent(boton_crear)
@@ -1566,7 +1727,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                     .addGroup(panel_infoLayout.createSequentialGroup()
                         .addComponent(panel_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_infoLayout.setVerticalGroup(
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1574,15 +1735,15 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addComponent(panel_info_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_detalles, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1680,7 +1841,8 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }//GEN-LAST:event_filtro_vendedorKeyReleased
 
     private void boton_confirmar_bebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmar_bebidaActionPerformed
-       switch((String) boton_confirmar_bebida.getClientProperty("tipoAccion")){
+       if(validarDatos()){
+           switch((String) boton_confirmar_bebida.getClientProperty("tipoAccion")){
             case "crear":
             crearBebida();
             break;
@@ -1689,6 +1851,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             break;
         }
        modal_bebida.dispose();
+       }
     }//GEN-LAST:event_boton_confirmar_bebidaActionPerformed
 
     private void combo_box_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_box_categoriaActionPerformed
@@ -1708,15 +1871,19 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     }//GEN-LAST:event_combo_box_tipoActionPerformed
 
     private void boton_confirmar_comidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmar_comidaActionPerformed
-        switch((String) boton_confirmar_comida.getClientProperty("tipoAccion")){
-            case "crear":
-            crearComida();
-            break;
-            case "editar":
-            editarComida((Integer) boton_confirmar_comida.getClientProperty("id"));
-            break;
+        
+        if(validarDatos()){
+            switch ((String) boton_confirmar_comida.getClientProperty("tipoAccion")) {
+                case "crear":
+                    crearComida();
+                    break;
+                case "editar":
+                    editarComida((Integer) boton_confirmar_comida.getClientProperty("id"));
+                    break;
+            }
+            modal_comida.dispose();
         }
-        modal_comida.dispose();
+        
     }//GEN-LAST:event_boton_confirmar_comidaActionPerformed
 
     private void boton_cancelar_comidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelar_comidaActionPerformed

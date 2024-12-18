@@ -71,6 +71,97 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
     }
     
     @Override
+    public Boolean validarDatos() {
+        try {
+            // Validar el nombre
+            String nombre = text_field_nombre.getText().trim();
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(modal, "El nombre no puede estar vacío.");
+                return false;
+            }
+            if (nombre.length() > 30) {
+                JOptionPane.showMessageDialog(modal, "El nombre no puede exceder los 30 caracteres.");
+                return false;
+            }
+            if (!nombre.matches("[a-zA-ZÁÉÍÓÚÑáéíóúñ\\s]+")) {
+                JOptionPane.showMessageDialog(modal, "El nombre solo puede contener letras");
+                return false;
+            }
+
+            // Validar la dirección
+            String direccion = text_field_direccion.getText().trim();
+            if (direccion.isEmpty()) {
+                JOptionPane.showMessageDialog(modal, "La dirección no puede estar vacía.");
+                return false;
+            }
+            if (direccion.length() > 50) {
+                JOptionPane.showMessageDialog(modal, "La dirección no puede exceder los 50 caracteres.");
+                return false;
+            }
+            if (!direccion.matches("[a-zA-ZÁÉÍÓÚÑáéíóúñ0-9\\s]+")) {
+                JOptionPane.showMessageDialog(modal, "La dirección solo puede contener letras y números");
+                return false;
+            }
+
+            // Validar la latitud
+            String latitudTexto = text_field_latitud.getText().trim();
+            if (latitudTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(modal, "La latitud no puede estar vacía.");
+                return false;
+            }
+
+            Float latitud;
+            try {
+                latitud = Float.parseFloat(latitudTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(modal, "La latitud debe ser un número válido.");
+                return false;
+            }
+
+            if (latitud < -90 || latitud > 90) {
+                JOptionPane.showMessageDialog(modal, "La latitud debe estar entre -90 y 90 grados.");
+                return false;
+            }
+            if (latitudTexto.contains(".") && latitudTexto.substring(latitudTexto.indexOf(".") + 1).length() > 2) {
+                JOptionPane.showMessageDialog(modal, "La latitud no puede tener más de dos decimales.");
+                return false;
+            }
+
+            // Validar la longitud
+            String longitudTexto = text_field_longitud.getText().trim();
+            if (longitudTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(modal, "La longitud no puede estar vacía.");
+                return false;
+            }
+
+            Float longitud;
+            try {
+                longitud = Float.parseFloat(longitudTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(modal, "La longitud debe ser un número válido.");
+                return false;
+            }
+
+            if (longitud < -180 || longitud > 180) {
+                JOptionPane.showMessageDialog(modal, "La longitud debe estar entre -180 y 180 grados.");
+                return false;
+            }
+            if (longitudTexto.contains(".") && longitudTexto.substring(longitudTexto.indexOf(".") + 1).length() > 2) {
+                JOptionPane.showMessageDialog(modal, "La longitud no puede tener más de dos decimales.");
+                return false;
+            }
+
+            // Si todos los datos son válidos
+            return true;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(modal, "Ocurrió un error inesperado al validar los datos.");
+            return false;
+        }
+    }
+
+    
+    @Override
     public void mostrarEliminar(int filaSeleccionada) {
         int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
         titulo_modal_eliminar.setText("Se eliminará el vendedor " + id);
@@ -410,6 +501,11 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
         );
 
         setPreferredSize(new java.awt.Dimension(800, 610));
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
 
         panel_info.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -501,7 +597,7 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_info_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panel_infoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_infoLayout.createSequentialGroup()
                         .addComponent(label_buscar)
@@ -512,10 +608,10 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
                         .addComponent(boton_crear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                         .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_infoLayout.setVerticalGroup(
             panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,14 +621,14 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(text_field_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boton_crear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -565,7 +661,8 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
 
     private void boton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_confirmarActionPerformed
 
-        switch((String) boton_confirmar.getClientProperty("tipoAccion")){
+        if(validarDatos()){
+            switch((String) boton_confirmar.getClientProperty("tipoAccion")){
             case "crear":
             crear();
             break;
@@ -574,7 +671,10 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
             break;
         }
 
-        modal.dispose();
+            modal.dispose();
+        }
+        
+        
     }//GEN-LAST:event_boton_confirmarActionPerformed
 
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
@@ -620,6 +720,10 @@ public class PanelVendedor extends javax.swing.JPanel implements PanelInformacio
             JOptionPane.showMessageDialog(panel_info, "Por favor, selecciona una fila para eliminar.");
         }
     }//GEN-LAST:event_boton_eliminarActionPerformed
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

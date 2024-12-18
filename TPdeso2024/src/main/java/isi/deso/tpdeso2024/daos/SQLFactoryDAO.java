@@ -21,5 +21,12 @@ public class SQLFactoryDAO extends FactoryDAO{
 
     @Override
     public CategoriaDAO getCategoriaDAO() {return new CategoriaSQLDAO();}
+
+    @Override
+    public PagoDAO getPagoDAO() {
+        return new PagoSQLDAO();
+    }
+    
+    
     
 }

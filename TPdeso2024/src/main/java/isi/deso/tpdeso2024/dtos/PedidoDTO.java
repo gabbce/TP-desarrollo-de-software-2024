@@ -18,30 +18,34 @@ public class PedidoDTO {
     
     private LinkedList<PedidoDetalleDTO> pedidoDetalle; // lista de items menu
 
-    private Pago pago; // se consigue el tipo con getStrategyType();
+    private PagoDTO pago; // se consigue el tipo con getStrategyType();
     private EstadoPedido estado; // ENUM
     private ClienteDTO cliente;
+    private Float precioFinal;
     //boolean changed;
 
-    public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+    public PedidoDTO(int id, LinkedList<PedidoDetalleDTO> pedidoDetalle, PagoDTO pago, EstadoPedido estado, ClienteDTO cliente, Float precioFinal) {
         this.id = id;
         this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
+        this.precioFinal = precioFinal;
     }
 
-    public PedidoDTO(LinkedList<PedidoDetalleDTO> pedidoDetalle, Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+    public PedidoDTO(LinkedList<PedidoDetalleDTO> pedidoDetalle, PagoDTO pago, EstadoPedido estado, ClienteDTO cliente, Float precioFinal) {
         this.pedidoDetalle = pedidoDetalle;
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
+        this.precioFinal = precioFinal;
     }
 
-    public PedidoDTO(Pago pago, EstadoPedido estado, ClienteDTO cliente) {
+    public PedidoDTO(PagoDTO pago, EstadoPedido estado, ClienteDTO cliente, Float precioFinal) {
         this.pago = pago;
         this.estado = estado;
         this.cliente = cliente;
+        this.precioFinal = precioFinal;
     }
 
    
@@ -60,11 +64,11 @@ public class PedidoDTO {
     }
     
 
-    public Pago getPago() {
+    public PagoDTO getPago() {
         return pago;
     }
 
-    public void setPago(Pago pago) {
+    public void setPago(PagoDTO pago) {
         this.pago = pago;
     }
 
@@ -74,6 +78,14 @@ public class PedidoDTO {
 
     public void setEstado(EstadoPedido estado) {
         this.estado = estado;
+    }
+
+    public Float getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public void setPrecioFinal(Float precioFinal) {
+        this.precioFinal = precioFinal;
     }
 
     public ClienteDTO getCliente() {

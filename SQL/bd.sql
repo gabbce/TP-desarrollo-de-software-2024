@@ -65,15 +65,17 @@ INSERT INTO pago_type (tipo) VALUES
 CREATE TABLE pedido(
     id SERIAL PRIMARY KEY,
     id_estado_pedido VARCHAR(20) REFERENCES estado_pedido (tipo),
-    id_cliente INTEGER REFERENCES cliente (id)
+    id_cliente INTEGER REFERENCES cliente (id),
+    precio_final REAL
 );
 
 CREATE TABLE pago(
     id SERIAL PRIMARY KEY,
-    id_pedido INTEGER REFERENCES pedido (id),
-    id_pagoType VARCHAR(20) REFERENCES pago_type (tipo),
+    id_pedido INTEGER REFERENCES pedido (id) UNIQUE,
+    pagoType VARCHAR(20) REFERENCES pago_type (tipo),
     alias_cbu VARCHAR(40),
-    fecha_pago DATE
+    cuit VARCHAR(11),
+    fecha_pago TIMESTAMP
 );
 
 CREATE TABLE pedido_detalle(
@@ -83,13 +85,22 @@ CREATE TABLE pedido_detalle(
     cantidad INTEGER NOT NULL
 );
 
+-- Inserciones para 'vendedor'
 INSERT INTO vendedor (nombre, direccion, latitud, longitud) VALUES
-('Carlos López', 'Av. Rivadavia 1234, Buenos Aires', -34.6083, -58.3712),
-('Ana Fernández', 'Calle Córdoba 567, Rosario', -32.9468, -60.6394),
-('Martín Gómez', 'San Martín 890, Mendoza', -32.8908, -68.8272),
-('Susana Martínez', 'Mitre 234, Córdoba', -31.4173, -64.1830),
-('Juan Pérez', 'Av. Belgrano 345, Salta', -24.7821, -65.4232);
+('Carlos López', 'Av Rivadavia 1234', -34.60, -58.37),
+('Ana Fernández', 'Calle Córdoba 567', -32.94, -60.64),
+('Martín Gómez', 'San Martín 890', -32.89, -68.82),
+('Susana Martínez', 'Mitre 234', -31.43, -64.10),
+('Juan Pérez', 'Av Belgrano 345', -24.71, -65.42);
 
+-- Inserciones para 'categoria'
+INSERT INTO categoria (descripcion, tipo) VALUES
+('Comida rápida','Fast food'),
+('Bebida con gas','Gaseosa'),
+('Bebidas con graduación alcoholica','Alcohol'),
+('Comida china', 'Comida china');
+
+-- Inserciones para 'item_menu'
 INSERT INTO item_menu 
 (es_comida, nombre, descripcion, id_vendedor, id_categoria, precio, graduacion_alcoholica, tam, peso, calorias, apto_celiaco, apto_vegano) VALUES
 (TRUE, 'Empanada', 'Empanada de carne', 1, 1, 150.0, 0.0, NULL, 0.15, 200, TRUE, FALSE),
@@ -98,27 +109,32 @@ INSERT INTO item_menu
 (FALSE, 'Quilmes', 'Cerveza Quilmes', 3, 3, 300.0, 4.5, 0.5, NULL, 180, TRUE, FALSE),
 (TRUE, 'Chow Mein', 'Fideos chinos con verduras', 4, 4, 850.0, 0.0, 0.75, NULL, 450, TRUE, TRUE);
 
+-- Inserciones para 'cliente'
 INSERT INTO cliente (cuit, mail, direccion, latitud, longitud) VALUES
-('20123456789', 'juan.perez@gmail.com', 'Av. Corrientes 1123, Buenos Aires', -34.6037, -58.3816),
-('20345678901', 'maria.lopez@yahoo.com', 'Calle Mitre 456, Rosario', -32.9471, -60.6388),
-('20987654321', 'carlos.garcia@outlook.com', 'Av. San Martín 789, Córdoba', -31.4135, -64.1811),
-('20876543210', 'laura.fernandez@gmail.com', 'San Juan 345, Mendoza', -32.8898, -68.8270),
-('20111222333', 'lucia.martinez@hotmail.com', 'Belgrano 890, Salta', -24.7852, -65.4103);
+('20123456789', 'juan.perez@gmail.com', 'Av Corrientes 1123', -34.60, -58.36),
+('20345678901', 'maria.lopez@yahoo.com', 'Calle Mitre 456', -32.91, -60.63),
+('20987654321', 'carlos.garcia@outlook.com', 'Av San Martín 789', -31.35, -64.11),
+('20876543210', 'laura.fernandez@gmail.com', 'San Juan 345', -32.88, -68.80),
+('20111222333', 'lucia.martinez@hotmail.com', 'Belgrano 890', -24.72, -65.43);
 
-INSERT INTO pedido (id_estado_pedido, id_cliente) VALUES
-('PENDIENTE', 1),
-('RECIBIDO', 2),
-('EN_ENVIO', 3),
-('RECIBIDO_CLIENTE', 4),
-('PENDIENTE', 5);
+-- Inserciones para 'pedido' 
+INSERT INTO pedido (id_estado_pedido, id_cliente, precio_final) VALUES
+('PENDIENTE', 1, 3000),
+('RECIBIDO', 2, 1500),
+('EN_ENVIO', 3, 3000),
+('RECIBIDO_CLIENTE', 4, 2550),
+('PENDIENTE', 5, 2400);
 
-INSERT INTO pago (id_pedido, id_pagoType, alias_cbu, fecha_pago) VALUES
-(1, 'MERCADO_PAGO', 'mercadopago.juan', '2024-11-10'),
-(2, 'TRANSFERENCIA', 'cbu.maria.456', '2024-11-12'),
-(3, 'MERCADO_PAGO', 'mercadopago.carlos', '2024-11-14'),
-(4, 'TRANSFERENCIA', 'cbu.laura.678', '2024-11-15'),
-(5, 'MERCADO_PAGO', 'mercadopago.lucia', '2024-11-16');
 
+-- Inserciones para 'pago' (MERCADO_PAGO y TRANSFERENCIA)
+INSERT INTO pago (id_pedido, pagoType, alias_cbu, cuit, fecha_pago) VALUES
+(1, 'MERCADO_PAGO', 'mercadopago.juan', NULL, '2024-11-10 14:00:00'),  -- MercadoPago (sin cuit)
+(2, 'TRANSFERENCIA', 'cbu.maria.456', '20345678901', '2024-11-12 15:30:00'), -- Transferencia (con cuit)
+(3, 'MERCADO_PAGO', 'mercadopago.carlos', NULL, '2024-11-14 16:45:00'),  -- MercadoPago (sin cuit)
+(4, 'TRANSFERENCIA', 'cbu.laura.678', '20876543210', '2024-11-15 17:00:00'), -- Transferencia (con cuit)
+(5, 'MERCADO_PAGO', 'mercadopago.lucia', NULL, '2024-11-16 18:00:00');  -- MercadoPago (sin cuit)
+
+-- Inserciones para 'pedido_detalle'
 INSERT INTO pedido_detalle (id_pedido, id_item_menu, cantidad) VALUES
 (1, 1, 12),
 (1, 2, 1),
@@ -126,4 +142,5 @@ INSERT INTO pedido_detalle (id_pedido, id_item_menu, cantidad) VALUES
 (3, 4, 10),
 (4, 5, 3),
 (5, 2, 2);
+
 

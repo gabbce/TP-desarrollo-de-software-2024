@@ -130,14 +130,15 @@ public class Cliente{
             }
         
         
-        Pago pagoSeleccionado = pMP; //A netbeans no le gusta que no inicialice 
+        Pago pagoSeleccionado = pMP; //A netbeans no le gusta que no inicialice
+        Float precioFinal = 0f;
         switch (formaDePago){
-            case 1 -> pagoSeleccionado = pMP;
-            case 2 -> pagoSeleccionado = pTr;
+            case 1 -> {pagoSeleccionado = pMP; precioFinal = precioMP;}
+            case 2 -> {pagoSeleccionado = pTr; precioFinal = precioTransferencia;}
         }
         
         pagoSeleccionado.tomarDatos();
-        Pedido p = new Pedido(/*new PedidoDetalle(listaItems),*/ pagoSeleccionado, this);
+        Pedido p = new Pedido(/*new PedidoDetalle(listaItems),*/ pagoSeleccionado, this, precioFinal);
         for(ItemMenu i : listaItems){
             PedidoDetalle pd = new PedidoDetalle(p, i, 1);
         }

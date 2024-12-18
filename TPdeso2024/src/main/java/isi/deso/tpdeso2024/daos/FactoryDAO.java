@@ -15,6 +15,7 @@ public abstract class FactoryDAO {
     public abstract ItemMenuDAO getItemMenuDAO();
     public abstract PedidoDAO getPedidoDAO();
     public abstract CategoriaDAO getCategoriaDAO();
+    public abstract PagoDAO getPagoDAO();
     
     public static FactoryDAO getFactory(int claveFactory){
         switch (claveFactory) {

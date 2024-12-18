@@ -60,7 +60,7 @@ public class ModeloTablaVendedor extends AbstractTableModel {
             case 0 -> vendedor.getId();
             case 1 -> vendedor.getNombre();
             case 2 -> vendedor.getDireccion();
-            case 3 -> "(" + String.valueOf(vendedor.getCoordenada().getLatitud()) + "; " + String.valueOf(vendedor.getCoordenada().getLongitud()) + ")";
+            case 3 -> "(" + String.format("%.2f", vendedor.getCoordenada().getLatitud()) + "; " + String.format("%.2f", vendedor.getCoordenada().getLongitud()) + ")";
             /*case 3 -> vendedor.getCoordenada().getLatitud();
             case 4 -> vendedor.getCoordenada().getLongitud();*/
             default -> null;
