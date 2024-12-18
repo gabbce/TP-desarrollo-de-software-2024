@@ -461,6 +461,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         jLabel8 = new javax.swing.JLabel();
         text_field_graduacion = new javax.swing.JTextField();
         text_field_tam = new javax.swing.JTextField();
+        boton_regresar_bebida = new javax.swing.JButton();
         modal_comida = new javax.swing.JDialog();
         panel_modal2 = new javax.swing.JPanel();
         boton_confirmar_comida = new javax.swing.JButton();
@@ -473,6 +474,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         apto_vegano = new javax.swing.JCheckBox();
         text_field_peso = new javax.swing.JTextField();
         text_field_calorias = new javax.swing.JTextField();
+        boton_regresar_comida = new javax.swing.JButton();
         modal_detalles_bebida = new javax.swing.JDialog();
         panel_modal3 = new javax.swing.JPanel();
         boton_continuar_detalle_bebida = new javax.swing.JButton();
@@ -655,7 +657,7 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                                 .addComponent(jLabel15)
                                 .addComponent(combo_box_categoria))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modalLayout.createSequentialGroup()
-                        .addGap(0, 155, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(text_field_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_modalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -832,15 +834,26 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addContainerGap())
         );
 
+        boton_regresar_bebida.setBackground(new java.awt.Color(153, 153, 153));
+        boton_regresar_bebida.setForeground(new java.awt.Color(204, 204, 204));
+        boton_regresar_bebida.setText("Regresar");
+        boton_regresar_bebida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_regresar_bebidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_modal1Layout = new javax.swing.GroupLayout(panel_modal1);
         panel_modal1.setLayout(panel_modal1Layout);
         panel_modal1Layout.setHorizontalGroup(
             panel_modal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(titulo_modal_bebida, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
             .addGroup(panel_modal1Layout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(boton_regresar_bebida)
+                .addGap(69, 69, 69)
                 .addComponent(boton_cancelar_bebida)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
                 .addComponent(boton_confirmar_bebida)
                 .addGap(109, 109, 109))
             .addGroup(panel_modal1Layout.createSequentialGroup()
@@ -857,7 +870,8 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(panel_modal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_cancelar_bebida)
-                    .addComponent(boton_confirmar_bebida))
+                    .addComponent(boton_confirmar_bebida)
+                    .addComponent(boton_regresar_bebida))
                 .addGap(22, 22, 22))
         );
 
@@ -979,6 +993,15 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addGap(9, 9, 9))
         );
 
+        boton_regresar_comida.setBackground(new java.awt.Color(153, 153, 153));
+        boton_regresar_comida.setForeground(new java.awt.Color(204, 204, 204));
+        boton_regresar_comida.setText("Regresar");
+        boton_regresar_comida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_regresar_comidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_modal2Layout = new javax.swing.GroupLayout(panel_modal2);
         panel_modal2.setLayout(panel_modal2Layout);
         panel_modal2Layout.setHorizontalGroup(
@@ -988,8 +1011,10 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_modal2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panel_modal2Layout.createSequentialGroup()
-                        .addComponent(boton_cancelar_comida)
+                        .addComponent(boton_regresar_comida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boton_cancelar_comida)
+                        .addGap(57, 57, 57)
                         .addComponent(boton_confirmar_comida))
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1003,7 +1028,8 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(panel_modal2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_cancelar_comida)
-                    .addComponent(boton_confirmar_comida))
+                    .addComponent(boton_confirmar_comida)
+                    .addComponent(boton_regresar_comida))
                 .addGap(22, 22, 22))
         );
 
@@ -1098,11 +1124,9 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             .addComponent(titulo_modal_detalle_bebida, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
             .addGroup(panel_modal3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panel_modal3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(boton_continuar_detalle_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_modal3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton_continuar_detalle_bebida, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_modal3Layout.setVerticalGroup(
@@ -1236,11 +1260,9 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
             .addComponent(titulo_modal_detalle_comida, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
             .addGroup(panel_modal4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panel_modal4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(boton_continuar_detalle_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_modal4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton_continuar_detalle_comida, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_modal4Layout.setVerticalGroup(
@@ -1762,6 +1784,17 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
         // TODO add your handling code here:
     }//GEN-LAST:event_detalle_caloriasActionPerformed
 
+    private void boton_regresar_bebidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_regresar_bebidaActionPerformed
+        
+        modal_bebida.dispose();
+        mostrarModal(modal);
+    }//GEN-LAST:event_boton_regresar_bebidaActionPerformed
+
+    private void boton_regresar_comidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_regresar_comidaActionPerformed
+        modal_comida.dispose();
+        mostrarModal(modal);
+    }//GEN-LAST:event_boton_regresar_comidaActionPerformed
+
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1780,6 +1813,8 @@ public class PanelItemMenu extends javax.swing.JPanel implements PanelInformacio
     private javax.swing.JButton boton_detalles;
     private javax.swing.JButton boton_editar;
     private javax.swing.JButton boton_eliminar;
+    private javax.swing.JButton boton_regresar_bebida;
+    private javax.swing.JButton boton_regresar_comida;
     private javax.swing.JButton boton_siguiente;
     private javax.swing.JComboBox<String> combo_box_categoria;
     private javax.swing.JComboBox<String> combo_box_tipo;
