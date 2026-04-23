@@ -9,7 +9,6 @@ import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.excepciones.ClienteNoEncontradoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ClienteSQLDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean crear(Cliente v) throws SQLException{
+    public boolean crear(Cliente v) {
     try{
         this.conector.conectar();
         
@@ -47,10 +46,9 @@ public class ClienteSQLDAO implements ClienteDAO {
         preparedStatement.close();
         this.conector.cerrar();
         }
-        catch(SQLException e){
+        catch(Exception e){
             System.out.println("excepcion en "+ this.getClass().getName() + ".create() " + e.getMessage());
-            throw new SQLException(e.getMessage());
-            //return false;
+            return false;
         } 
         return true;
     }
@@ -161,7 +159,7 @@ public class ClienteSQLDAO implements ClienteDAO {
     }
 
     @Override
-    public boolean actualizar(Cliente v) throws SQLException{
+    public boolean actualizar(Cliente v) {
 		try{
         this.conector.conectar();
         
@@ -185,10 +183,9 @@ public class ClienteSQLDAO implements ClienteDAO {
         preparedStatement.close();
         this.conector.cerrar();
         }
-        catch(SQLException e){
+        catch(Exception e){
             System.out.println("excepcion en "+ this.getClass().getName() + ".actualizar() " + e.getMessage());
-            throw new SQLException(e.getMessage());
-            //return false;
+            return false;
         } 
         
         return true;
@@ -234,8 +231,7 @@ public class ClienteSQLDAO implements ClienteDAO {
             
         } catch (Exception e) {
             System.out.println("excepcion en " + this.getClass().getName() + ".buscarPorID() " + e.getMessage());
-            throw new ClienteNoEncontradoException(e.getMessage());
-           // return null;
+            return null;
         }
     }
 }

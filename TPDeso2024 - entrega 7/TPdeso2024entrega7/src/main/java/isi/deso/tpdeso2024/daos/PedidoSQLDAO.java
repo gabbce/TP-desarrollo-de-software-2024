@@ -9,9 +9,6 @@ import isi.deso.tpdeso2024.Cliente;
 import isi.deso.tpdeso2024.Coordenada;
 import isi.deso.tpdeso2024.EstadoPedido;
 import isi.deso.tpdeso2024.ItemMenu;
-import isi.deso.tpdeso2024.Pago;
-import isi.deso.tpdeso2024.PagoMercadoPago;
-import isi.deso.tpdeso2024.PagoTransferencia;
 import isi.deso.tpdeso2024.PagoType;
 import isi.deso.tpdeso2024.Pedido;
 import isi.deso.tpdeso2024.PedidoDetalle;
@@ -44,13 +41,13 @@ public class PedidoSQLDAO implements PedidoDAO {
         
        
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
-                                                                            INSERT INTO Pedido (id_estado_pedido,id_cliente, precio_final) 
-                                                                            VALUES ('PENDIENTE',?,?);""",
+                                                                            INSERT INTO Pedido (id_estado_pedido,id_cliente) 
+                                                                            VALUES ('PENDIENTE',?);""",
                 PreparedStatement.RETURN_GENERATED_KEYS);
         
         //setear valores
         preparedStatement.setInt(1, v.getCliente().getId());
-        preparedStatement.setFloat(2, v.getPrecioFinal());
+
         preparedStatement.executeUpdate();
             
         
@@ -67,16 +64,7 @@ public class PedidoSQLDAO implements PedidoDAO {
         preparedStatement.setInt(2, pd.getItem().getId());
         preparedStatement.setInt(3, pd.getCantidad());
         
-        preparedStatement.executeUpdate();
-        
-        if(v.getPago().getStrategyType() == PagoType.MERCADO_PAGO){
-            ((PagoMercadoPago)v.getPago()).setId_pedido(parentId);
-        } else {
-            ((PagoTransferencia)v.getPago()).setId_pedido(parentId);
-        }
-        
-        FactoryDAO.getFactory(FactoryDAO.SQL).getPagoDAO().crear(v.getPago());
-        
+        preparedStatement.executeUpdate();        
         }
         preparedStatement.close();
         this.conector.cerrar();
@@ -98,22 +86,21 @@ public class PedidoSQLDAO implements PedidoDAO {
        
        
         PreparedStatement preparedStatement = conector.con.prepareStatement("""
-                                                                            UPDATE Pedido 
-                                                                            SET  id_cliente = ?, precio_final = ?, id_estado_pedido = ? 
+                                                                            UPDATE Pedido
+                                                                            SET id_estado_pedido = ?, id_cliente = ?
                                                                             WHERE id = ?;""");
         
         //setear valores
-        preparedStatement.setString(3, (v.getEstado().toString()));
-        preparedStatement.setInt(1, v.getCliente().getId());
-        preparedStatement.setFloat(2, v.getPrecioFinal());
-        preparedStatement.setInt(4, v.getId());
+        preparedStatement.setString(1, (v.getEstado().toString()));
+        preparedStatement.setInt(2, v.getCliente().getId());
+        preparedStatement.setInt(3, v.getId());
 
         preparedStatement.executeUpdate();
         
         for(PedidoDetalle pd: v.getPedidoDetalle()){
         
         preparedStatement = conector.con.prepareStatement("""
-                                                              UPDATE Pedido_detalle 
+                                                              UPDATE Pedido_detalle
                                                               SET id_item_menu = ?, cantidad = ?
                                                               WHERE id_pedido = ?;""");
         //setear valores
@@ -121,9 +108,7 @@ public class PedidoSQLDAO implements PedidoDAO {
         preparedStatement.setInt(2, pd.getCantidad());
         preparedStatement.setInt(3, v.getId());
         
-        preparedStatement.executeUpdate();  
-        
-        FactoryDAO.getFactory(FactoryDAO.SQL).getPagoDAO().actualizar(v.getPago());
+        preparedStatement.executeUpdate();        
         }
         this.conector.cerrar();
         }
@@ -153,10 +138,7 @@ public class PedidoSQLDAO implements PedidoDAO {
         
         preparedStatement.executeUpdate();
         preparedStatement.close();
-        
         this.conector.cerrar();
-        
-        FactoryDAO.getFactory(FactoryDAO.SQL).getPagoDAO().eliminar(id);
         }
         catch(Exception e){
             System.out.println("excepcion en "+ this.getClass().getName() + ".eliminar() " + e.getMessage());
@@ -180,13 +162,8 @@ public class PedidoSQLDAO implements PedidoDAO {
 
             ResultSet resultados = preparedStatement.executeQuery();
             while (resultados.next()) {
-                int id = resultados.getInt(1);
-                
-                Pago pago = FactoryDAO.getFactory(FactoryDAO.SQL).getPagoDAO().buscarPorIdPedido(id);
-                
                 Cliente aux = new Cliente(resultados.getInt(3), null,null, null,null);
-                
-                Pedido tmp = new Pedido(resultados.getInt(1), pago, EstadoPedido.valueOf(resultados.getString(2)),aux, resultados.getFloat(4));
+                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
                 ret.add(tmp);
             }
 
@@ -261,12 +238,8 @@ public class PedidoSQLDAO implements PedidoDAO {
             ResultSet resultados = preparedStatement.executeQuery();
             int contador =0;
             while (resultados.next()) {
-                int idp = resultados.getInt(1);
-                Pago pago = FactoryDAO.getFactory(FactoryDAO.SQL).getPagoDAO().buscarPorIdPedido(idp);
-                
                 Cliente aux = new Cliente(resultados.getInt(3), null, null, null, null);
-                
-                Pedido tmp = new Pedido(idp, pago, EstadoPedido.valueOf(resultados.getString(2)),aux, resultados.getFloat(4));
+                Pedido tmp = new Pedido(resultados.getInt(1), null, EstadoPedido.valueOf(resultados.getString(2)),aux);
                 contador++;
                 ret = tmp;
             }
@@ -311,5 +284,29 @@ public class PedidoSQLDAO implements PedidoDAO {
         return ret;
     }
     
-    
+    @Override
+    public List<PagoType> getPagoTypes(){
+        List<PagoType> ret = new ArrayList<>();
+        
+        try {
+            this.conector.conectar();
+
+            PreparedStatement preparedStatement = conector.con.prepareStatement("""
+		SELECT * FROM pago_type;								
+		""");
+            
+            ResultSet resultados = preparedStatement.executeQuery();
+            
+            while (resultados.next()) {
+                ret.add(PagoType.valueOf(resultados.getString(1)));
+            }
+
+            preparedStatement.close();
+            this.conector.cerrar();
+        } catch(SQLException e){
+             System.out.println("excepcion en " + this.getClass().getName() + ".getPagoTypes() " + e.getMessage());
+        }
+        
+        return ret;
+    }
 }
